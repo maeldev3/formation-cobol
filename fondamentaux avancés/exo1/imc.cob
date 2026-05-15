@@ -1,4 +1,4 @@
-       IDENTIFICATION DIVISION.
+IDENTIFICATION DIVISION.
        PROGRAM-ID. IMC.
        
        DATA DIVISION.
@@ -6,7 +6,7 @@
        01 WS-POIDS         PIC 9(3).
        01 WS-TAILLE        PIC 9V99.
        01 WS-IMC           PIC 99V99.
-       01 WS-CATEGORIE     PIC X(15).
+       01 WS-CATEGORIE     PIC X(20).
        01 WS-ERREUR        PIC X(1) VALUE 'N'.
            88 OK-VALIDE    VALUE 'N'.
        
@@ -32,30 +32,28 @@
            IF WS-TAILLE < 0.50 OR WS-TAILLE > 2.50
                DISPLAY "ERREUR: TAILLE INVALIDE"
                MOVE 'O' TO WS-ERREUR
-           END-IF
-           .
+           END-IF.
        
        2000-CALCUL.
-           IF NOT OK-VALIDE
-               COMPUTE WS-IMC = WS-POIDS / (WS-TAILLE * WS-TAILLE)
+           IF OK-VALIDE
+               COMPUTE WS-IMC ROUNDED = WS-POIDS / (WS-TAILLE * WS-TAILLE)
                
                EVALUATE TRUE
                    WHEN WS-IMC < 18.5
                        MOVE "MAIGREUR" TO WS-CATEGORIE
-                   WHEN WS-IMC >= 18.5 AND WS-IMC < 25
+                   WHEN WS-IMC < 25
                        MOVE "NORMAL" TO WS-CATEGORIE
-                   WHEN WS-IMC >= 25 AND WS-IMC < 30
+                   WHEN WS-IMC < 30
                        MOVE "SURPOIDS" TO WS-CATEGORIE
-                   WHEN WS-IMC >= 30 AND WS-IMC < 35
+                   WHEN WS-IMC < 35
                        MOVE "OBESITE MODEREE" TO WS-CATEGORIE
-                   WHEN WS-IMC >= 35
+                   WHEN OTHER
                        MOVE "OBESITE SEVERE" TO WS-CATEGORIE
                END-EVALUATE
-           END-IF
-           .
+           END-IF.
        
        3000-AFFICHAGE.
-           IF NOT OK-VALIDE
+           IF OK-VALIDE
                DISPLAY " "
                DISPLAY "--- RESULTAT ---"
                DISPLAY "IMC: " WS-IMC
@@ -74,6 +72,5 @@
                        DISPLAY "Suivi medical obligatoire"
                END-EVALUATE
            ELSE
-               DISPLAY "Veuillez relancer le programme"
-           END-IF
-           .
+               DISPLAY "Saisie incorrecte. Veuillez relancer le programme"
+           END-IF.
