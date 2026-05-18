@@ -1,0 +1,22 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. STOCK.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+
+       01 I PIC 9.
+       01 WS-PROD OCCURS 5 TIMES PIC X(15).
+
+       PROCEDURE DIVISION.
+
+           MOVE "PC" TO WS-PROD(1)
+           MOVE "PHONE" TO WS-PROD(2)
+           MOVE "TV" TO WS-PROD(3)
+           MOVE "TABLET" TO WS-PROD(4)
+           MOVE "MOUSE" TO WS-PROD(5)
+
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > 5
+               DISPLAY WS-PROD(I)
+           END-PERFORM
+
+           STOP RUN.

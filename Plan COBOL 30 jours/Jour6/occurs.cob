@@ -1,0 +1,22 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TABLE1.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+
+       01 WS-I PIC 9.
+       01 WS-NOTES OCCURS 5 TIMES PIC 9(2).
+
+       PROCEDURE DIVISION.
+
+           MOVE 10 TO WS-NOTES(1)
+           MOVE 12 TO WS-NOTES(2)
+           MOVE 15 TO WS-NOTES(3)
+           MOVE 18 TO WS-NOTES(4)
+           MOVE 20 TO WS-NOTES(5)
+
+           PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > 5
+               DISPLAY WS-NOTES(WS-I)
+           END-PERFORM
+
+           STOP RUN.

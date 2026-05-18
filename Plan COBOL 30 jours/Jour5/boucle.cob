@@ -1,0 +1,10 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. REPETE.
+
+       PROCEDURE DIVISION.
+
+           PERFORM 10 TIMES
+               DISPLAY "ISMAEL"
+           END-PERFORM
+
+           STOP RUN.

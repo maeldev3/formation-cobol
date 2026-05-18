@@ -1,0 +1,15 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. COUNT1.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 WS-I PIC 99 VALUE 1.
+
+       PROCEDURE DIVISION.
+
+           PERFORM UNTIL WS-I > 10
+               DISPLAY WS-I
+               ADD 1 TO WS-I
+           END-PERFORM
+
+           STOP RUN.

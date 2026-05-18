@@ -1,0 +1,4 @@
+=== CLIENT REPORT ===
+ID: 00001 NAME: ISMAEL               CITY: MADAGASCAR
+ID: 00002 NAME: JOHN                 CITY: PARIS
+ID: 00003 NAME: PAUL                 CITY: LONDON

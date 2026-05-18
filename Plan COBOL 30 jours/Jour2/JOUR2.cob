@@ -1,0 +1,24 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PAYE.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+
+       01 WS-SALAIRE     PIC 9(6)V99.
+       01 WS-PRIME       PIC 9(5)V99.
+       01 WS-TOTAL       PIC 9(7)V99.
+
+       PROCEDURE DIVISION.
+
+           DISPLAY "SALAIRE : "
+           ACCEPT WS-SALAIRE
+
+           DISPLAY "PRIME : "
+           ACCEPT WS-PRIME
+
+           MOVE WS-SALAIRE TO WS-TOTAL
+           ADD WS-PRIME TO WS-TOTAL
+
+           DISPLAY "TOTAL : " WS-TOTAL
+
+           STOP RUN.

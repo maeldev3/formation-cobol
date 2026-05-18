@@ -1,0 +1,20 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CLIENTS.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+
+       01 WS-I PIC 9.
+       01 WS-NAMES OCCURS 3 TIMES PIC X(20).
+
+       PROCEDURE DIVISION.
+
+           MOVE "ISMAEL" TO WS-NAMES(1)
+           MOVE "JOHN" TO WS-NAMES(2)
+           MOVE "PAUL" TO WS-NAMES(3)
+
+           PERFORM VARYING WS-I FROM 1 BY 1 UNTIL WS-I > 3
+               DISPLAY WS-NAMES(WS-I)
+           END-PERFORM
+
+           STOP RUN.

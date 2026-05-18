@@ -1,0 +1,24 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. SALARRAY.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+
+       01 I PIC 9.
+       01 WS-SAL OCCURS 4 TIMES PIC 9(6)V99.
+       01 WS-TOTAL PIC 9(8)V99 VALUE ZERO.
+
+       PROCEDURE DIVISION.
+
+           MOVE 1000 TO WS-SAL(1)
+           MOVE 2000 TO WS-SAL(2)
+           MOVE 1500 TO WS-SAL(3)
+           MOVE 2500 TO WS-SAL(4)
+
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > 4
+               ADD WS-SAL(I) TO WS-TOTAL
+           END-PERFORM
+
+           DISPLAY "TOTAL SALAIRE : " WS-TOTAL
+
+           STOP RUN.
