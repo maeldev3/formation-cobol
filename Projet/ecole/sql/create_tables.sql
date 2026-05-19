@@ -1,0 +1,71 @@
+-- Suppression des tables existantes
+DROP TABLE IF EXISTS EVALUATION;
+DROP TABLE IF EXISTS NOTE;
+DROP TABLE IF EXISTS ETUDIANT;
+DROP TABLE IF EXISTS COURS;
+
+-- Table ETUDIANT
+CREATE TABLE ETUDIANT (
+    ID              CHAR(6) PRIMARY KEY,
+    NOM             CHAR(30),
+    PRENOM          CHAR(20),
+    DATE_NAISSANCE  DATE,
+    CLASSE          CHAR(3)
+);
+
+-- Table COURS
+CREATE TABLE COURS (
+    ID              CHAR(6) PRIMARY KEY,
+    NOM_COURS       CHAR(30),
+    COEFFICIENT     INTEGER
+);
+
+-- Table NOTE
+CREATE TABLE NOTE (
+    ID              CHAR(6) PRIMARY KEY,
+    ID_ETUDIANT     CHAR(6),
+    ID_COURS        CHAR(6),
+    VALEUR          DECIMAL(4,2),
+    DATE_NOTE       DATE,
+    FOREIGN KEY (ID_ETUDIANT) REFERENCES ETUDIANT(ID),
+    FOREIGN KEY (ID_COURS) REFERENCES COURS(ID)
+);
+
+-- Table EVALUATION
+CREATE TABLE EVALUATION (
+    ID              CHAR(6) PRIMARY KEY,
+    ID_ETUDIANT     CHAR(6),
+    DATE_EVAL       DATE,
+    MOYENNE         DECIMAL(5,2),
+    MENTION         CHAR(1),
+    FOREIGN KEY (ID_ETUDIANT) REFERENCES ETUDIANT(ID)
+);
+
+-- Insertion des données
+INSERT INTO ETUDIANT VALUES 
+    ('E00001', 'DUPONT', 'Jean', '2010-05-15', '3A'),
+    ('E00002', 'MARTIN', 'Sophie', '2011-08-22', '3B'),
+    ('E00003', 'DURAND', 'Pierre', '2009-12-03', '4A'),
+    ('E00004', 'LEROY', 'Claire', '2010-03-18', '4B'),
+    ('E00005', 'PETIT', 'Laurent', '2011-07-25', '3A');
+
+INSERT INTO COURS VALUES 
+    ('MAT001', 'Mathematiques', 5),
+    ('FR002', 'Francais', 4),
+    ('ANG003', 'Anglais', 3),
+    ('HIS004', 'Histoire', 2),
+    ('GEO005', 'Geographie', 2);
+
+-- Vérification
+SELECT '=== ETUDIANTS ===' AS "";
+SELECT * FROM ETUDIANT;
+
+SELECT '=== COURS ===' AS "";
+SELECT * FROM COURS;
+
+SELECT '=== NOTES ===' AS "";
+SELECT N.ID, E.NOM, C.NOM_COURS, N.VALEUR, N.DATE_NOTE
+FROM NOTE N
+JOIN ETUDIANT E ON N.ID_ETUDIANT = E.ID
+JOIN COURS C ON N.ID_COURS = C.ID
+LIMIT 10;
