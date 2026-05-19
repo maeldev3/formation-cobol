@@ -1,0 +1,1 @@
+cobc -x -free -o bin/AJOUT_ADHERENT src/modules/ADHERENTS/AJOUT_ADHERENT.cob

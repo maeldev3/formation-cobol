@@ -1,0 +1,62 @@
+-- Suppression des tables existantes
+DROP TABLE IF EXISTS EMPRUNT;
+DROP TABLE IF EXISTS LIVRE;
+DROP TABLE IF EXISTS ADHERENT;
+
+-- Table ADHERENT
+CREATE TABLE ADHERENT (
+    ID           CHAR(6) PRIMARY KEY,
+    NOM          CHAR(30),
+    PRENOM       CHAR(20),
+    ADRESSE      CHAR(50),
+    DATE_ADHESION DATE,
+    PRIME        DECIMAL(7,2)
+);
+
+-- Table LIVRE
+CREATE TABLE LIVRE (
+    ISBN         CHAR(17) PRIMARY KEY,
+    TITRE        CHAR(50),
+    AUTEUR       CHAR(30),
+    CATEGORIE    CHAR(20),
+    QUANTITE     INTEGER
+);
+
+-- Table EMPRUNT
+CREATE TABLE EMPRUNT (
+    ID           CHAR(6) PRIMARY KEY,
+    ID_ADHERENT  CHAR(6),
+    ISBN         CHAR(17),
+    DATE_EMPRUNT DATE,
+    DATE_RETOUR  DATE,
+    AMENDE       DECIMAL(5,2)
+);
+
+-- Insertion données test
+INSERT INTO ADHERENT VALUES 
+    ('A00001', 'DUPONT', 'Jean', '12 Rue de Paris', '2024-01-15', 80.00),
+    ('A00002', 'MARTIN', 'Sophie', '5 Avenue Lyon', '2024-03-20', 80.00),
+    ('A00003', 'DURAND', 'Pierre', '8 Place Marseille', '2024-06-10', 80.00);
+
+INSERT INTO LIVRE VALUES 
+    ('978-2-123456789', 'Le Petit Prince', 'Saint-Exupéry', 'Jeunesse', 3),
+    ('978-0-123456789', '1984', 'Orwell', 'Fiction', 2),
+    ('978-1-234567890', 'Les Misérables', 'Hugo', 'Classique', 5);
+
+INSERT INTO EMPRUNT VALUES 
+    ('E00001', 'A00001', '978-2-123456789', '2025-01-10', NULL, 0.00),
+    ('E00002', 'A00002', '978-0-123456789', '2025-01-15', NULL, 0.00);
+
+-- Vérification
+SELECT '=== ADHERENTS ===' AS " ";
+SELECT * FROM ADHERENT;
+
+SELECT '=== LIVRES ===' AS " ";
+SELECT * FROM LIVRE;
+
+SELECT '=== EMPRUNTS EN COURS ===' AS " ";
+SELECT E.ID, A.NOM, L.TITRE, E.DATE_EMPRUNT
+FROM EMPRUNT E
+JOIN ADHERENT A ON E.ID_ADHERENT = A.ID
+JOIN LIVRE L ON E.ISBN = L.ISBN
+WHERE E.DATE_RETOUR IS NULL;
