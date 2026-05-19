@@ -1,0 +1,135 @@
+============================================================
+JOUR 18 — TRAITEMENT FICHIERS MULTIPLES
+LEÇON THÉORIQUE + EXERCICES
+============================================================
+
+OBJECTIFS DU JOUR :
+  - Maîtriser la lecture parallèle de plusieurs fichiers
+  - Implémenter l'algorithme de matching (correspondance)
+  - Gérer les cas de non-correspondance
+  - Utiliser les fichiers temporaires pour le chaînage
+
+============================================================
+1. LE MATCHING ALGORITHM — CONCEPT FONDAMENTAL
+============================================================
+
+Le "matching" est la technique de base pour fusionner deux
+fichiers triés sur la même clé.
+
+PRÉ-REQUIS ABSOLUS :
+  1. Les deux fichiers DOIVENT être triés sur la même clé
+  2. Le tri doit être dans le même ordre (A ou D)
+  3. La clé doit être de même type et longueur
+
+ALGORITHME :
+  Lire un enregistrement de chaque fichier
+  TANT QUE les deux fichiers ne sont pas épuisés :
+    SI clé_fichier1 < clé_fichier2 :
+      → Enreg. F1 sans correspondance dans F2
+      → Lire prochain enreg. de F1
+    SI clé_fichier1 = clé_fichier2 :
+      → CORRESPONDANCE : traiter ensemble
+      → Lire prochain enreg. de F1 (et/ou F2 selon cas)
+    SI clé_fichier1 > clé_fichier2 :
+      → Enreg. F2 sans correspondance dans F1
+      → Lire prochain enreg. de F2
+  Traiter les enregistrements restants de chaque fichier
+
+============================================================
+2. TYPES DE RELATIONS ENTRE FICHIERS
+============================================================
+
+1:1  → Un compte = une transaction (matching strict)
+1:N  → Un compte = plusieurs transactions (cas le plus fréquent)
+N:1  → Plusieurs transactions pour aucun compte (anomalie)
+0:1  → Un compte sans aucune transaction (cas normal)
+
+DANS LE PROGRAMME FUSION.cbl :
+  - 1:0 → COMPTE-SANS-TRANS : écrire relevé à zéro
+  - 1:N → TRAITER-CORRESPONDANCE : accumuler toutes les transactions
+  - 0:1 → TRANS-SANS-COMPTE : écrire dans fichier anomalies
+
+============================================================
+3. FICHIERS TEMPORAIRES (&&NOM)
+============================================================
+
+Les noms commençant par && sont temporaires :
+  &&TEMP, &&TRIEOK, &&PASSAGE...
+
+Règles :
+  - Créés avec DISP=(NEW,PASS) ou DISP=(NEW,DELETE)
+  - PASS = transmis au step suivant
+  - DELETE = supprimé à la fin du step
+  - Disparaissent automatiquement à la fin du job
+  - Ne sont pas catalogués (pas de DSN permanent)
+
+Usage typique :
+  STEP01 : Créer &&TRIE    avec DISP=(NEW,PASS,DELETE)
+  STEP02 : Utiliser &&TRIE avec DISP=(OLD,DELETE)
+
+============================================================
+4. EXERCICES DU JOUR 18
+============================================================
+
+EXERCICE 1 — ANALYSE :
+  Dans le programme FUSION.cbl, que se passe-t-il si :
+  a) Le fichier COMPTES est vide ?
+  b) Le fichier TRANSACTIONS est vide ?
+  c) Les deux fichiers sont vides ?
+
+EXERCICE 2 — MODIFICATION :
+  Modifiez FUSION.cbl pour :
+  a) Calculer le solde moyen par transaction (Solde Final / NB trans)
+  b) Marquer les comptes avec solde négatif final avec un indicateur
+  c) Compter et afficher les comptes à solde négatif en fin de job
+
+EXERCICE 3 — CRÉATION :
+  Créez un programme RAPPROCH.cbl qui :
+  - Lit fichier VIREMENTS-EMIS (virements envoyés)
+  - Lit fichier VIREMENTS-RECUS (virements reçus)
+  - Les deux triés par NUM-VIREMENT
+  - Identifie les virements émis non reçus (anomalie)
+  - Identifie les virements reçus non émis (anomalie)
+  - Produit un rapport de rapprochement
+
+EXERCICE 4 — AVANCÉ :
+  Créez un JCL pour traiter 3 régions :
+  - REGION1.TRANSACTIONS, REGION2.TRANSACTIONS, REGION3.TRANSACTIONS
+  - Fusionner les 3 avec MERGE SORT
+  - Puis exécuter FUSION avec le COMPTES.MASTER commun
+  - Le tout en un seul JOB multi-steps
+
+============================================================
+CORRIGÉ EXERCICE 1
+============================================================
+
+a) Fichier COMPTES vide :
+   - WS-FIN-COMPTES = 'O' dès le premier READ
+   - La boucle PERFORM UNTIL entre dans le CAS 2 (TRANS-SANS-COMPTE)
+   - Toutes les transactions sont écrites en anomalies
+   - Aucun relevé n'est produit
+
+b) Fichier TRANSACTIONS vide :
+   - WS-FIN-TRANSAC = 'O' dès le premier READ
+   - La boucle entre dans le CAS 1 (COMPTE-SANS-TRANS)
+   - Tous les comptes reçoivent un relevé à zéro transaction
+   - Aucune anomalie
+
+c) Les deux vides :
+   - Les deux indicateurs = 'O' immédiatement
+   - La condition UNTIL FIN-COMPTES AND FIN-TRANSAC est vraie
+   - La boucle ne s'exécute jamais
+   - On passe directement à FINALISATION
+
+============================================================
+POINTS CLÉS À RETENIR
+============================================================
+
+  ✓ MATCHING = comparer les clés des deux fichiers triés
+  ✓ Les fichiers DOIVENT être triés sur la même clé AVANT fusion
+  ✓ 3 cas : F1<F2 (sans correspondance F2), F1=F2, F1>F2
+  ✓ Gérer les fins de fichiers SÉPARÉMENT (deux indicateurs)
+  ✓ Fichiers temporaires && = uniquement pendant le job
+  ✓ DISP=(NEW,PASS) = créer et passer au step suivant
+  ✓ DISP=(OLD,DELETE) = utiliser et supprimer après
+  ✓ Toujours prévoir un fichier anomalies pour les rejets

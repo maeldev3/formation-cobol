@@ -1,0 +1,170 @@
+============================================================
+JOUR 19 — VALIDATION ET GESTION DES REJETS
+LEÇON THÉORIQUE + EXERCICES
+============================================================
+
+OBJECTIFS DU JOUR :
+  - Implémenter une stratégie de validation complète
+  - Distinguer les types de validations
+  - Gérer les rejets avec motifs clairs
+  - Calibrer les codes retour selon le taux d'erreur
+
+============================================================
+1. LES 3 NIVEAUX DE VALIDATION
+============================================================
+
+NIVEAU 1 — FORMAT (Structure physique)
+  Vérifier que le champ a la bonne forme :
+  - Champ numérique contient bien des chiffres
+  - Champ non vide si obligatoire
+  - Longueur correcte
+
+  Tests COBOL :
+  IF CHAMP NUMERIC ...          ← chiffres uniquement
+  IF CHAMP = SPACES ...         ← champ vide
+  IF CHAMP NOT ALPHABETIC ...   ← lettres uniquement
+
+NIVEAU 2 — CONTENU (Valeurs acceptables)
+  Vérifier que la valeur est dans une plage/liste valide :
+  - Date dans les bornes (pas 30 février)
+  - Code dans une liste de valeurs autorisées
+  - Montant dans une plage raisonnable
+
+NIVEAU 3 — COHÉRENCE (Relations entre champs)
+  Vérifier que les champs sont cohérents entre eux :
+  - Date début < Date fin
+  - Compte débit ≠ Compte crédit
+  - Si urgent → montant minimum requis
+
+============================================================
+2. STRATÉGIE DE REJET
+============================================================
+
+UN REJET PAR ENREGISTREMENT (stratégie simple) :
+  → Arrêter à la première erreur trouvée
+  → Avantage : simple à coder
+  → Inconvénient : l'utilisateur doit corriger erreur par erreur
+
+TOUS LES REJETS (stratégie complète) :
+  → Trouver et signaler TOUTES les erreurs d'un enregistrement
+  → Avantage : l'utilisateur corrige tout en une fois
+  → Inconvénient : plus complexe (tableau de motifs)
+
+Dans VALIDAT.cbl, on utilise la stratégie "un rejet" :
+  → Dès la première erreur, on positionne STATUT='ER' et
+    on sort du paragraphe avec EXIT PARAGRAPH.
+  → Les contrôles suivants ne s'exécutent pas.
+
+============================================================
+3. LE FICHIER DE REJETS — BONNE PRATIQUE
+============================================================
+
+Un fichier de rejets DOIT contenir :
+  1. Les données originales (pour reprendre la correction)
+  2. Un code rejet court et stable (V001, V002, ...)
+  3. Un libellé explicite du motif
+  4. Idéalement : la date/heure du rejet
+
+EXEMPLE d'enregistrement rejet :
+  [120 octets données] + [V007] + [DEVISE INCONNUE : XYZ       ]
+
+Les codes rejets (V001, V002...) permettent :
+  - Des statistiques par type d'erreur
+  - Des reportings automatiques
+  - Une gestion dans des tables de paramètres
+
+============================================================
+4. EXIT PARAGRAPH — POUR QUITTER UN PARAGRAPHE
+============================================================
+
+COBOL standard pour sortir d'un paragraphe :
+  EXIT PARAGRAPH
+  → Équivalent d'un "return" ou "break" dans d'autres langages
+  → Saute à la fin du paragraphe courant
+
+COBOL alternatif avec GO TO :
+  GO TO 3100-FIN-VALID
+  ...
+  3100-FIN-VALID. EXIT.
+
+La version avec EXIT PARAGRAPH est plus moderne et lisible.
+
+============================================================
+5. ACCEPT FROM DATE — RÉCUPÉRER LA DATE SYSTÈME
+============================================================
+
+  ACCEPT WS-DATE-YYYYMMDD FROM DATE YYYYMMDD.
+  → Remplit WS-DATE-YYYYMMDD avec la date du jour au format AAAAMMJJ
+
+  ACCEPT WS-HEURE FROM TIME.
+  → Format : HHMMSSCC (heures, minutes, secondes, centièmes)
+
+Utile pour :
+  - Horodater les enregistrements traités
+  - Valider que les dates ne sont pas dans le futur
+  - Dater les lignes de rapport
+
+============================================================
+6. EXERCICES DU JOUR 19
+============================================================
+
+EXERCICE 1 — ANALYSE :
+  Dans VALIDAT.cbl, quel est le code retour si :
+  a) 0 rejet sur 1000 enregistrements ?
+  b) 40 rejets sur 1000 enregistrements ?
+  c) 250 rejets sur 1000 enregistrements ?
+  d) 300 rejets sur 1000 enregistrements ?
+
+EXERCICE 2 — AJOUT DE CONTRÔLE :
+  Ajoutez les contrôles suivants à VALIDAT.cbl :
+  a) V013 : Le motif du virement ne doit pas être vide
+  b) V014 : La date ne peut pas être antérieure à 2020-01-01
+  c) V015 : Si devise = JPY, le montant minimum est 10000
+
+EXERCICE 3 — TABLE DE VALIDATION :
+  Transformez le contrôle de devise pour utiliser une table
+  COBOL chargée depuis un fichier de paramètres SYSIN.
+  Format de SYSIN : une devise par ligne (3 caractères)
+  Créez un paragraphe 0500-CHARGER-PARAMETRES.
+
+EXERCICE 4 — STRATÉGIE MULTI-REJETS :
+  Modifiez le programme pour accumuler TOUS les rejets
+  d'un enregistrement (pas seulement le premier).
+  Utilisez une table WS-TABLE-REJETS avec 10 entrées.
+  L'enregistrement rejet contiendra tous les codes rejet.
+
+============================================================
+CORRIGÉS EXERCICE 1
+============================================================
+
+a) 0/1000 = 0%  → Code retour 0  (tout valide)
+b) 40/1000 = 4% → Code retour 4  (< 5%, warning)
+c) 250/1000 = 25% → Code retour 12 (> 20%, grave)
+d) 300/1000 = 30% → Code retour 12 (> 20%, grave)
+
+============================================================
+CORRIGÉ EXERCICE 2a (V013)
+============================================================
+
+Dans 3300-VALID-COHERENCE, ajouter après CTRL 10 :
+
+*    CTRL 11 : Motif non vide
+     IF ENT-MOTIF = SPACES
+         MOVE 'ER' TO WS-STATUT-VALID
+         MOVE 'V013' TO WS-CODE-REJET
+         MOVE 'MOTIF VIREMENT OBLIGATOIRE' TO WS-MOTIF-REJET
+         EXIT PARAGRAPH
+     END-IF.
+
+============================================================
+POINTS CLÉS À RETENIR
+============================================================
+
+  ✓ 3 niveaux : FORMAT → CONTENU → COHÉRENCE (dans cet ordre)
+  ✓ Toujours réinitialiser le statut avant chaque enregistrement
+  ✓ EXIT PARAGRAPH pour sortir dès la première erreur
+  ✓ Le fichier rejets doit contenir les données originales + motif
+  ✓ Codes rejet courts (V001) + libellés longs (pour humains)
+  ✓ Code retour calibré sur le taux de rejet (pas juste 0/non-0)
+  ✓ ACCEPT FROM DATE pour obtenir la date système en COBOL
+  ✓ Tables COBOL pour les listes de valeurs valides

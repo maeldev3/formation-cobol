@@ -1,0 +1,163 @@
+============================================================
+JOUR 20 — REPORTING BATCH
+LEÇON THÉORIQUE + EXERCICES
+============================================================
+
+OBJECTIFS DU JOUR :
+  - Maîtriser les PICs d'édition COBOL
+  - Implémenter les ruptures de contrôle
+  - Gérer la pagination automatique
+  - Formater dates et heures pour l'affichage
+
+============================================================
+1. LES PICTURES D'ÉDITION — FORMATAGE AUTOMATIQUE
+============================================================
+
+En COBOL, une "picture d'édition" formate automatiquement
+les données numériques pour l'affichage.
+
+SYMBOLES COURANTS :
+
+  Z   = Zéro supprimé (affiche espace si zéro)
+  9   = Toujours afficher ce chiffre (affiche zéro)
+  .   = Point décimal
+  ,   = Virgule de séparation des milliers
+  -   = Signe moins (affiché seulement si négatif)
+  +   = Signe toujours affiché (+ ou -)
+  $   = Symbole dollar
+  *   = Astérisque (remplace zéros supprimés)
+  B   = Espace
+  /   = Barre oblique
+
+EXEMPLES :
+  PIC ZZZ,ZZZ,ZZ9.99    :  Nombre avec virgules et 2 décimales
+  Valeur 1500.5  → "     1,500.50"
+  Valeur 0       → "         0.00"
+
+  PIC -ZZZ,ZZ9.99       :  Nombre signé
+  Valeur -1500.5 → "  -1,500.50"
+  Valeur  1500.5 → "   1,500.50"
+
+  PIC **,***,**9.99     :  Avec étoiles (sécurité chèques)
+  Valeur 1500.5  → "*****1,500.50"
+
+  PIC 9(4)/99/9(2)      :  Date formatée
+  Valeur 20240115 → "2024/01/15"
+
+============================================================
+2. RUPTURE DE CONTRÔLE (CONTROL BREAK)
+============================================================
+
+La rupture de contrôle permet de produire des sous-totaux
+quand une clé de tri change de valeur.
+
+PRÉ-REQUIS : Le fichier DOIT être trié sur la clé de rupture.
+
+PATTERN COBOL :
+
+  MOVE CLÉ-PREMIER-ENREG TO CLÉ-PRÉCÉDENTE
+  PERFORM UNTIL FIN-FICHIER
+    IF CLÉ-COURANTE NOT = CLÉ-PRÉCÉDENTE
+      PERFORM ECRIRE-SOUS-TOTAL    ← Rupture !
+      PERFORM INIT-NOUVEAU-GROUPE  ← Réinitialiser
+      MOVE CLÉ-COURANTE TO CLÉ-PRÉCÉDENTE
+    END-IF
+    PERFORM TRAITER-ENREGISTREMENT
+    READ FICHIER ...
+  END-PERFORM
+  PERFORM ECRIRE-SOUS-TOTAL   ← Dernier groupe !
+
+ATTENTION : Ne pas oublier d'écrire le sous-total du
+DERNIER groupe après la boucle !
+
+============================================================
+3. GESTION DE LA PAGINATION
+============================================================
+
+STRATÉGIE :
+  - Maintenir un compteur WS-NB-LIGNES
+  - Définir un maximum WS-MAX-LIGNES (ex: 55)
+  - Avant chaque WRITE, vérifier si on dépasse la limite
+  - Si oui : AFTER ADVANCING PAGE + ré-imprimer les en-têtes
+  - Réinitialiser WS-NB-LIGNES à 5 (pour les 5 lignes d'en-tête)
+  - Incrémenter WS-NUM-PAGE
+
+WRITE ENREG-RAPPORT FROM MA-LIGNE
+    AFTER ADVANCING 1 LINE.    ← Avancer d'une ligne
+
+WRITE ENREG-RAPPORT FROM EN-TETE
+    AFTER ADVANCING PAGE.      ← Saut de page (form feed)
+
+============================================================
+4. REFERENCE MODIFICATION — ACCÈS AUX SOUS-CHAÎNES
+============================================================
+
+COBOL permet d'accéder à une partie d'une variable :
+
+  WS-DATE-SYST(1:4)   ← Caractères 1 à 4 (l'année)
+  WS-DATE-SYST(5:2)   ← Caractères 5 et 6 (le mois)
+  WS-DATE-SYST(7:2)   ← Caractères 7 et 8 (le jour)
+
+Syntaxe : variable(début:longueur)
+  → début   = position de départ (1 = premier caractère)
+  → longueur = nombre de caractères à prendre
+
+Utilisation courante : découper une date AAAAMMJJ
+  MOVE WS-DATE(1:4) TO WS-ANNEE
+  MOVE WS-DATE(5:2) TO WS-MOIS
+  MOVE WS-DATE(7:2) TO WS-JOUR
+
+============================================================
+5. EXERCICES DU JOUR 20
+============================================================
+
+EXERCICE 1 — PICTURES :
+  Quelle est la valeur affichée pour :
+  a) PIC ZZZ,ZZ9.99  avec valeur 12345.6
+  b) PIC -ZZZ,ZZ9.99 avec valeur -500.0
+  c) PIC ZZZ,ZZ9     avec valeur 0
+  d) PIC **,***,**9  avec valeur 1234
+
+EXERCICE 2 — RUPTURE :
+  Le fichier de paiements est trié par : TYPE puis DATE.
+  Modifiez RAPPORT.cbl pour avoir :
+  - Sous-total par type (déjà fait)
+  - Sous-sous-total par date dans chaque type (niveau 2)
+  - Grand total en fin
+
+EXERCICE 3 — AJOUT DE COLONNE :
+  Ajoutez au rapport une colonne "COMMISSION" (0.5% du montant)
+  Calculez et affichez la commission sur chaque ligne de détail.
+  Ajoutez le total des commissions dans les sous-totaux.
+
+EXERCICE 4 — RAPPORT TRIÉ :
+  Créez un JCL complet pour :
+  STEP01 : Trier le fichier par TYPE (A) puis MONTANT (D)
+  STEP02 : Exécuter le programme RAPPORT
+  Adaptez le programme pour une rupture sur TYPE uniquement.
+
+============================================================
+CORRIGÉS EXERCICE 1
+============================================================
+
+a) PIC ZZZ,ZZ9.99  val 12345.6  → "  12,345.60"
+b) PIC -ZZZ,ZZ9.99 val -500.0   → "    -500.00"
+   (si positif                  → "     500.00")
+c) PIC ZZZ,ZZ9     val 0        → "      0"
+   (le dernier 9 garantit l'affichage du zéro)
+d) PIC **,***,**9  val 1234     → "****,*1,234"
+   (les étoiles remplacent les zéros supprimés)
+
+============================================================
+POINTS CLÉS À RETENIR
+============================================================
+
+  ✓ PIC Z = zéro supprimé / PIC 9 = toujours affiché
+  ✓ , dans PIC = virgule milliers / . = décimale
+  ✓ Rupture = détecter le changement de clé dans la boucle
+  ✓ NE PAS OUBLIER le sous-total du dernier groupe après boucle
+  ✓ AFTER ADVANCING PAGE = saut de page
+  ✓ AFTER ADVANCING N LINES = avancer de N lignes
+  ✓ Reference modification : VAR(début:longueur)
+  ✓ ACCEPT FROM DATE YYYYMMDD = date système
+  ✓ Le fichier doit être trié sur la clé de rupture AVANT traitement

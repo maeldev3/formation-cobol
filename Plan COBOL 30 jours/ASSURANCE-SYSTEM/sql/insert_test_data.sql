@@ -1,0 +1,7 @@
+INSERT INTO clients VALUES (1,'Jean','Antananarivo','0340000000');
+
+INSERT INTO contrats VALUES (1,1,'AUTO',120000);
+
+INSERT INTO sinistres VALUES (1,1,'2026-05-19',50000,'OPEN');
+
+INSERT INTO paiements VALUES (1,1,'2026-05-19',120000);

@@ -1,0 +1,1 @@
+Objectif : Lire un fichier de commandes, écrire un fichier de paiements acceptés (montant > 1000 €).

@@ -1,0 +1,141 @@
+============================================================
+JOUR 15 — BATCH ARCHITECTURE MAINFRAME
+LEÇON THÉORIQUE + EXERCICES
+============================================================
+
+OBJECTIFS DU JOUR :
+  - Comprendre la structure d'un JOB JCL
+  - Maîtriser les STEPs et leur enchaînement
+  - Définir des fichiers avec les DD statements
+  - Utiliser les control cards
+
+============================================================
+1. THÉORIE : QU'EST-CE QUE LE BATCH ?
+============================================================
+
+Le traitement BATCH (par lots) est le mode de traitement 
+principal des mainframes IBM. Contrairement aux applications 
+en ligne (CICS, IMS), le batch traite de grands volumes de 
+données sans interaction humaine.
+
+Caractéristiques du batch :
+  - Traitement planifié (nuit, week-end)
+  - Grand volume de données
+  - Pas d'interaction utilisateur
+  - Séquentiel ou parallèle
+  - Résultats différés (rapports, fichiers)
+
+============================================================
+2. STRUCTURE JCL (Job Control Language)
+============================================================
+
+Un JCL se compose de 3 types d'instructions :
+
+  a) Instruction JOB (une seule par job)
+     //NOM-JOB JOB paramètres
+     → Identifie et paramètre le travail entier
+
+  b) Instructions EXEC (une par step)
+     //NOM-STEP EXEC PGM=programme
+     → Lance l'exécution d'un programme
+
+  c) Instructions DD (plusieurs par step)
+     //NOM-DD DD paramètres-fichier
+     → Définit un fichier ou ressource
+
+  d) Commentaires
+     //* texte libre
+     → Documentation (ignorée par le système)
+
+============================================================
+3. LES FICHIERS DD — TYPES PRINCIPAUX
+============================================================
+
+TYPE 1 : Fichier disque permanent
+  //NOM DD DSN=nom.du.fichier,DISP=(NEW,CATLG,DELETE)
+
+TYPE 2 : Fichier temporaire (vit le temps du job)
+  //NOM DD DSN=&&TEMP,DISP=(NEW,PASS,DELETE)
+
+TYPE 3 : Flux interne (données dans le JCL même)
+  //NOM DD *
+  données ici
+  /*
+
+TYPE 4 : Sortie imprimante/console
+  //NOM DD SYSOUT=*
+
+TYPE 5 : Fichier vide (pour ignorer)
+  //NOM DD DUMMY
+
+============================================================
+4. LES CONTROL CARDS
+============================================================
+
+Les "control cards" sont des paramètres passés à un programme
+via le DD SYSIN. Elles contrôlent le comportement du programme.
+
+Exemple pour un programme de tri (SORT) :
+  //SYSIN DD *
+   SORT FIELDS=(1,5,CH,A)    ← trier sur col 1-5, alphab., croissant
+   RECORD TYPE=F,LENGTH=80   ← enregistrements fixes de 80 octets
+  /*
+
+Exemple pour IDCAMS :
+  //SYSIN DD *
+   DELETE FICHIER.A.TRIER
+   SET MAXCC=0
+  /*
+
+============================================================
+5. EXERCICES DU JOUR 15
+============================================================
+
+EXERCICE 1 — DÉBUTANT :
+  Écrivez un JOB avec 2 STEPs :
+  - STEP1 : exécuter IEFBR14 (ne fait rien)
+  - STEP2 : copier TRAIN.INPUT vers TRAIN.OUTPUT avec IEBGENER
+
+EXERCICE 2 — INTERMÉDIAIRE :
+  Modifiez le JCL pour que STEP2 ne s'exécute que si STEP1 
+  réussit (code retour = 0).
+
+EXERCICE 3 — AVANCÉ :
+  Créez un JOB 3 STEPs :
+  - STEP1 : Allouer un fichier temporaire &&TEMP
+  - STEP2 : Copier données dans &&TEMP
+  - STEP3 : Lire &&TEMP et envoyer résultat en SYSOUT
+  Gérer correctement les DISP à chaque step.
+
+============================================================
+RÉPONSES AUX EXERCICES — CORRIGÉ
+============================================================
+
+EXERCICE 1 — CORRIGÉ :
+//EXER01  JOB (ACCT),'EXERCICE 1',CLASS=A,MSGCLASS=A
+//STEP01  EXEC PGM=IEFBR14
+//STEP02  EXEC PGM=IEBGENER
+//SYSUT1  DD DSN=TRAIN.INPUT,DISP=SHR
+//SYSUT2  DD DSN=TRAIN.OUTPUT,DISP=(NEW,CATLG,DELETE),
+//           UNIT=SYSDA,SPACE=(TRK,(5,1)),
+//           DCB=(RECFM=FB,LRECL=80,BLKSIZE=800)
+//SYSPRINT DD SYSOUT=*
+//SYSIN   DD DUMMY
+
+EXERCICE 2 — CORRIGÉ :
+  Ajouter COND=(0,NE,STEP01) sur l'instruction EXEC de STEP02
+//STEP02  EXEC PGM=IEBGENER,COND=(0,NE,STEP01)
+
+EXERCICE 3 — CORRIGÉ : (voir fichier EXER03.jcl dans ce dossier)
+
+============================================================
+POINTS CLÉS À RETENIR
+============================================================
+
+  ✓ Un JOB = un travail complet (une seule instruction JOB)
+  ✓ Un STEP = une étape = un programme executé
+  ✓ Un DD = définition d'un fichier ou ressource
+  ✓ DISP = la disposition gère la création/suppression
+  ✓ COND permet l'exécution conditionnelle des steps
+  ✓ //* = commentaire JCL (bonne pratique : documenter !)
+  ✓ Les codes retour : 0=OK, 4=warn, 8=err, 12=grave, 16=fatal

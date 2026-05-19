@@ -1,0 +1,144 @@
+============================================================
+JOUR 16 — PROGRAMME BATCH : PAIEMENTS
+LEÇON THÉORIQUE + EXERCICES
+============================================================
+
+OBJECTIFS DU JOUR :
+  - Comprendre la structure d'un programme COBOL batch
+  - Lire/écrire des fichiers séquentiels
+  - Implémenter la logique de traitement par lots
+  - Gérer les erreurs et produire un rapport
+
+============================================================
+1. STRUCTURE D'UN PROGRAMME COBOL BATCH
+============================================================
+
+Tout programme COBOL batch suit le pattern :
+
+  INITIALISATION
+    └── Ouvrir les fichiers
+    └── Initialiser les compteurs
+    └── Écrire les en-têtes de rapport
+
+  LIRE PREMIER ENREGISTREMENT
+    └── (Pattern "priming read")
+
+  BOUCLE PRINCIPALE (UNTIL fin-de-fichier)
+    └── Valider l'enregistrement
+    └── Traiter si valide / Rejeter si invalide
+    └── Lire l'enregistrement suivant
+
+  FINALISATION
+    └── Écrire le rapport de synthèse
+    └── Fermer tous les fichiers
+    └── Positionner le code retour
+
+============================================================
+2. LE "PRIMING READ" — Pourquoi lire avant la boucle ?
+============================================================
+
+MAUVAISE APPROCHE :
+  PERFORM UNTIL FIN-FICHIER-OUI
+    READ FIC-ENTREE
+      AT END MOVE 'O' TO FIN-FICHIER
+    END-READ
+    PERFORM TRAITER    ← traite même après EOF !
+  END-PERFORM
+
+BONNE APPROCHE :
+  READ FIC-ENTREE         ← Premier READ avant la boucle
+    AT END MOVE 'O' TO FIN-FICHIER
+  END-READ
+  PERFORM UNTIL FIN-FICHIER-OUI
+    PERFORM TRAITER       ← Traite seulement si données valides
+    READ FIC-ENTREE       ← Lire suivant en fin de boucle
+      AT END MOVE 'O' TO FIN-FICHIER
+    END-READ
+  END-PERFORM
+
+============================================================
+3. LES NIVEAUX 88 — CONDITIONS BOOLÉENNES
+============================================================
+
+Définition :
+  01  WS-FIN-FICHIER  PIC X  VALUE 'N'.
+      88  FIN-FICHIER-OUI  VALUE 'O'.
+      88  FIN-FICHIER-NON  VALUE 'N'.
+
+Utilisation :
+  IF FIN-FICHIER-OUI ...        → lisible et maintenable
+  au lieu de :
+  IF WS-FIN-FICHIER = 'O' ...   → moins lisible
+
+SET FIN-FICHIER-OUI TO TRUE    → positionne WS-FIN-FICHIER à 'O'
+SET FIN-FICHIER-NON TO TRUE    → positionne WS-FIN-FICHIER à 'N'
+
+============================================================
+4. LES STATUTS DE FICHIER
+============================================================
+
+Après chaque opération READ/WRITE/OPEN/CLOSE, le système
+positionne la variable FILE STATUS :
+
+  00 = Succès
+  10 = Fin de fichier (EOF) lors d'un READ
+  35 = Fichier absent lors d'un OPEN
+  39 = Attributs du fichier incompatibles
+  41 = Fichier déjà ouvert (OPEN sur fichier ouvert)
+  42 = Fichier déjà fermé (CLOSE sur fichier fermé)
+  43 = REWRITE sans READ précédent
+
+BONNE PRATIQUE : Toujours vérifier le statut après OPEN !
+
+============================================================
+5. EXERCICES DU JOUR 16
+============================================================
+
+EXERCICE 1 — COMPRÉHENSION :
+  Dans le programme PAIEMENT.cbl, repérez :
+  a) Où sont déclarés les fichiers ?
+  b) Quelle variable détecte la fin du fichier ?
+  c) Quel paragraphe valide les données ?
+  d) Comment est calculée la commission ?
+
+EXERCICE 2 — MODIFICATION :
+  Modifiez le programme pour :
+  a) Ajouter une validation : la date ne peut pas être dans le futur
+  b) Ajouter un deuxième taux de commission :
+     - Virements (VIR) : 0.25%
+     - Chèques (CHQ)   : 0.75%
+     - Carte (CBK)     : 1.50%
+
+EXERCICE 3 — CRÉATION :
+  Créez un programme CREDITS.cbl qui :
+  a) Lit un fichier de crédits clients (même structure que paiements)
+  b) Calcule les intérêts mensuels (taux = 1.2%)
+  c) Écrit un fichier avec : client, montant, intérêts, total dû
+  d) Produit un rapport avec les 3 clients avec le plus gros crédit
+
+============================================================
+RÉPONSES — EXERCICE 1
+============================================================
+
+a) Fichiers déclarés dans : ENVIRONMENT DIVISION / FILE-CONTROL
+   + Structures dans : DATA DIVISION / FILE SECTION
+
+b) Variable fin fichier : WS-FIN-FICHIER (niveau 88 : FIN-FICHIER-OUI)
+
+c) Validation dans paragraphe : 3100-VALIDER-PAIEMENT
+
+d) Commission : COMPUTE WS-COMMISSION = PAI-MONTANT * WS-TAUX-COMM
+   Taux = 0.0050 = 0.50%
+
+============================================================
+POINTS CLÉS À RETENIR
+============================================================
+
+  ✓ 4 DIVISIONS COBOL : IDENTIFICATION, ENVIRONMENT, DATA, PROCEDURE
+  ✓ FILE SECTION = structure des enregistrements de fichiers
+  ✓ WORKING-STORAGE = variables internes du programme
+  ✓ Niveau 88 = conditions booléennes (très lisibles)
+  ✓ Pattern "priming read" = lire avant la boucle PERFORM UNTIL
+  ✓ Toujours vérifier FILE STATUS après OPEN
+  ✓ COMPUTE pour les calculs avec ROUNDED
+  ✓ CLOSE obligatoire avant fin de programme

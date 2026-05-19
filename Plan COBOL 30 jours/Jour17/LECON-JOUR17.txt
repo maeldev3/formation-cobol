@@ -1,0 +1,163 @@
+============================================================
+JOUR 17 — SORT ET MERGE MAINFRAME
+LEÇON THÉORIQUE + EXERCICES
+============================================================
+
+OBJECTIFS DU JOUR :
+  - Maîtriser l'utilitaire SORT/DFSORT
+  - Écrire des control cards SORT correctement
+  - Utiliser INCLUDE/OMIT pour filtrer
+  - Fusionner des fichiers avec MERGE
+  - Transformer des enregistrements avec OUTREC
+
+============================================================
+1. POURQUOI LE SORT EST-IL SI IMPORTANT ?
+============================================================
+
+Sur mainframe, le SORT est utilisé pour :
+  - Trier des fichiers avant traitement (COBOL, DB2...)
+  - Éliminer les doublons (SUM FIELDS=NONE)
+  - Extraire des sous-ensembles (INCLUDE/OMIT)
+  - Reformater des enregistrements (OUTREC/INREC)
+  - Totaliser par groupe (SUM FIELDS=...)
+  - Fusionner plusieurs fichiers triés (MERGE)
+
+Il est optimisé pour traiter des millions d'enregistrements
+rapidement (tri externe, parallèle, en mémoire étendue).
+
+============================================================
+2. SYNTAXE SORT — RÉFÉRENCE RAPIDE
+============================================================
+
+SORT FIELDS=(début,longueur,type,ordre [,début,longueur,type,ordre...])
+
+  Types de données :
+  CH  = Character (alphanumérique, EBCDIC)
+  ZD  = Zoned Decimal (numérique externe, ex: PIC 9(n))
+  PD  = Packed Decimal (COMP-3, ex: PIC 9(n) COMP-3)
+  BI  = Binary (COMP/COMP-4)
+  FI  = Fixed-point Integer signé (COMP)
+  FS  = Fixed-point Integer non signé
+
+  Ordres :
+  A   = Ascending (croissant : 0→9, A→Z)
+  D   = Descending (décroissant : Z→A, 9→0)
+
+============================================================
+3. INCLUDE ET OMIT — FILTRAGE
+============================================================
+
+INCLUDE : garder seulement les enregistrements qui correspondent
+  INCLUDE COND=(60,3,CH,EQ,C'VIR')    ← Garder si Type='VIR'
+
+OMIT : exclure les enregistrements qui correspondent
+  OMIT COND=(49,11,ZD,LE,0)            ← Exclure si Montant<=0
+
+Opérateurs de comparaison :
+  EQ = égal         NE = différent
+  GT = supérieur    GE = supérieur ou égal
+  LT = inférieur    LE = inférieur ou égal
+
+Opérateurs logiques :
+  AND = et (les deux conditions vraies)
+  OR  = ou (au moins une condition vraie)
+
+Comparaison avec constante :
+  C'VIR'  = constante caractère
+  X'00'   = constante hexadécimale
+  10000   = constante numérique
+
+============================================================
+4. SUM — TOTALISATION
+============================================================
+
+SUM FIELDS=(début,longueur,type [,...])
+  → Additionne les champs numériques des enregistrements
+    ayant la même clé de tri
+  → Conserve un seul enregistrement par clé (élimine doublons)
+
+SUM FIELDS=NONE
+  → Élimine les doublons sans totaliser (dédoublonnage)
+
+Exemple :
+  Avant SORT+SUM :
+  CLI001  100.00
+  CLI001   50.00
+  CLI001  200.00
+  CLI002  300.00
+
+  Après SORT+SUM :
+  CLI001  350.00   ← 100+50+200
+  CLI002  300.00
+
+============================================================
+5. EXERCICES DU JOUR 17
+============================================================
+
+EXERCICE 1 — TRI SIMPLE :
+  Écrivez les control cards SORT pour trier
+  TRAIN.PAIEMENTS.ENTREE par :
+  - Type de paiement (col 60, long 3) croissant
+  - Dans chaque type, par montant (col 49, long 11) décroissant
+
+EXERCICE 2 — FILTRE :
+  Extrayez du fichier de paiements :
+  - Seulement les paiements du mois courant (YYYYMM = 202401)
+  - Date en col 41, longueur 8 (AAAAMMJJ)
+  - Comparer les 6 premiers caractères avec C'202401'
+
+EXERCICE 3 — MERGE :
+  Deux fichiers ont été produits par deux programmes distincts :
+  - TRAIN.PAIE.ZONE1 (trié par client croissant)
+  - TRAIN.PAIE.ZONE2 (trié par client croissant)
+  Écrivez le JCL MERGE pour les fusionner en TRAIN.PAIE.TOTAL
+
+EXERCICE 4 — OUTREC :
+  Créez un fichier d'extrait contenant seulement :
+  - Numéro client (col 1, long 10)
+  - Montant (col 49, long 11)
+  - Type (col 60, long 3)
+  Total = 24 caractères par enregistrement.
+
+============================================================
+CORRIGÉS
+============================================================
+
+EXERCICE 1 :
+ SORT FIELDS=(60,3,CH,A,
+              49,11,ZD,D)
+
+EXERCICE 2 :
+ INCLUDE COND=(41,6,CH,EQ,C'202401')
+ SORT FIELDS=(1,10,CH,A)
+
+EXERCICE 3 :
+//MERGE01 EXEC PGM=SORT
+//SORTIN01 DD DSN=TRAIN.PAIE.ZONE1,DISP=SHR
+//SORTIN02 DD DSN=TRAIN.PAIE.ZONE2,DISP=SHR
+//SORTOUT  DD DSN=TRAIN.PAIE.TOTAL,
+//            DISP=(NEW,CATLG,DELETE),UNIT=SYSDA,
+//            SPACE=(TRK,(100,20)),
+//            DCB=(RECFM=FB,LRECL=100,BLKSIZE=1000)
+//SYSOUT   DD SYSOUT=*
+//SYSIN    DD *
+ MERGE FIELDS=(1,10,CH,A)
+/*
+
+EXERCICE 4 :
+ SORT FIELDS=(1,10,CH,A)
+ OUTREC FIELDS=(1,10,49,11,60,3)
+
+============================================================
+POINTS CLÉS À RETENIR
+============================================================
+
+  ✓ SORTIN/SORTOUT = noms DD obligatoires pour SORT
+  ✓ SORTINnn = noms DD pour MERGE (SORTIN01, SORTIN02...)
+  ✓ SORTWK01-03 = fichiers de travail temporaires (SORT seulement)
+  ✓ FIELDS=(début, longueur, type, ordre) — dans cet ordre !
+  ✓ ZD = numérique externe (PIC 9) ; PD = COMP-3
+  ✓ INCLUDE garde / OMIT élimine
+  ✓ SUM totalise et dédoublonne
+  ✓ OUTREC reconstruit l'enregistrement de sortie
+  ✓ MERGE nécessite fichiers déjà triés dans le même ordre

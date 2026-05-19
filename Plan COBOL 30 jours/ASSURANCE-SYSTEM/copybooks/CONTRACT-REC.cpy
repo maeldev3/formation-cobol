@@ -1,0 +1,5 @@
+01 CONTRACT-REC.
+   05 CONTRACT-ID       PIC 9(8).
+   05 CLIENT-ID         PIC 9(6).
+   05 POLICY-TYPE       PIC X(30).
+   05 PREMIUM           PIC 9(8)V99.
