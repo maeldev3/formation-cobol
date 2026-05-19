@@ -29,7 +29,7 @@
        PROCEDURE DIVISION.
            DISPLAY "=== RECHERCHE ADHERENT ==="
            DISPLAY " "
-           DISPLAY "ID a rechercher : "
+           DISPLAY "ID a rechercher: "
            ACCEPT WS-RECHERCHE
            
            OPEN INPUT FICHIER-ADHERENT

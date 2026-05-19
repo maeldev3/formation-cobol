@@ -38,11 +38,7 @@
                    AT END MOVE 'Y' TO WS-FIN
                    NOT AT END
                        ADD 1 TO WS-COMPTEUR
-                       DISPLAY ISBN-LIV " " 
-                               TITRE-LIV " "
-                               AUTEUR-LIV " "
-                               CAT-LIV "    "
-                               QTE-LIV
+                       DISPLAY ISBN-LIV " " TITRE-LIV " " AUTEUR-LIV " " CAT-LIV "    " QTE-LIV
                END-READ
            END-PERFORM
            

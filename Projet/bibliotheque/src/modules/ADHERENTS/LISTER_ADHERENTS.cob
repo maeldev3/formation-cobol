@@ -31,21 +31,18 @@
            DISPLAY " "
            DISPLAY "=== LISTE DES ADHERENTS ==="
            DISPLAY "ID     NOM              PRENOM     DATE ADHESION"
-           DISPLAY "------------------------------------------------"
+           DISPLAY "----------------------------------------------"
            
            PERFORM UNTIL WS-FIN = 'Y'
                READ FICHIER-ADHERENT
                    AT END MOVE 'Y' TO WS-FIN
                    NOT AT END
                        ADD 1 TO WS-COMPTEUR
-                       DISPLAY ID-ADH " " 
-                               NOM-ADH " "
-                               PRENOM-ADH "   "
-                               DATE-ADH
+                       DISPLAY ID-ADH " " NOM-ADH " " PRENOM-ADH "   " DATE-ADH
                END-READ
            END-PERFORM
            
-           DISPLAY "------------------------------------------------"
+           DISPLAY "----------------------------------------------"
            DISPLAY "TOTAL ADHERENTS: " WS-COMPTEUR
            
            CLOSE FICHIER-ADHERENT
