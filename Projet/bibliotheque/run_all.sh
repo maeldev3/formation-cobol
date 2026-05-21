@@ -27,12 +27,16 @@ while true; do
             echo "1. Lister adhérents"
             echo "2. Ajouter adhérent"
             echo "3. Rechercher adhérent"
+            echo "4. Modifier adhérent"
+            echo "5. Supprimer adhérent"
             echo -n "Choix : "
             read sub
             case $sub in
                 1) bin/LISTER_ADHERENTS ;;
                 2) bin/AJOUT_ADHERENT ;;
                 3) bin/RECHERCHE_ADHERENT ;;
+                4) bin/MODIF_ADHERENT ;;
+                5) bin/SUPPR_ADHERENT ;;
                 *) echo "Option invalide" ;;
             esac
             ;;

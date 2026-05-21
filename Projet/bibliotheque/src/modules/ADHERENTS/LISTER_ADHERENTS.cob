@@ -24,26 +24,33 @@
        WORKING-STORAGE SECTION.
        01 WS-FIN            PIC X VALUE 'N'.
        01 WS-COMPTEUR       PIC 99 VALUE 0.
+       01 WS-LIGNE          PIC X(80).
        
        PROCEDURE DIVISION.
            OPEN INPUT FICHIER-ADHERENT
            
            DISPLAY " "
-           DISPLAY "=== LISTE DES ADHERENTS ==="
-           DISPLAY "ID     NOM              PRENOM     DATE ADHESION"
-           DISPLAY "----------------------------------------------"
+           DISPLAY "==================== LISTE DES ADHERENTS ===================="
+           DISPLAY "ID      NOM              PRENOM       DATE ADHESION"
+           DISPLAY "--------------------------------------------------------------"
            
            PERFORM UNTIL WS-FIN = 'Y'
                READ FICHIER-ADHERENT
                    AT END MOVE 'Y' TO WS-FIN
                    NOT AT END
                        ADD 1 TO WS-COMPTEUR
-                       DISPLAY ID-ADH " " NOM-ADH " " PRENOM-ADH "   " DATE-ADH
+                       DISPLAY ID-ADH " " 
+                               FUNCTION TRIM(NOM-ADH) 
+                               " " 
+                               FUNCTION TRIM(PRENOM-ADH)
+                               "  " 
+                               DATE-ADH
                END-READ
            END-PERFORM
            
-           DISPLAY "----------------------------------------------"
+           DISPLAY "--------------------------------------------------------------"
            DISPLAY "TOTAL ADHERENTS: " WS-COMPTEUR
+           DISPLAY "=============================================================="
            
            CLOSE FICHIER-ADHERENT
            
