@@ -1,0 +1,152 @@
+
+### 4.2 Structure des données
+
+#### Table CLIENTS
+| Champ | Type | Longueur | Contrainte | Description |
+|-------|------|----------|------------|-------------|
+| ID_CLIENT | TEXT | 6 | PRIMARY KEY | Identifiant unique |
+| NOM | TEXT | 20 | NOT NULL | Nom de famille |
+| PRENOM | TEXT | 15 | NOT NULL | Prénom |
+| EMAIL | TEXT | 30 | UNIQUE | Email |
+| TELEPHONE | TEXT | 12 | NOT NULL | Téléphone |
+| ADRESSE | TEXT | 40 | - | Adresse postale |
+| STATUT | TEXT | 10 | DEFAULT 'ACTIF' | Statut client |
+
+#### Table CHAMBRES
+| Champ | Type | Longueur | Contrainte | Description |
+|-------|------|----------|------------|-------------|
+| ID_CHAMBRE | TEXT | 6 | PRIMARY KEY | Identifiant |
+| NUMERO | TEXT | 5 | NOT NULL, UNIQUE | Numéro chambre |
+| TYPE | TEXT | 15 | - | Type de chambre |
+| PRIX | REAL | - | NOT NULL | Prix par nuit |
+| STATUT | TEXT | 15 | DEFAULT 'DISPONIBLE' | Statut |
+
+#### Table RESERVATIONS
+| Champ | Type | Longueur | Contrainte | Description |
+|-------|------|----------|------------|-------------|
+| ID_RESERVATION | TEXT | 8 | PRIMARY KEY | Identifiant |
+| ID_CLIENT | TEXT | 6 | FOREIGN KEY | Réf. client |
+| ID_CHAMBRE | TEXT | 6 | FOREIGN KEY | Réf. chambre |
+| DATE_DEBUT | TEXT | 10 | NOT NULL | Date début |
+| DATE_FIN | TEXT | 10 | NOT NULL | Date fin |
+| STATUT | TEXT | 15 | DEFAULT 'CONFIRMEE' | Statut |
+| MONTANT | REAL | - | - | Montant total |
+
+#### Table PAIEMENTS
+| Champ | Type | Longueur | Contrainte | Description |
+|-------|------|----------|------------|-------------|
+| ID_PAIEMENT | TEXT | 8 | PRIMARY KEY | Identifiant |
+| ID_RESERVATION | TEXT | 8 | FOREIGN KEY | Réf. réservation |
+| MONTANT | REAL | - | NOT NULL | Montant payé |
+| DATE_PAIEMENT | TEXT | 10 | - | Date paiement |
+| MODE_PAIEMENT | TEXT | 15 | - | Mode de paiement |
+
+### 4.3 Modèle relationnel
+
+---
+
+## 6. FONCTIONNALITÉS DÉTAILLÉES
+
+### 6.1 Module Clients (CRUD complet)
+
+| Fonction | Commande | Description | Prérequis |
+|----------|----------|-------------|-----------|
+| CREATE | CREER_CLIENT | Ajouter un nouveau client | ID unique |
+| READ | LISTER_CLIENTS | Afficher tous les clients | - |
+| READ | RECHERCHER_CLIENT | Trouver client par ID | - |
+| UPDATE | MODIFIER_CLIENT | Modifier coordonnées | ID existant |
+| DELETE | SUPPRIMER_CLIENT | Supprimer un client | ID existant, sans réservation |
+
+### 6.2 Module Chambres (CRUD partiel)
+
+| Fonction | Commande | Description | Prérequis |
+|----------|----------|-------------|-----------|
+| CREATE | CREER_CHAMBRE | Ajouter une chambre | Numéro unique |
+| READ | LISTER_CHAMBRES | Voir toutes les chambres | - |
+| UPDATE | MODIFIER_CHAMBRE | Changer statut | ID existant |
+
+### 6.3 Module Réservations (CRUD partiel)
+
+| Fonction | Commande | Description | Prérequis |
+|----------|----------|-------------|-----------|
+| CREATE | CREER_RESERVATION | Nouvelle réservation | Client + chambre existants |
+| READ | LISTER_RESERVATIONS | Voir toutes les réservations | - |
+| UPDATE | ANNULER_RESERVATION | Annuler réservation | ID existant |
+
+### 6.4 Module Rapports
+
+| Rapport | Description | Calcul |
+|---------|-------------|--------|
+| Occupation | Taux de remplissage | (chambres occupées / total) × 100 |
+| Chiffre d'affaires | CA total et par mois | SUM(montant des réservations) |
+
+---
+
+## 7. INTERFACES UTILISATEUR
+
+### 7.1 Menu principal
+
+---
+
+## 8. INDICATEURS DE PERFORMANCE
+
+### 8.1 Objectifs
+
+| Indicateur | Cible | Seuil critique |
+|------------|-------|----------------|
+| Temps réponse menu | < 2 sec | > 5 sec |
+| Temps création client | < 30 sec | > 1 min |
+| Temps création réservation | < 1 min | > 2 min |
+| Disponibilité système | 99.5% | < 95% |
+| Taux erreur saisie | < 1% | > 5% |
+
+### 8.2 Capacités
+
+| Capacité | Valeur limite |
+|----------|---------------|
+| Clients max | 99 999 |
+| Chambres max | 999 |
+| Réservations actives | 10 000 |
+| Taille base données | 100 MB |
+| Utilisateurs simultanés | 5 |
+
+---
+
+## 9. PLAN DE TEST
+
+### 9.1 Scénarios de test
+
+| ID | Test | Procédure | Résultat attendu |
+|----|------|-----------|------------------|
+| T01 | Créer client | Saisir ID C00010, NOM, PRENOM, TEL | Client ajouté |
+| T02 | Lister clients | Option 2 menu clients | Affichage liste |
+| T03 | Rechercher client | Option 3, saisir ID | Affichage détail |
+| T04 | Modifier client | Option 4, modifier téléphone | Mise à jour OK |
+| T05 | Supprimer client | Option 5, confirmer O | Client supprimé |
+| T06 | Créer chambre | Ajouter CH010, numéro 210 | Chambre créée |
+| T07 | Lister chambres | Option 2 menu chambres | Affichage liste |
+| T08 | Modifier statut | Changer DISPONIBLE→OCCUPEE | Statut modifié |
+| T09 | Créer réservation | Client + chambre + dates | Réservation OK |
+| T10 | Annuler réservation | Confirmer annulation | Réservation annulée |
+
+### 9.2 Tests non-régressifs
+
+```bash
+#!/bin/bash
+# Script de test automatique
+
+echo "=== TEST AUTOMATIQUE HOTEL ==="
+
+# Test création client
+echo -e "C00999\nTEST\nTest\n999999999\n" | ./bin/CREER_CLIENT
+[ $? -eq 0 ] && echo "✓ Création client OK" || echo "✗ Échec création"
+
+# Test liste clients
+./bin/LISTER_CLIENTS
+[ $? -eq 0 ] && echo "✓ Liste clients OK" || echo "✗ Échec liste"
+
+# Test suppression
+echo -e "C00999\nO" | ./bin/SUPPRIMER_CLIENT
+[ $? -eq 0 ] && echo "✓ Suppression OK" || echo "✗ Échec suppression"
+
+echo "=== TESTS TERMINES ==="

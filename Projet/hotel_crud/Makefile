@@ -1,0 +1,92 @@
+# Makefile pour la compilation du projet Hôtel CRUD
+
+BIN_DIR = bin
+SRC_DIR = src
+COBC = cobc
+CFLAGS = -x -free
+
+# Programmes CLIENTS
+CLIENT_PROGS = $(BIN_DIR)/CREER_CLIENT \
+               $(BIN_DIR)/LISTER_CLIENTS \
+               $(BIN_DIR)/RECHERCHER_CLIENT \
+               $(BIN_DIR)/MODIFIER_CLIENT \
+               $(BIN_DIR)/SUPPRIMER_CLIENT
+
+# Programmes CHAMBRES
+CHAMBRE_PROGS = $(BIN_DIR)/CREER_CHAMBRE \
+                $(BIN_DIR)/LISTER_CHAMBRES \
+                $(BIN_DIR)/MODIFIER_CHAMBRE
+
+# Programmes RESERVATIONS
+RESERVATION_PROGS = $(BIN_DIR)/CREER_RESERVATION \
+                    $(BIN_DIR)/LISTER_RESERVATIONS \
+                    $(BIN_DIR)/ANNULER_RESERVATION
+
+# Programmes RAPPORTS
+RAPPORT_PROGS = $(BIN_DIR)/RAPPORT_OCCUPATION \
+                $(BIN_DIR)/RAPPORT_CA
+
+# Menu principal
+MAIN_PROG = $(BIN_DIR)/MENU_PRINCIPAL
+
+# Tous les programmes
+ALL_PROGS = $(CLIENT_PROGS) $(CHAMBRE_PROGS) $(RESERVATION_PROGS) $(RAPPORT_PROGS) $(MAIN_PROG)
+
+# Règle par défaut
+all: $(ALL_PROGS)
+	@echo "✅ Compilation terminée"
+	@ls -la $(BIN_DIR)
+
+# Règles pour CLIENTS
+$(BIN_DIR)/CREER_CLIENT: $(SRC_DIR)/modules/CLIENTS/CREER_CLIENT.cob
+	mkdir -p $(BIN_DIR)
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/LISTER_CLIENTS: $(SRC_DIR)/modules/CLIENTS/LISTER_CLIENTS.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/RECHERCHER_CLIENT: $(SRC_DIR)/modules/CLIENTS/RECHERCHER_CLIENT.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/MODIFIER_CLIENT: $(SRC_DIR)/modules/CLIENTS/MODIFIER_CLIENT.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/SUPPRIMER_CLIENT: $(SRC_DIR)/modules/CLIENTS/SUPPRIMER_CLIENT.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+# Règles pour CHAMBRES
+$(BIN_DIR)/CREER_CHAMBRE: $(SRC_DIR)/modules/CHAMBRES/CREER_CHAMBRE.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/LISTER_CHAMBRES: $(SRC_DIR)/modules/CHAMBRES/LISTER_CHAMBRES.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/MODIFIER_CHAMBRE: $(SRC_DIR)/modules/CHAMBRES/MODIFIER_CHAMBRE.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+# Règles pour RESERVATIONS
+$(BIN_DIR)/CREER_RESERVATION: $(SRC_DIR)/modules/RESERVATIONS/CREER_RESERVATION.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/LISTER_RESERVATIONS: $(SRC_DIR)/modules/RESERVATIONS/LISTER_RESERVATIONS.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/ANNULER_RESERVATION: $(SRC_DIR)/modules/RESERVATIONS/ANNULER_RESERVATION.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+# Règles pour RAPPORTS
+$(BIN_DIR)/RAPPORT_OCCUPATION: $(SRC_DIR)/modules/RAPPORTS/RAPPORT_OCCUPATION.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+$(BIN_DIR)/RAPPORT_CA: $(SRC_DIR)/modules/RAPPORTS/RAPPORT_CA.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+# Menu principal
+$(BIN_DIR)/MENU_PRINCIPAL: $(SRC_DIR)/MENU_PRINCIPAL.cob
+	$(COBC) $(CFLAGS) -o $@ $^
+
+# Nettoyage
+clean:
+	rm -f $(BIN_DIR)/*
+
+.PHONY: all clean
