@@ -13,6 +13,8 @@
        01 WS-NB-JOURS   PIC 9(3).
        01 WS-MONTANT    PIC 9(6)V99.
        01 WS-COMMANDE   PIC X(500).
+       01 WS-PERSONNES-TXT PIC X(2).
+       01 WS-MONTANT-TXT   PIC X(15).
        
        PROCEDURE DIVISION.
        DEBUT.

@@ -147,16 +147,21 @@ while true; do
                 read -p "Choix : " sub_choix
                 
                 case $sub_choix in
-                    1)
+                      1)
                         echo ""
                         read -p "ID Client: " client
                         read -p "ID Chambre: " chambre
                         read -p "Date debut (YYYY-MM-DD): " debut
                         read -p "Date fin (YYYY-MM-DD): " fin
-                        read -p "Montant: " montant
+                        read -p "Nombre de personnes: " nb_personnes
+                        read -p "Montant total: " montant
                         id="RES$(date +%Y%m%d%H%M%S)"
-                        sqlite3 data/input/hotel.db "INSERT INTO RESERVATIONS VALUES ('$id', '$client', '$chambre', '$debut', '$fin', 'CONFIRMEE', $montant);"
+                        date_reservation=$(date +%Y-%m-%d)
+                        
+                        sqlite3 data/input/hotel.db "INSERT INTO RESERVATIONS (ID_RESERVATION, ID_CLIENT, ID_CHAMBRE, DATE_DEBUT, DATE_FIN, NB_PERSONNES, STATUT, DATE_RESERVATION, MONTANT_TOTAL) VALUES ('$id', '$client', '$chambre', '$debut', '$fin', $nb_personnes, 'CONFIRMEE', '$date_reservation', $montant);"
+                        
                         sqlite3 data/input/hotel.db "UPDATE CHAMBRES SET STATUT='RESERVEE' WHERE ID_CHAMBRE='$chambre';"
+                        
                         echo "✓ Réservation créée: $id"
                         read -p "Appuyez sur Entrée..."
                         ;;
@@ -202,7 +207,7 @@ while true; do
                 read -p "Choix : " sub_choix
                 
                 case $sub_choix in
-                    1)
+                     1)
                         echo ""
                         echo "=== RAPPORT D'OCCUPATION ==="
                         echo ""
@@ -219,7 +224,8 @@ while true; do
                         echo ""
                         echo "=== RAPPORT CHIFFRE D'AFFAIRES ==="
                         echo ""
-                        ca=$(sqlite3 data/input/hotel.db "SELECT COALESCE(SUM(MONTANT), 0) FROM RESERVATIONS WHERE STATUT='CONFIRMEE';")
+                        # FIXED: Changed MONTANT to MONTANT_TOTAL
+                        ca=$(sqlite3 data/input/hotel.db "SELECT COALESCE(SUM(MONTANT_TOTAL), 0) FROM RESERVATIONS WHERE STATUT='CONFIRMEE';")
                         echo "CA TOTAL: $ca €"
                         read -p "Appuyez sur Entrée..."
                         ;;
