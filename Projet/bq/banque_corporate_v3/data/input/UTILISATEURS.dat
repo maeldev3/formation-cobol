@@ -1,0 +1,12 @@
+U001|ADMIN|admin|admin123|Administrateur Systeme|admin@banque.com|2023-01-01|ACTIF|A001
+U002|AGENT|dupont|agent123|Jean Dupont|jean.dupont@banque.com|2023-01-15|ACTIF|A001
+U003|AGENT|martin|agent123|Sophie Martin|sophie.martin@banque.com|2023-02-20|ACTIF|A002
+U004|MANAGER|durand|manager123|Pierre Durand|pierre.durand@banque.com|2023-03-10|ACTIF|A001
+U005|AUDITEUR|leroy|audit123|Claire Leroy|claire.leroy@banque.com|2023-04-05|ACTIF|A001
+U006|AGENT|robert|agent123|Isabelle Robert|isabelle.robert@banque.com|2023-05-12|ACTIF|A003
+U007|AGENT|michel|agent123|Catherine Michel|catherine.michel@banque.com|2023-06-15|ACTIF|A004
+U008|AGENT|simon|agent123|Thomas Simon|thomas.simon@banque.com|2023-07-20|ACTIF|A005
+U009|MANAGER|moreau|manager123|Nicolas Moreau|nicolas.moreau@banque.com|2023-08-10|ACTIF|A003
+U010|AGENT|laurent|agent123|Valerie Laurent|valerie.laurent@banque.com|2023-09-05|ACTIF|A006
+U011|AUDITEUR|petit|audit123|Laurent Petit|laurent.petit@banque.com|2023-10-12|ACTIF|A001
+U012|AGENT|rousseau|agent123|Julie Rousseau|julie.rousseau@banque.com|2023-11-15|ACTIF|A007

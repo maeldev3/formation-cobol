@@ -11,8 +11,9 @@
        01 WS-PERSONNES  PIC 99.
        01 WS-PRIX       PIC 9(5)V99.
        01 WS-MONTANT    PIC 9(6)V99.
-       01 WS-COMMANDE   PIC X(1024).
-       01 WS-SQL-FICHIER PIC X(50) VALUE "temp.sql".
+       01 WS-COMMANDE   PIC X(500).
+       01 WS-PERSONNES-TXT PIC X(2).
+       01 WS-MONTANT-TXT   PIC X(15).
        
        PROCEDURE DIVISION.
        DEBUT.
