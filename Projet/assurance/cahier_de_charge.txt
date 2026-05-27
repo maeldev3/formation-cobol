@@ -1,0 +1,203 @@
+#!/bin/bash
+
+# Créer le dossier docs s'il n'existe pas
+mkdir -p ~/projet/PR-Olivier/cobol/cobol_formation/Projet/assurance/docs
+
+# Créer le fichier CAHIER_CHARGE_ASSURANCE.md
+cat > ~/projet/PR-Olivier/cobol/cobol_formation/Projet/assurance/docs/CAHIER_CHARGE_ASSURANCE.md << 'EOF'
+# CAHIER DE CHARGE - SYSTÈME DE GESTION D'ASSURANCE
+
+## PROJET ASSURANCE EN COBOL
+
+---
+
+## 1. INTRODUCTION
+
+### 1.1 Objectif du projet
+Développer une application de gestion d'assurance en langage COBOL permettant de gérer les clients, les contrats, les paiements et les sinistres avec des fichiers séquentiels.
+
+### 1.2 Contexte
+Le projet vise à automatiser les opérations courantes d'une compagnie d'assurance :
+- Gestion des clients (inscription, modification, suppression)
+- Gestion des contrats (création, résiliation)
+- Gestion des sinistres (déclaration, traitement, indemnisation)
+- Gestion des paiements (échéances, encaissement)
+
+### 1.3 Technologies utilisées
+- **Langage** : COBOL (GnuCOBOL)
+- **Stockage** : Fichiers séquentiels (.DAT)
+- **Plateforme** : Linux Ubuntu
+- **Compilateur** : cobc (GnuCOBOL)
+
+---
+
+## 2. COMPRENDRE LE CAHIER DE CHARGE
+
+### Qu'est-ce qu'un cahier de charge ?
+Un cahier de charge est un document qui décrit **CE QUE** le logiciel doit faire (pas COMMENT). C'est un contrat entre le client et le développeur.
+
+### Pourquoi est-ce important ?
+- ✅ Le client sait exactement ce qu'il va recevoir
+- ✅ Le développeur sait exactement ce qu'il doit faire
+- ✅ Évite les malentendus et les modifications en cours de route
+- ✅ Sert de base pour les tests et la validation
+
+---
+
+## 3. DESCRIPTION DU SYSTÈME D'ASSURANCE
+
+### 3.1 Les 4 piliers d'une assurance
+
+### 3.2 Explication des concepts
+
+| Concept | Définition | Exemple |
+|---------|------------|---------|
+| **CLIENT** | Personne qui souscrit un contrat | M. DUPONT |
+| **CONTRAT** | Document liant client et assureur | Assurance auto, habitation, santé |
+| **PRIME/PAIEMENT** | Cotisation payée par le client | 500€ par an |
+| **SINISTRE** | Accident/incident couvert | Voiture volée, dégât des eaux |
+| **INDEMNISATION** | Montant payé par l'assureur | 2500€ pour réparation |
+
+---
+
+## 4. SPÉCIFICATIONS FONCTIONNELLES
+
+### 4.1 Gestion des CLIENTS
+
+#### 4.1.1 Structure du fichier CLIENTS.DAT
+**Exemple:**
+#### 4.1.2 Règles de gestion
+- ID unique : `C` + 5 chiffres (C00001 à C99999)
+- Un client peut avoir plusieurs contrats
+- Un client peut être supprimé seulement sans contrat actif
+- Le téléphone doit contenir 10 chiffres
+
+#### 4.1.3 Fonctions CLIENTS
+
+| Fonction | Description | Règles |
+|----------|-------------|--------|
+| AJOUT_CLIENT | Créer un nouveau client | ID unique, validation téléphone |
+| MODIF_CLIENT | Modifier coordonnées | Conservation si champ vide |
+| SUPPR_CLIENT | Supprimer un client | Vérifier absence contrat actif |
+| RECHERCHE_CLIENT | Trouver un client | Par ID ou nom |
+| LISTE_CLIENT | Lister tous les clients | Affichage formaté |
+
+---
+
+### 4.2 Gestion des CONTRATS
+
+#### 4.2.1 Structure du fichier CONTRATS.DAT
+
+
+#### 4.2.2 Types de contrats
+| Code | Type | Description | Taux prime |
+|------|------|-------------|------------|
+| AUTO | Automobile | Assurance véhicule | 3% |
+| HABI | Habitation | Assurance maison | 2% |
+| SANT | Santé | Assurance médicale | 5% |
+| VIE | Vie | Assurance décès | 4% |
+
+#### 4.2.3 Règles de gestion
+- ID contrat unique : TYPE + 4 chiffres (AUTO0001)
+- Un contrat est lié à un seul client
+- Montant annuel = valeur assurée × taux prime
+- Date début ≤ Date fin
+- Contrat actif uniquement si paiements à jour
+
+#### 4.2.4 Fonctions CONTRATS
+
+| Fonction | Description | Règles |
+|----------|-------------|--------|
+| CREER_CONTRAT | Créer un nouveau contrat | Client doit exister, type valide |
+| RESILIER_CONTRAT | Résilier un contrat | Sans sinistre en cours |
+| LISTER_CONTRATS | Afficher contrats | Par client ou tous |
+| RENOUVELER | Prolonger contrat | 1 an supplémentaire |
+
+---
+
+### 4.3 Gestion des PAIEMENTS
+
+#### 4.3.1 Structure du fichier PAIEMENTS.DAT
+
+
+#### 4.3.2 Règles de paiement
+- **Fréquence** : Mensuelle, trimestrielle, annuelle
+- **Calcul** : Montant annuel / 12 pour mensuel
+- **Retard** : Pénalité de 5% par mois de retard
+- **Rappel** : Envoyer à J+7, J+30, J+60
+
+#### 4.3.3 Calcul des primes
+
+#### 4.3.4 Fonctions PAIEMENTS
+
+| Fonction | Description | Règles |
+|----------|-------------|--------|
+| ENREGISTRER_PAIEMENT | Encaisser une prime | Contrat actif |
+| CALCULER_RETARDS | Détecter impayés | À J+30 |
+| LISTER_PAIEMENTS | Afficher historique | Par contrat |
+| GENERER_FACTURE | Éditer une facture | Format PDF |
+
+---
+
+### 4.4 Gestion des SINISTRES
+
+#### 4.4.1 Structure du fichier SINISTRES.DAT
+
+#### 4.4.2 Statuts des sinistres
+| Code | Statut | Description |
+|------|--------|-------------|
+| D | Déclaré | En attente de traitement |
+| E | En instruction | Expertise en cours |
+| A | Accepté | Indemnisation validée |
+| R | Refusé | Non couvert |
+| C | Clôturé | Dossier terminé |
+
+#### 4.4.3 Règles de gestion
+- ID sinistre : `SIN` + AAAAMMJJ + 2 chiffres
+- Un sinistre est lié à un contrat
+- Délai de déclaration : 5 jours ouvrés
+- Franchise selon contrat : 50€ à 500€
+
+#### 4.4.4 Calcul des indemnités
+
+
+#### 4.4.5 Fonctions SINISTRES
+
+| Fonction | Description | Règles |
+|----------|-------------|--------|
+| DECLARER_SINISTRE | Enregistrer un sinistre | Contrat actif |
+| TRAITER_SINISTRE | Accepter/Refuser | Expertise requise |
+| INDEMNISER | Payer l'indemnité | Sinistre accepté |
+| LISTER_SINISTRES | Afficher historique | Par contrat |
+
+---
+
+## 5. FLUX DE TRAITEMENT
+
+### 5.1 Cycle de vie d'un contrat
+
+resulat attendue 
+=== CLIENTS ===
+C00001 DUPONT Jean 12 Rue de Paris 0612345678
+C00002 MARTIN Sophie 5 Avenue Lyon 0766666666
+C00003 DURAND Pierre 8 Place Marseille 0788888888
+C00099 (nom) (prenom) (adresse) (telephone)
+C00100 DIALLO Amadou 15 Rue Paris 0788888888
+Total: 5 clients
+
+=== CONTRATS ===
+AUTO0001 C00001 AUTO 50000 2025-01-01 ACTIF
+AUTO0099 C00099 AUTO 25000 2025-01-01 ACTIF
+Total: 2 contrats actifs
+
+=== SINISTRES ===
+SIN2025001 AUTO0001 2500 2025-03-10 A 1500
+SIN2025051 AUTO0001 1200 2025-05-18 A 1200
+SIN2025052 AUTO0099 3000 2025-05-20 A 3000
+Total: 3 sinistres
+
+=== PAIEMENTS ===
+AUTO0001 C00001 12500 2025-01-15
+AUTO0001 C00001 12500 2025-02-15
+AUTO0099 C00099 2083 2025-02-01
+Total: 3 paiements

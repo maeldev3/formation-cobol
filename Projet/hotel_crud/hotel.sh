@@ -219,7 +219,7 @@ while true; do
                         echo ""
                         echo "=== RAPPORT CHIFFRE D'AFFAIRES ==="
                         echo ""
-                        ca=$(sqlite3 data/input/hotel.db "SELECT COALESCE(SUM(MONTANT), 0) FROM RESERVATIONS WHERE STATUT='CONFIRMEE';")
+                        ca=$(sqlite3 data/input/hotel.db "SELECT COALESCE(SUM(MONTANT_TOTAL), 0) FROM RESERVATIONS WHERE STATUT='CONFIRMEE';")
                         echo "CA TOTAL: $ca €"
                         read -p "Appuyez sur Entrée..."
                         ;;
