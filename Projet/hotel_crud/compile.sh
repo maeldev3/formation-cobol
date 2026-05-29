@@ -33,6 +33,7 @@ cobc -x -free -o bin/RAPPORT_CA src/modules/RAPPORTS/RAPPORT_CA.cob 2>/dev/null 
 # MENU
 cobc -x -free -o bin/MENU_PRINCIPAL src/MENU_PRINCIPAL.cob 2>/dev/null && echo "✓ MENU_PRINCIPAL" || echo "✗ MENU_PRINCIPAL"
 
+
 echo ""
 echo "========================================="
 echo "COMPILATION TERMINEE"

@@ -3,14 +3,13 @@
        
        DATA DIVISION.
        WORKING-STORAGE SECTION.
-       01 WS-ID         PIC X(8).
+       01 WS-ID         PIC X(20).
        01 WS-CLIENT     PIC X(6).
        01 WS-CHAMBRE    PIC X(6).
        01 WS-DEBUT      PIC X(10).
        01 WS-FIN        PIC X(10).
        01 WS-PERSONNES  PIC 99.
        01 WS-PRIX       PIC 9(5)V99.
-       01 WS-NB-JOURS   PIC 9(3).
        01 WS-MONTANT    PIC 9(6)V99.
        01 WS-COMMANDE   PIC X(500).
        01 WS-PERSONNES-TXT PIC X(2).
@@ -33,37 +32,49 @@
            ACCEPT WS-FIN
            DISPLAY "Nombre de personnes : " WITH NO ADVANCING
            ACCEPT WS-PERSONNES
+           DISPLAY "Prix par nuit (€) : " WITH NO ADVANCING
+           ACCEPT WS-PRIX
            
-           STRING "RES" FUNCTION CURRENT-DATE(1:12)
+           MOVE 1 TO WS-MONTANT
+           COMPUTE WS-MONTANT = WS-PRIX * 1
+           
+      *> Générer ID
+           STRING "RES" 
+               FUNCTION CURRENT-DATE(1:4)
+               FUNCTION CURRENT-DATE(6:2)
+               FUNCTION CURRENT-DATE(9:2)
+               FUNCTION CURRENT-DATE(12:2)
+               FUNCTION CURRENT-DATE(15:2)
                INTO WS-ID
            END-STRING
            
-           STRING "sqlite3 data/input/hotel.db 'SELECT PRIX_BASE FROM TYPES_CHAMBRE "
-               "WHERE ID_TYPE = (SELECT ID_TYPE FROM CHAMBRES WHERE ID_CHAMBRE = '\''"
-               FUNCTION TRIM(WS-CHAMBRE) "'\'');'"
+      *> Créer un fichier SQL temporaire
+           STRING 
+               "INSERT INTO RESERVATIONS (ID_RESERVATION, ID_CLIENT, "
+               "ID_CHAMBRE, DATE_DEBUT, DATE_FIN, NB_PERSONNES, STATUT, "
+               "DATE_RESERVATION, MONTANT_TOTAL, REMARQUES) VALUES ("
+               "'" FUNCTION TRIM(WS-ID) "', "
+               "'" FUNCTION TRIM(WS-CLIENT) "', "
+               "'" FUNCTION TRIM(WS-CHAMBRE) "', "
+               "'" FUNCTION TRIM(WS-DEBUT) "', "
+               "'" FUNCTION TRIM(WS-FIN) "', "
+               FUNCTION NUMVAL(WS-PERSONNES) ", "
+               "'CONFIRMEE', date('now'), "
+               WS-MONTANT ", NULL);"
                INTO WS-COMMANDE
            END-STRING
            
-           MOVE 80.00 TO WS-PRIX
-           MOVE 3 TO WS-NB-JOURS
-           COMPUTE WS-MONTANT = WS-PRIX * WS-NB-JOURS
+      *> Écrire dans un fichier
+           CALL "SYSTEM" 
+               USING "echo " FUNCTION TRIM(WS-COMMANDE) 
+               " > " WS-SQL-FICHIER
            
-           STRING "sqlite3 data/input/hotel.db \"INSERT INTO RESERVATIONS VALUES ('"
-               FUNCTION TRIM(WS-ID) "', '"
-               FUNCTION TRIM(WS-CLIENT) "', '"
-               FUNCTION TRIM(WS-CHAMBRE) "', '"
-               FUNCTION TRIM(WS-DEBUT) "', '"
-               FUNCTION TRIM(WS-FIN) "', " WS-PERSONNES
-               ", 'CONFIRMEE', date('now'), " WS-MONTANT ", NULL);\""
-               INTO WS-COMMANDE
-           END-STRING
-           CALL "SYSTEM" USING WS-COMMANDE
+      *> Exécuter le fichier SQL
+           CALL "SYSTEM" 
+               USING "sqlite3 data/input/hotel.db < " WS-SQL-FICHIER
            
-           STRING "sqlite3 data/input/hotel.db \"UPDATE CHAMBRES SET STATUT = 'RESERVEE' "
-               "WHERE ID_CHAMBRE = '" FUNCTION TRIM(WS-CHAMBRE) "';\""
-               INTO WS-COMMANDE
-           END-STRING
-           CALL "SYSTEM" USING WS-COMMANDE
+      *> Nettoyer
+           CALL "SYSTEM" USING "rm " WS-SQL-FICHIER
            
            DISPLAY " "
            DISPLAY "✓ RESERVATION CREEE AVEC SUCCES !"

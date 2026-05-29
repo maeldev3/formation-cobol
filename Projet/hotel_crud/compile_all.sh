@@ -7,7 +7,7 @@ echo "========================================="
 cd ~/projet/PR\ OLIVIER/cobol/formation-cobol/Projet/hotel_crud
 mkdir -p bin
 
-# Liste de tous les fichiers à compiler
+# Liste des fichiers
 FILES="
 src/MENU_PRINCIPAL.cob
 src/modules/CLIENTS/CREER_CLIENT.cob
@@ -29,12 +29,13 @@ COMPTEUR=0
 for file in $FILES; do
     if [ -f "$file" ]; then
         nom=$(basename "$file" .cob)
-        cobc -x -free -o "bin/$nom" "$file" 2>/dev/null
+        echo "Compilation de $nom..."
+        cobc -x -free -o "bin/$nom" "$file"  # <- Enlever 2>/dev/null
         if [ $? -eq 0 ]; then
-            echo "✓ $nom"
+            echo "  ✓ $nom"
             COMPTEUR=$((COMPTEUR + 1))
         else
-            echo "✗ $nom (erreur)"
+            echo "  ✗ $nom - ERREUR (voir messages ci-dessus)"
         fi
     else
         echo "⚠ $file n'existe pas"
@@ -45,4 +46,3 @@ echo ""
 echo "========================================="
 echo "$COMPTEUR programmes compilés avec succès"
 echo "========================================="
-ls -la bin/
