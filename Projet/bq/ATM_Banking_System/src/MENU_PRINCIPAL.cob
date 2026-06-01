@@ -1,0 +1,60 @@
+IDENTIFICATION DIVISION.
+PROGRAM-ID. MENU-PRINCIPAL.
+
+DATA DIVISION.
+
+WORKING-STORAGE SECTION.
+
+01 WS-CHOIX PIC 9 VALUE 0.
+
+PROCEDURE DIVISION.
+
+MAIN.
+
+PERFORM UNTIL WS-CHOIX = 6
+
+    CALL "SYSTEM" USING "clear"
+
+    DISPLAY "=================================="
+    DISPLAY "      ATM BANKING SYSTEM PRO"
+    DISPLAY "=================================="
+    DISPLAY "1. CREER COMPTE"
+    DISPLAY "2. CONSULTER SOLDE"
+    DISPLAY "3. DEPOT"
+    DISPLAY "4. RETRAIT"
+    DISPLAY "5. TRANSFERT"
+    DISPLAY "6. QUITTER"
+    DISPLAY "=================================="
+    DISPLAY "CHOIX : " WITH NO ADVANCING
+
+    ACCEPT WS-CHOIX
+
+    EVALUATE WS-CHOIX
+
+        WHEN 1
+            CALL "SYSTEM" USING "./bin/CREER_COMPTE"
+
+        WHEN 2
+            CALL "SYSTEM" USING "./bin/CONSULTER_SOLDE"
+
+        WHEN 3
+            CALL "SYSTEM" USING "./bin/DEPOT"
+
+        WHEN 4
+            CALL "SYSTEM" USING "./bin/RETRAIT"
+
+        WHEN 5
+            CALL "SYSTEM" USING "./bin/TRANSFERT"
+
+        WHEN 6
+            DISPLAY "MERCI - FIN ATM"
+
+        WHEN OTHER
+            DISPLAY "CHOIX INVALIDE"
+            CALL "SYSTEM" USING "sleep 1"
+
+    END-EVALUATE
+
+END-PERFORM
+
+STOP RUN.

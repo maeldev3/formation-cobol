@@ -1,0 +1,86 @@
+IDENTIFICATION DIVISION.
+PROGRAM-ID. CREER-COMPTE.
+
+DATA DIVISION.
+WORKING-STORAGE SECTION.
+
+01 WS-ID-CLIENT     PIC X(10).
+01 WS-NOM           PIC X(30).
+01 WS-PRENOM        PIC X(30).
+01 WS-TELEPHONE      PIC X(20).
+01 WS-COMPTE        PIC X(10).
+01 WS-CARTE         PIC X(16).
+01 WS-PIN           PIC X(4).
+01 WS-SOLDE         PIC 9(8)V99.
+01 WS-CMD           PIC X(1000).
+
+PROCEDURE DIVISION.
+
+MAIN.
+
+    DISPLAY "==============================="
+    DISPLAY "CREATION COMPTE"
+    DISPLAY "==============================="
+
+    DISPLAY "ID CLIENT : "
+    ACCEPT WS-ID-CLIENT
+
+    DISPLAY "NOM CLIENT : "
+    ACCEPT WS-NOM
+
+    DISPLAY "PRENOM CLIENT : "
+    ACCEPT WS-PRENOM
+
+    DISPLAY "TELEPHONE : "
+    ACCEPT WS-TELEPHONE
+
+    DISPLAY "NUMERO COMPTE : "
+    ACCEPT WS-COMPTE
+
+    DISPLAY "NUMERO CARTE : "
+    ACCEPT WS-CARTE
+
+    DISPLAY "PIN (4 chiffres) : "
+    ACCEPT WS-PIN
+
+    DISPLAY "SOLDE INITIAL : "
+    ACCEPT WS-SOLDE
+
+
+    STRING
+       "sqlite3 data/input/atm.db ""INSERT INTO CLIENTS "
+       "(ID_CLIENT,NOM,PRENOM,TELEPHONE,DATE_CREATION) VALUES ('"
+       FUNCTION TRIM(WS-ID-CLIENT)
+       "','"
+       FUNCTION TRIM(WS-NOM)
+       "','"
+       FUNCTION TRIM(WS-PRENOM)
+       "','"
+       FUNCTION TRIM(WS-TELEPHONE)
+       "',date('now'));"""
+       INTO WS-CMD
+    END-STRING
+
+    CALL "SYSTEM" USING WS-CMD
+
+   STRING
+      "sqlite3 data/input/atm.db ""INSERT INTO COMPTES "
+      "(NUM_COMPTE,ID_CLIENT,NUM_CARTE,PIN_CODE,SOLDE,STATUT) VALUES ('"
+      FUNCTION TRIM(WS-COMPTE)
+      "','"
+      FUNCTION TRIM(WS-ID-CLIENT)
+      "','"
+      FUNCTION TRIM(WS-CARTE)
+      "','"
+      FUNCTION TRIM(WS-PIN)
+      "',"
+      WS-SOLDE
+      ",'ACTIF');"""
+         INTO WS-CMD
+    END-STRING
+
+    CALL "SYSTEM" USING WS-CMD
+
+    DISPLAY "COMPTE CREE AVEC SUCCES"
+
+    STOP RUN.
