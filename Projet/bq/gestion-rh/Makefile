@@ -6,7 +6,7 @@
 COBOL = cobc
 FLAGS = -x
 
-all: auth departement departement-liste departement-modifier
+all: auth departement departement-liste departement-modifier departement-supprimer poste poste-liste poste-supprimer poste-modifier
 
 # --------------------------------------------------
 # Authentification
@@ -36,7 +36,36 @@ departement-modifier:
 	modules/departements/modifier-departement.cob \
 	-o bin/departement-modifier
 
+# --------------------------------------------------
+# Supprimer un département
+# --------------------------------------------------
+departement-supprimer:
+	$(COBOL) $(FLAGS) \
+	modules/departements/supprimer-departement.cob \
+	-o bin/departement-supprimer
 
+
+
+# --------------------------------------------------
+# Ajouter poste
+# --------------------------------------------------
+poste:
+	$(COBOL) $(FLAGS) \
+	modules/postes/ajouter-poste.cob \
+	-o bin/poste
+
+poste-liste:
+	$(COBOL) $(FLAGS) \
+	modules/postes/lister-postes.cob \
+	-o bin/poste-liste
+poste-supprimer:
+	$(COBOL) $(FLAGS) \
+	modules/postes/supprimer-poste.cob \
+	-o bin/poste-supprimer
+poste-modifier:
+	$(COBOL) $(FLAGS) \
+	modules/postes/modifier-poste.cob \
+	-o bin/poste-modifier	
 # --------------------------------------------------
 # Nettoyage
 # --------------------------------------------------
