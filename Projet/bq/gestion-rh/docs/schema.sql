@@ -41,6 +41,20 @@ CREATE TABLE leaves (
     FOREIGN KEY(employee_id) REFERENCES employees(employee_id)
 );
 
+CREATE TABLE payroll (
+    payroll_id     INTEGER PRIMARY KEY AUTOINCREMENT,
+    employee_id    INTEGER NOT NULL,
+    payroll_month  TEXT NOT NULL,
+    basic_salary   REAL NOT NULL,
+    bonus          REAL DEFAULT 0,
+    deduction      REAL DEFAULT 0,
+    net_salary     REAL NOT NULL,
+    created_at     TEXT DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(employee_id)
+        REFERENCES employees(employee_id)
+);
+
 
 -- Insertions valides
 INSERT INTO departments (department_name) VALUES ('Informatique');

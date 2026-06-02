@@ -13,7 +13,8 @@ all: auth departement departement-liste \
      presence-ajouter presence-liste \
      conge-demande conge-liste conge-valider \
      rapport-mensuel \
-     menu-rh
+     menu-rh \
+	 calculer-paie lister-paie rapport-paie
 
 # --------------------------------------------------
 # Authentification
@@ -135,7 +136,20 @@ rapport-mensuel:
 	$(COBOL) $(FLAGS) \
 	modules/rapport/rapport-mensuel.cob \
 	-o bin/rapport-mensuel
+# calculer-paie:
+# 	$(COBOL) -x \
+# 	modules/paie/calculer-paie.cob \
+# 	-o bin/calculer-paie
 
+lister-paie:
+	$(COBOL) -x \
+	modules/paie/lister-paie.cob \
+	-o bin/lister-paie
+
+# rapport-paie:
+# 	$(COBOL) -x \
+# 	modules/paie/rapport-paie.cob \
+# 	-o bin/rapport-paie
 # --------------------------------------------------
 # Menu principal RH
 # --------------------------------------------------
@@ -198,6 +212,20 @@ run-conge-valider: conge-valider
 run-rapport-mensuel: rapport-mensuel
 	./bin/rapport-mensuel
 
+calculer-paie:
+	$(COBOL) -x \
+	modules/paie/calculer-paie.cob \
+	-o bin/calculer-paie
+
+lister-paie:
+	$(COBOL) -x \
+	modules/paie/lister-paie.cob \
+	-o bin/lister-paie
+
+rapport-paie:
+	$(COBOL) -x \
+	modules/paie/rapport-paie.cob \
+	-o bin/rapport-paie
 # --------------------------------------------------
 # Nettoyage
 # --------------------------------------------------
