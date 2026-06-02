@@ -141,10 +141,10 @@ rapport-mensuel:
 # 	modules/paie/calculer-paie.cob \
 # 	-o bin/calculer-paie
 
-lister-paie:
-	$(COBOL) -x \
-	modules/paie/lister-paie.cob \
-	-o bin/lister-paie
+# lister-paie:
+# 	$(COBOL) -x \
+# 	modules/paie/lister-paie.cob \
+# 	-o bin/lister-paie
 
 # rapport-paie:
 # 	$(COBOL) -x \
