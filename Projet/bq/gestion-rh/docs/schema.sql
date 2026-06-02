@@ -21,6 +21,27 @@ CREATE TABLE employees (
     FOREIGN KEY(position_id) REFERENCES positions(position_id)
 );
 
+CREATE TABLE attendance (
+    attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    employee_id INTEGER NOT NULL,
+    date TEXT DEFAULT (date('now')),
+    check_in TEXT,
+    check_out TEXT,
+    status TEXT DEFAULT 'PRESENT',
+    FOREIGN KEY(employee_id) REFERENCES employees(employee_id)
+);
+
+CREATE TABLE leaves (
+    leave_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    employee_id INTEGER NOT NULL,
+    start_date TEXT,
+    end_date TEXT,
+    reason TEXT,
+    status TEXT DEFAULT 'PENDING',
+    FOREIGN KEY(employee_id) REFERENCES employees(employee_id)
+);
+
+
 -- Insertions valides
 INSERT INTO departments (department_name) VALUES ('Informatique');
 INSERT INTO departments (department_name) VALUES ('Ressources Humaines');
@@ -37,3 +58,12 @@ VALUES ('Marie', 'Ravelo', 1, 2);
 
 INSERT INTO employees (first_name, last_name, department_id, position_id)
 VALUES ('Paul', 'Andria', 2, 3);
+
+
+
+INSERT INTO attendance (employee_id, check_in, status)
+VALUES (1, '08:00', 'PRESENT');
+
+INSERT INTO leaves (employee_id, start_date, end_date, reason)
+VALUES (1, '2026-06-10', '2026-06-15', 'Vacances');
+
