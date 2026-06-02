@@ -6,7 +6,7 @@
 COBOL = cobc
 FLAGS = -x
 
-all: auth departement departement-liste departement-modifier departement-supprimer poste poste-liste poste-supprimer poste-modifier
+all: auth departement departement-liste departement-modifier departement-supprimer poste poste-liste poste-supprimer poste-modifier employe employe-liste employe-modifier
 
 # --------------------------------------------------
 # Authentification
@@ -66,6 +66,21 @@ poste-modifier:
 	$(COBOL) $(FLAGS) \
 	modules/postes/modifier-poste.cob \
 	-o bin/poste-modifier	
+
+
+
+employe:
+	$(COBOL) $(FLAGS) \
+	modules/employes/ajouter-employe.cob \
+	-o bin/employe
+employe-liste:
+	$(COBOL) $(FLAGS) \
+	modules/employes/lister-employes.cob \
+	-o bin/employe-liste
+employe-modifier:
+	$(COBOL) $(FLAGS) \
+	modules/employes/modifier-employe.cob \
+	-o bin/employe-modifier
 # --------------------------------------------------
 # Nettoyage
 # --------------------------------------------------
