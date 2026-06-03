@@ -55,8 +55,7 @@
                        PERFORM MENU-CONGES
 
                    WHEN 6
-                       CALL "SYSTEM"
-                           USING "./bin/paie"
+                       PERFORM MENU-PAIE
 
                    WHEN 7
                        CALL "SYSTEM"
@@ -293,6 +292,50 @@
                    WHEN 3
                        CALL "SYSTEM"
                            USING "./bin/conge-liste"
+
+                   WHEN 0
+                       CONTINUE
+
+                   WHEN OTHER
+                       DISPLAY "Choix invalide"
+
+               END-EVALUATE
+
+           END-PERFORM.
+
+      *> ==========================================
+      *> MENU PAIE
+      *> ==========================================
+
+       MENU-PAIE.
+
+           MOVE 9 TO WS-SOUS-CHOIX
+
+           PERFORM UNTIL WS-SOUS-CHOIX = 0
+
+               DISPLAY SPACE
+               DISPLAY "========== GESTION PAIE =========="
+               DISPLAY "1 - Calculer Paie"
+               DISPLAY "2 - Lister Paie"
+               DISPLAY "3 - Rapport Paie"
+               DISPLAY "0 - Retour"
+
+               DISPLAY "Choix : " WITH NO ADVANCING
+               ACCEPT WS-SOUS-CHOIX
+
+               EVALUATE WS-SOUS-CHOIX
+
+                   WHEN 1
+                       CALL "SYSTEM"
+                           USING "./bin/calculer-paie"
+
+                   WHEN 2
+                       CALL "SYSTEM"
+                           USING "./bin/lister-paie"
+
+                   WHEN 3
+                       CALL "SYSTEM"
+                           USING "./bin/rapport-paie"
 
                    WHEN 0
                        CONTINUE

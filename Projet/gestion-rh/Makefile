@@ -1,226 +1,370 @@
 # ==================================================
 # Projet : Gestion RH COBOL + SQLite
 # Auteur : DEV
+# Version : 2.0
 # ==================================================
 
+# --------------------------------------------------
+# COMPILATEUR ET OPTIONS
+# --------------------------------------------------
 COBOL = cobc
 FLAGS = -x
+DB_PATH = data/rh.db
 
-all: auth departement departement-liste \
+# --------------------------------------------------
+# RÉPERTOIRES
+# --------------------------------------------------
+BIN_DIR = bin
+MODULES_DIR = modules
+TEMP_DIR = temp
+
+# --------------------------------------------------
+# SOURCES PAR MODULE
+# --------------------------------------------------
+# Authentification
+AUTH_SRC = modules/auth/authentifier.cob
+
+# Départements
+DEPARTEMENT_SRC = modules/departements/ajouter-departement.cob
+DEPARTEMENT_LISTE_SRC = modules/departements/lister-departements.cob
+DEPARTEMENT_MODIFIER_SRC = modules/departements/modifier-departement.cob
+DEPARTEMENT_SUPPRIMER_SRC = modules/departements/supprimer-departement.cob
+
+# Postes
+POSTE_SRC = modules/postes/ajouter-poste.cob
+POSTE_LISTE_SRC = modules/postes/lister-postes.cob
+POSTE_MODIFIER_SRC = modules/postes/modifier-poste.cob
+POSTE_SUPPRIMER_SRC = modules/postes/supprimer-poste.cob
+
+# Employés
+EMPLOYE_SRC = modules/employes/ajouter-employe.cob
+EMPLOYE_LISTE_SRC = modules/employes/lister-employes.cob
+EMPLOYE_MODIFIER_SRC = modules/employes/modifier-employe.cob
+
+# Paie
+PAIE_CALCULER_SRC = modules/paie/calculer-paie.cob
+PAIE_LISTER_SRC = modules/paie/lister-paie.cob
+PAIE_RAPPORT_SRC = modules/paie/rapport-paie.cob
+
+# Présence
+PRESENCE_AJOUTER_SRC = modules/presence/ajouter-presence.cob
+PRESENCE_LISTE_SRC = modules/presence/lister-presence.cob
+
+# Congés
+CONGE_DEMANDE_SRC = modules/conges/demande-conge.cob
+CONGE_LISTE_SRC = modules/conges/lister-conge.cob
+CONGE_VALIDER_SRC = modules/conges/valider-conge.cob
+
+# Rapport
+RAPPORT_MENSUEL_SRC = modules/rapport/rapport-mensuel.cob
+
+# Menu
+MENU_RH_SRC = modules/menu/menu-rh.cob
+
+# --------------------------------------------------
+# BINAIRES (générés automatiquement)
+# --------------------------------------------------
+AUTH_BIN = $(BIN_DIR)/login
+DEPARTEMENT_BIN = $(BIN_DIR)/departement
+DEPARTEMENT_LISTE_BIN = $(BIN_DIR)/departement-liste
+DEPARTEMENT_MODIFIER_BIN = $(BIN_DIR)/departement-modifier
+DEPARTEMENT_SUPPRIMER_BIN = $(BIN_DIR)/departement-supprimer
+POSTE_BIN = $(BIN_DIR)/poste
+POSTE_LISTE_BIN = $(BIN_DIR)/poste-liste
+POSTE_MODIFIER_BIN = $(BIN_DIR)/poste-modifier
+POSTE_SUPPRIMER_BIN = $(BIN_DIR)/poste-supprimer
+EMPLOYE_BIN = $(BIN_DIR)/employe
+EMPLOYE_LISTE_BIN = $(BIN_DIR)/employe-liste
+EMPLOYE_MODIFIER_BIN = $(BIN_DIR)/employe-modifier
+PAIE_CALCULER_BIN = $(BIN_DIR)/calculer-paie
+PAIE_LISTER_BIN = $(BIN_DIR)/lister-paie
+PAIE_RAPPORT_BIN = $(BIN_DIR)/rapport-paie
+PRESENCE_AJOUTER_BIN = $(BIN_DIR)/presence-ajouter
+PRESENCE_LISTE_BIN = $(BIN_DIR)/presence-liste
+CONGE_DEMANDE_BIN = $(BIN_DIR)/conge-demande
+CONGE_LISTE_BIN = $(BIN_DIR)/conge-liste
+CONGE_VALIDER_BIN = $(BIN_DIR)/conge-valider
+RAPPORT_MENSUEL_BIN = $(BIN_DIR)/rapport-mensuel
+MENU_RH_BIN = $(BIN_DIR)/menu-rh
+
+# --------------------------------------------------
+# RÈGLES PRINCIPALES
+# --------------------------------------------------
+.PHONY: all clean rebuild run run-all help
+
+all: $(BIN_DIR) \
+     auth \
+     departement departement-liste departement-modifier departement-supprimer \
      poste poste-liste poste-modifier poste-supprimer \
      employe employe-liste employe-modifier \
-     paie calculer-paie lister-paie rapport-paie \
+     paie-calculer paie-lister paie-rapport \
      presence-ajouter presence-liste \
      conge-demande conge-liste conge-valider \
      rapport-mensuel \
-     menu-rh 
-	 
+     menu-rh
 
+# Création du répertoire bin
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+	mkdir -p $(TEMP_DIR)
+
+# --------------------------------------------------
+# RÈGLE GÉNÉRIQUE DE COMPILATION
+# --------------------------------------------------
+define compile_rule
+$(1): $(2)
+	@echo "🔨 Compilation de $$<..."
+	$(COBOL) $(FLAGS) $$< -o $$@
+	@echo "✅ $$@ créé avec succès"
+endef
+
+# --------------------------------------------------
+# RÈGLES SPÉCIFIQUES PAR MODULE
 # --------------------------------------------------
 # Authentification
-# --------------------------------------------------
-auth:
-	$(COBOL) $(FLAGS) \
-	modules/auth/authentifier.cob \
-	-o bin/login
+$(AUTH_BIN): $(AUTH_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
-# Ajouter un département
-# --------------------------------------------------
-departement:
-	$(COBOL) $(FLAGS) \
-	modules/departements/ajouter-departement.cob \
-	-o bin/departement
+# Départements
+$(DEPARTEMENT_BIN): $(DEPARTEMENT_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
-# Lister les départements
-# --------------------------------------------------
-departement-liste:
-	$(COBOL) $(FLAGS) \
-	modules/departements/lister-departements.cob \
-	-o bin/departement-liste
+$(DEPARTEMENT_LISTE_BIN): $(DEPARTEMENT_LISTE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-departement-modifier:
-	$(COBOL) $(FLAGS) \
-	modules/departements/modifier-departement.cob \
-	-o bin/departement-modifier
+$(DEPARTEMENT_MODIFIER_BIN): $(DEPARTEMENT_MODIFIER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
-# Supprimer un département
-# --------------------------------------------------
-departement-supprimer:
-	$(COBOL) $(FLAGS) \
-	modules/departements/supprimer-departement.cob \
-	-o bin/departement-supprimer
+$(DEPARTEMENT_SUPPRIMER_BIN): $(DEPARTEMENT_SUPPRIMER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
-# Ajouter poste
-# --------------------------------------------------
-poste:
-	$(COBOL) $(FLAGS) \
-	modules/postes/ajouter-poste.cob \
-	-o bin/poste
+# Postes
+$(POSTE_BIN): $(POSTE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-poste-liste:
-	$(COBOL) $(FLAGS) \
-	modules/postes/lister-postes.cob \
-	-o bin/poste-liste
+$(POSTE_LISTE_BIN): $(POSTE_LISTE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-poste-supprimer:
-	$(COBOL) $(FLAGS) \
-	modules/postes/supprimer-poste.cob \
-	-o bin/poste-supprimer
+$(POSTE_MODIFIER_BIN): $(POSTE_MODIFIER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-poste-modifier:
-	$(COBOL) $(FLAGS) \
-	modules/postes/modifier-poste.cob \
-	-o bin/poste-modifier
+$(POSTE_SUPPRIMER_BIN): $(POSTE_SUPPRIMER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
-# Ajouter employé
-# --------------------------------------------------
-employe:
-	$(COBOL) $(FLAGS) \
-	modules/employes/ajouter-employe.cob \
-	-o bin/employe
+# Employés
+$(EMPLOYE_BIN): $(EMPLOYE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-employe-liste:
-	$(COBOL) $(FLAGS) \
-	modules/employes/lister-employes.cob \
-	-o bin/employe-liste
+$(EMPLOYE_LISTE_BIN): $(EMPLOYE_LISTE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-employe-modifier:
-	$(COBOL) $(FLAGS) \
-	modules/employes/modifier-employe.cob \
-	-o bin/employe-modifier
+$(EMPLOYE_MODIFIER_BIN): $(EMPLOYE_MODIFIER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
 # Paie
-# --------------------------------------------------
-paie:
-	$(COBOL) $(FLAGS) \
-	modules/paie/lister-paie.cob \
-	-o bin/paie
+$(PAIE_CALCULER_BIN): $(PAIE_CALCULER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
+$(PAIE_LISTER_BIN): $(PAIE_LISTER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
+
+$(PAIE_RAPPORT_BIN): $(PAIE_RAPPORT_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
+
 # Présence
-# --------------------------------------------------
-presence-ajouter:
-	$(COBOL) $(FLAGS) modules/presence/ajouter-presence.cob -o bin/presence-ajouter
+$(PRESENCE_AJOUTER_BIN): $(PRESENCE_AJOUTER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-presence-liste:
-	$(COBOL) $(FLAGS) modules/presence/lister-presence.cob -o bin/presence-liste
+$(PRESENCE_LISTE_BIN): $(PRESENCE_LISTE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
 # Congés
-# --------------------------------------------------
-conge-demande:
-	$(COBOL) $(FLAGS) \
-	modules/conges/demande-conge.cob \
-	-o bin/conge-demande
+$(CONGE_DEMANDE_BIN): $(CONGE_DEMANDE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-conge-liste:
-	$(COBOL) $(FLAGS) \
-	modules/conges/lister-conge.cob \
-	-o bin/conge-liste
+$(CONGE_LISTE_BIN): $(CONGE_LISTE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-conge-valider:
-	$(COBOL) $(FLAGS) \
-	modules/conges/valider-conge.cob \
-	-o bin/conge-valider
+$(CONGE_VALIDER_BIN): $(CONGE_VALIDER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
-# --------------------------------------------------
-# Rapport mensuel
-# --------------------------------------------------
-rapport-mensuel:
-	$(COBOL) $(FLAGS) \
-	modules/rapport/rapport-mensuel.cob \
-	-o bin/rapport-mensuel
+# Rapport
+$(RAPPORT_MENSUEL_BIN): $(RAPPORT_MENSUEL_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
+
+# Menu
+$(MENU_RH_BIN): $(MENU_RH_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
 # --------------------------------------------------
-# Menu principal RH
+# ALIAS POUR LES CIBLES
 # --------------------------------------------------
-calculer-paie:
-	$(COBOL) -x \
-	modules/paie/calculer-paie.cob \
-	-o bin/calculer-paie
+auth: $(AUTH_BIN)
 
-lister-paie:
-	$(COBOL) -x \
-	modules/paie/lister-paie.cob \
-	-o bin/lister-paie
+departement: $(DEPARTEMENT_BIN)
+departement-liste: $(DEPARTEMENT_LISTE_BIN)
+departement-modifier: $(DEPARTEMENT_MODIFIER_BIN)
+departement-supprimer: $(DEPARTEMENT_SUPPRIMER_BIN)
 
-rapport-paie:
-	$(COBOL) -x \
-	modules/paie/rapport-paie.cob \
-	-o bin/rapport-paie
-menu-rh:
-	$(COBOL) $(FLAGS) \
-	modules/menu/menu-rh.cob \
-	-o bin/menu-rh
+poste: $(POSTE_BIN)
+poste-liste: $(POSTE_LISTE_BIN)
+poste-modifier: $(POSTE_MODIFIER_BIN)
+poste-supprimer: $(POSTE_SUPPRIMER_BIN)
+
+employe: $(EMPLOYE_BIN)
+employe-liste: $(EMPLOYE_LISTE_BIN)
+employe-modifier: $(EMPLOYE_MODIFIER_BIN)
+
+paie-calculer: $(PAIE_CALCULER_BIN)
+paie-lister: $(PAIE_LISTER_BIN)
+paie-rapport: $(PAIE_RAPPORT_BIN)
+# Alias pour compatibilité avec anciens noms
+calculer-paie: $(PAIE_CALCULER_BIN)
+lister-paie: $(PAIE_LISTER_BIN)
+rapport-paie: $(PAIE_RAPPORT_BIN)
+paie: $(PAIE_LISTER_BIN)
+
+presence-ajouter: $(PRESENCE_AJOUTER_BIN)
+presence-liste: $(PRESENCE_LISTE_BIN)
+
+conge-demande: $(CONGE_DEMANDE_BIN)
+conge-liste: $(CONGE_LISTE_BIN)
+conge-valider: $(CONGE_VALIDER_BIN)
+
+rapport-mensuel: $(RAPPORT_MENSUEL_BIN)
+
+menu-rh: $(MENU_RH_BIN)
 
 # --------------------------------------------------
-# Exécution des programmes (commandes run)
+# EXÉCUTION (run)
 # --------------------------------------------------
 run: menu-rh
-	./bin/menu-rh
+	@echo "🚀 Lancement du menu principal..."
+	./$(MENU_RH_BIN)
 
 run-auth: auth
-	./bin/login
+	./$(AUTH_BIN)
 
 run-departement-liste: departement-liste
-	./bin/departement-liste
+	./$(DEPARTEMENT_LISTE_BIN)
 
 run-departement-modifier: departement-modifier
-	./bin/departement-modifier
+	./$(DEPARTEMENT_MODIFIER_BIN)
 
 run-departement-supprimer: departement-supprimer
-	./bin/departement-supprimer
+	./$(DEPARTEMENT_SUPPRIMER_BIN)
 
 run-poste-liste: poste-liste
-	./bin/poste-liste
+	./$(POSTE_LISTE_BIN)
 
 run-poste-modifier: poste-modifier
-	./bin/poste-modifier
+	./$(POSTE_MODIFIER_BIN)
 
 run-poste-supprimer: poste-supprimer
-	./bin/poste-supprimer
+	./$(POSTE_SUPPRIMER_BIN)
 
 run-employe-liste: employe-liste
-	./bin/employe-liste
+	./$(EMPLOYE_LISTE_BIN)
 
 run-employe-modifier: employe-modifier
-	./bin/employe-modifier
+	./$(EMPLOYE_MODIFIER_BIN)
 
-run-paie: paie
-	./bin/paie
+run-paie: paie-lister
+	./$(PAIE_LISTER_BIN)
+
+run-calculer-paie: paie-calculer
+	./$(PAIE_CALCULER_BIN)
+
+run-rapport-paie: paie-rapport
+	./$(PAIE_RAPPORT_BIN)
 
 run-presence-ajouter: presence-ajouter
-	./bin/presence-ajouter
+	./$(PRESENCE_AJOUTER_BIN)
 
 run-presence-liste: presence-liste
-	./bin/presence-liste
+	./$(PRESENCE_LISTE_BIN)
 
 run-conge-demande: conge-demande
-	./bin/conge-demande
+	./$(CONGE_DEMANDE_BIN)
 
 run-conge-liste: conge-liste
-	./bin/conge-liste
+	./$(CONGE_LISTE_BIN)
 
 run-conge-valider: conge-valider
-	./bin/conge-valider
+	./$(CONGE_VALIDER_BIN)
 
 run-rapport-mensuel: rapport-mensuel
-	./bin/rapport-mensuel
-
+	./$(RAPPORT_MENSUEL_BIN)
 
 # --------------------------------------------------
-# Nettoyage
+# EXÉCUTION DE TOUS LES PROGRAMMES (TEST)
+# --------------------------------------------------
+run-all: run-auth run-departement-liste run-poste-liste run-employe-liste run-paie run-presence-liste run-conge-liste run-rapport-mensuel
+	@echo "✅ Tous les programmes ont été exécutés"
+
+# --------------------------------------------------
+# VÉRIFICATION DE LA BASE DE DONNÉES
+# --------------------------------------------------
+check-db:
+	@echo "🔍 Vérification de la base de données..."
+	@if [ -f $(DB_PATH) ]; then \
+		echo "✅ Base de données trouvée : $(DB_PATH)"; \
+		sqlite3 $(DB_PATH) ".tables"; \
+	else \
+		echo "❌ Base de données introuvable : $(DB_PATH)"; \
+		echo "   Veuillez exécuter : sqlite3 $(DB_PATH) < schema.sql"; \
+		exit 1; \
+	fi
+
+# --------------------------------------------------
+# NETTOYAGE
 # --------------------------------------------------
 clean:
-	rm -f bin/*
+	@echo "🧹 Nettoyage des fichiers compilés..."
+	rm -f $(BIN_DIR)/*
+	rm -rf $(TEMP_DIR)
+	@echo "✅ Nettoyage terminé"
+
+clean-all: clean
+	@echo "🧹 Suppression du répertoire bin..."
+	rm -rf $(BIN_DIR)
+	@echo "✅ Nettoyage complet terminé"
 
 # --------------------------------------------------
-# Recompilation complète
+# RECOMPILATION COMPLÈTE
 # --------------------------------------------------
-rebuild: clean all
+rebuild: clean-all all
+	@echo "🔨 Recompilation complète terminée"
+
+# --------------------------------------------------
+# AIDE
+# --------------------------------------------------
+help:
+	@echo "========================================="
+	@echo "      GESTION RH - MAKEFILE"
+	@echo "========================================="
+	@echo ""
+	@echo "📦 COMPILATION :"
+	@echo "  make all              - Compile tout le projet"
+	@echo "  make auth             - Compile authentification"
+	@echo "  make departement      - Compile ajout département"
+	@echo "  make poste            - Compile ajout poste"
+	@echo "  make employe          - Compile ajout employé"
+	@echo "  make paie-calculer    - Compile calcul de paie"
+	@echo "  make menu-rh          - Compile menu principal"
+	@echo ""
+	@echo "🚀 EXÉCUTION :"
+	@echo "  make run              - Lance le menu RH"
+	@echo "  make run-calculer-paie - Lance calcul paie"
+	@echo "  make run-auth         - Test authentification"
+	@echo ""
+	@echo "🔧 UTILITAIRES :"
+	@echo "  make check-db         - Vérifie la base de données"
+	@echo "  make clean            - Nettoie les binaires"
+	@echo "  make rebuild          - Recompile tout"
+	@echo ""
+	@echo "📋 LISTE COMPLÈTE :"
+	@echo "  run-departement-liste, run-poste-liste,"
+	@echo "  run-employe-liste, run-paie, run-presence-ajouter,"
+	@echo "  run-conge-demande, run-rapport-mensuel"
+	@echo "========================================="
