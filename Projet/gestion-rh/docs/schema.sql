@@ -1,3 +1,10 @@
+CREATE TABLE users (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    login TEXT UNIQUE NOT NULL,
+    pin TEXT NOT NULL,
+    role TEXT NOT NULL
+);
+
 -- Tables
 CREATE TABLE departments (
     department_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,17 +62,16 @@ CREATE TABLE payroll (
         REFERENCES employees(employee_id)
 );
 
-CREATE TABLE evaluations (
-    evaluation_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    employee_id INTEGER NOT NULL,
-    evaluation_date TEXT DEFAULT (date('now')),
-    score INTEGER NOT NULL,
-    commentaire TEXT,
-    FOREIGN KEY(employee_id)
-        REFERENCES employees(employee_id)
-);
 
 -- Insertions valides
+
+
+INSERT INTO users(login,pin,role)
+VALUES('admin','1234','ADMIN');
+
+INSERT INTO users(login,pin,role)
+VALUES('rh','1234','RH');
+
 INSERT INTO departments (department_name) VALUES ('Informatique');
 INSERT INTO departments (department_name) VALUES ('Ressources Humaines');
 

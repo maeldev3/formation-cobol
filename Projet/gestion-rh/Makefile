@@ -57,7 +57,10 @@ CONGE_VALIDER_SRC = modules/conges/valider-conge.cob
 
 # Rapport
 RAPPORT_MENSUEL_SRC = modules/rapport/rapport-mensuel.cob
-
+USER_SRC = modules/users/ajouter-utilisateur.cob
+USER_LISTE_SRC = modules/users/lister-utilisateurs.cob
+USER_MODIFIER_SRC = modules/users/modifier-utilisateur.cob
+USER_SUPPRIMER_SRC = modules/users/supprimer-utilisateur.cob
 # Menu
 MENU_RH_SRC = modules/menu/menu-rh.cob
 
@@ -87,6 +90,11 @@ CONGE_VALIDER_BIN = $(BIN_DIR)/conge-valider
 RAPPORT_MENSUEL_BIN = $(BIN_DIR)/rapport-mensuel
 MENU_RH_BIN = $(BIN_DIR)/menu-rh
 
+
+USER_BIN = $(BIN_DIR)/user
+USER_LISTE_BIN = $(BIN_DIR)/user-liste
+USER_MODIFIER_BIN = $(BIN_DIR)/user-modifier
+USER_SUPPRIMER_BIN = $(BIN_DIR)/user-supprimer
 # --------------------------------------------------
 # RÈGLES PRINCIPALES
 # --------------------------------------------------
@@ -104,6 +112,7 @@ all: $(BIN_DIR) \
      menu-rh \
 	 dashboard \
      export-employes export-paie export-conges \
+	 user user-liste user-modifier user-supprimer
 
 # Création du répertoire bin
 $(BIN_DIR):
@@ -197,7 +206,17 @@ $(RAPPORT_MENSUEL_BIN): $(RAPPORT_MENSUEL_SRC) | $(BIN_DIR)
 # Menu
 $(MENU_RH_BIN): $(MENU_RH_SRC) | $(BIN_DIR)
 	$(COBOL) $(FLAGS) $< -o $@
+$(USER_BIN): $(USER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 
+$(USER_LISTE_BIN): $(USER_LISTE_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
+
+$(USER_MODIFIER_BIN): $(USER_MODIFIER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
+
+$(USER_SUPPRIMER_BIN): $(USER_SUPPRIMER_SRC) | $(BIN_DIR)
+	$(COBOL) $(FLAGS) $< -o $@
 # --------------------------------------------------
 # ALIAS POUR LES CIBLES
 # --------------------------------------------------
@@ -251,6 +270,14 @@ export-paie:
 export-conges:
 	$(COBOL) -x modules/export/export-conges.cob \
 	-o bin/export-conges
+
+user: $(USER_BIN)
+
+user-liste: $(USER_LISTE_BIN)
+
+user-modifier: $(USER_MODIFIER_BIN)
+
+user-supprimer: $(USER_SUPPRIMER_BIN)
 menu-rh: $(MENU_RH_BIN)
 
 # --------------------------------------------------
