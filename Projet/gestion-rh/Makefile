@@ -101,7 +101,9 @@ all: $(BIN_DIR) \
      presence-ajouter presence-liste \
      conge-demande conge-liste conge-valider \
      rapport-mensuel \
-     menu-rh
+     menu-rh \
+	 dashboard \
+     export-employes export-paie export-conges \
 
 # Création du répertoire bin
 $(BIN_DIR):
@@ -200,7 +202,13 @@ $(MENU_RH_BIN): $(MENU_RH_SRC) | $(BIN_DIR)
 # ALIAS POUR LES CIBLES
 # --------------------------------------------------
 auth: $(AUTH_BIN)
+dashboard:
+	$(COBOL) $(FLAGS) \
+	modules/dashboard/dashboard-rh.cob \
+	-o bin/dashboard
 
+run-dashboard: dashboard
+	./bin/dashboard
 departement: $(DEPARTEMENT_BIN)
 departement-liste: $(DEPARTEMENT_LISTE_BIN)
 departement-modifier: $(DEPARTEMENT_MODIFIER_BIN)
@@ -232,7 +240,17 @@ conge-liste: $(CONGE_LISTE_BIN)
 conge-valider: $(CONGE_VALIDER_BIN)
 
 rapport-mensuel: $(RAPPORT_MENSUEL_BIN)
+export-employes:
+	$(COBOL) -x modules/export/export-employes.cob \
+	-o bin/export-employes
 
+export-paie:
+	$(COBOL) -x modules/export/export-paie.cob \
+	-o bin/export-paie
+
+export-conges:
+	$(COBOL) -x modules/export/export-conges.cob \
+	-o bin/export-conges
 menu-rh: $(MENU_RH_BIN)
 
 # --------------------------------------------------

@@ -55,6 +55,15 @@ CREATE TABLE payroll (
         REFERENCES employees(employee_id)
 );
 
+CREATE TABLE evaluations (
+    evaluation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    employee_id INTEGER NOT NULL,
+    evaluation_date TEXT DEFAULT (date('now')),
+    score INTEGER NOT NULL,
+    commentaire TEXT,
+    FOREIGN KEY(employee_id)
+        REFERENCES employees(employee_id)
+);
 
 -- Insertions valides
 INSERT INTO departments (department_name) VALUES ('Informatique');

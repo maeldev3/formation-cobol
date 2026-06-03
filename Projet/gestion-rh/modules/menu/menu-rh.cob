@@ -31,6 +31,8 @@
                DISPLAY "5 - Gestion Conges"
                DISPLAY "6 - Paie"
                DISPLAY "7 - Rapport RH"
+               DISPLAY "8 - Dashboard RH"
+               DISPLAY "9 - Exports CSV"
                DISPLAY "0 - Quitter"
                DISPLAY "===================================="
 
@@ -60,6 +62,12 @@
                    WHEN 7
                        CALL "SYSTEM"
                            USING "./bin/rapport-mensuel"
+                   WHEN 8
+                       CALL "SYSTEM"
+                           USING "./bin/dashboard"
+
+                   WHEN 9
+                       PERFORM MENU-EXPORTS
 
                    WHEN 0
                        CONTINUE
@@ -336,6 +344,64 @@
                    WHEN 3
                        CALL "SYSTEM"
                            USING "./bin/rapport-paie"
+
+                   WHEN 0
+                       CONTINUE
+
+                   WHEN OTHER
+                       DISPLAY "Choix invalide"
+
+               END-EVALUATE
+
+           END-PERFORM.
+      *> ==========================================
+      *> MENU EXPORTS CSV
+      *> ==========================================
+
+       MENU-EXPORTS.
+
+           MOVE 9 TO WS-SOUS-CHOIX
+
+           PERFORM UNTIL WS-SOUS-CHOIX = 0
+
+               DISPLAY SPACE
+               DISPLAY "========== EXPORTS CSV =========="
+               DISPLAY "1 - Export Employes"
+               DISPLAY "2 - Export Paie"
+               DISPLAY "3 - Export Conges"
+               DISPLAY "4 - Export Tous"
+               DISPLAY "0 - Retour"
+
+               DISPLAY "Choix : " WITH NO ADVANCING
+               ACCEPT WS-SOUS-CHOIX
+
+               EVALUATE WS-SOUS-CHOIX
+
+                   WHEN 1
+                       CALL "SYSTEM"
+                           USING "./bin/export-employes"
+
+                   WHEN 2
+                       CALL "SYSTEM"
+                           USING "./bin/export-paie"
+
+                   WHEN 3
+                       CALL "SYSTEM"
+                           USING "./bin/export-conges"
+
+                   WHEN 4
+
+                       CALL "SYSTEM"
+                           USING "./bin/export-employes"
+
+                       CALL "SYSTEM"
+                           USING "./bin/export-paie"
+
+                       CALL "SYSTEM"
+                           USING "./bin/export-conges"
+
+                       DISPLAY SPACE
+                       DISPLAY "[OK] TOUS LES EXPORTS SONT GENERES"
 
                    WHEN 0
                        CONTINUE
