@@ -366,14 +366,9 @@ check-db:
 # --------------------------------------------------
 clean:
 	@echo "🧹 Nettoyage des fichiers compilés..."
-	rm -f $(BIN_DIR)/*
+	rm -rf $(BIN_DIR)/* 2>/dev/null || true
 	rm -rf $(TEMP_DIR)
 	@echo "✅ Nettoyage terminé"
-
-clean-all: clean
-	@echo "🧹 Suppression du répertoire bin..."
-	rm -rf $(BIN_DIR)
-	@echo "✅ Nettoyage complet terminé"
 
 # --------------------------------------------------
 # RECOMPILATION COMPLÈTE
