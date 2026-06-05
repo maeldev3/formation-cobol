@@ -1,0 +1,7 @@
+01 MOVEMENT-REC.
+   05 MOVE-ID        PIC 9(6).
+   05 PRODUCT-ID     PIC 9(6).
+   05 MOVE-TYPE      PIC X.
+   05 QUANTITY       PIC 9(5).
+   05 REASON         PIC X(50).
+   05 MOVE-DATE      PIC X(19).
