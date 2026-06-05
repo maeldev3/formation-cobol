@@ -13,6 +13,7 @@
            DISPLAY "2. List Product".
            DISPLAY "3. Recherche".
            DISPLAY "4. Modification".
+           DISPLAY "5. Supprimer".
            DISPLAY "6. Exit".
            DISPLAY "Choose option: ".
            ACCEPT WS-CHOICE.
@@ -27,6 +28,8 @@
            WHEN 4
                    CALL 'UPDATE_STOCK'
            WHEN 5
+                   CALL 'DELETE_PRODUCT'        
+           WHEN 6
                    DISPLAY "Goodbye!"
                    STOP RUN
            WHEN OTHER

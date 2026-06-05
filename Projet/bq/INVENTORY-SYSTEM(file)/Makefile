@@ -5,7 +5,8 @@ SRC = src/main.cob \
       src/product/add_product.cob \
       src/product/list_products.cob \
       src/product/search_product.cob \
-      src/product/update_stock.cob
+      src/product/update_stock.cob \
+	  src/product/delete_product.cob
 all:
 	@mkdir -p bin
 	@echo "Compiling COBOL..."
