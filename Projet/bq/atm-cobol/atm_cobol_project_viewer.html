@@ -1,0 +1,362 @@
+
+<style>
+:root { --atm-bg: #0a0f1e; --atm-panel: #111827; --atm-border: #1e3a5f; --atm-gold: #d4a843; --atm-green: #00d084; --atm-blue: #3b82f6; --atm-red: #ef4444; --atm-text: #e2e8f0; --atm-muted: #64748b; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: transparent; font-family: var(--font-mono, 'Courier New', monospace); }
+.atm-wrap { background: linear-gradient(135deg, #0a0f1e 0%, #0f172a 50%, #0a0f1e 100%); border-radius: 16px; padding: 24px; border: 1px solid #1e3a5f; }
+.atm-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #1e3a5f; }
+.atm-logo { width: 48px; height: 48px; background: linear-gradient(135deg, #d4a843, #f59e0b); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.atm-title { color: #f1f5f9; font-size: 18px; font-weight: 500; font-family: var(--font-sans); }
+.atm-sub { color: #64748b; font-size: 13px; font-family: var(--font-sans); margin-top: 2px; }
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-family: var(--font-sans); font-weight: 500; }
+.badge-gold { background: #2d1f05; color: #d4a843; border: 1px solid #5c3d0a; }
+.badge-green { background: #052010; color: #00d084; border: 1px solid #0a4a28; }
+.badge-blue { background: #0c1f3d; color: #60a5fa; border: 1px solid #1e3a70; }
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; background: #111827; border-radius: 10px; padding: 4px; border: 1px solid #1e3a5f; }
+.tab { flex: 1; padding: 8px; text-align: center; border-radius: 7px; cursor: pointer; font-size: 12px; font-family: var(--font-sans); color: #64748b; border: none; background: transparent; transition: all 0.2s; }
+.tab.active { background: #1e3a5f; color: #93c5fd; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.terminal { background: #050a14; border: 1px solid #1e3a5f; border-radius: 10px; overflow: hidden; }
+.term-bar { background: #0f172a; padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #1e3a5f; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #ef4444; } .dot-y { background: #f59e0b; } .dot-g { background: #22c55e; }
+.term-title { color: #64748b; font-size: 12px; margin-left: auto; font-family: var(--font-sans); }
+.term-body { padding: 16px; font-size: 12px; line-height: 1.8; color: #00d084; min-height: 280px; }
+.term-line { display: block; }
+.t-white { color: #f1f5f9; }
+.t-gold { color: #d4a843; }
+.t-blue { color: #60a5fa; }
+.t-muted { color: #475569; }
+.t-red { color: #f87171; }
+.t-yellow { color: #fbbf24; }
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.card { background: #111827; border: 1px solid #1e3a5f; border-radius: 10px; padding: 14px; }
+.card-label { font-size: 11px; color: #64748b; font-family: var(--font-sans); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+.card-value { font-size: 20px; color: #f1f5f9; font-weight: 500; font-family: var(--font-sans); }
+.card-sub { font-size: 11px; color: #22c55e; font-family: var(--font-sans); margin-top: 3px; }
+.file-list { display: flex; flex-direction: column; gap: 8px; }
+.file-item { background: #111827; border: 1px solid #1e3a5f; border-radius: 8px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+.file-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.fi-main { background: #1e3a5f; }
+.fi-sec { background: #1a2e1a; }
+.fi-init { background: #2d1f05; }
+.fi-trans { background: #1e1a35; }
+.file-name { color: #93c5fd; font-size: 13px; font-weight: 500; font-family: var(--font-mono); }
+.file-desc { color: #64748b; font-size: 11px; font-family: var(--font-sans); margin-top: 2px; }
+.file-size { color: #475569; font-size: 11px; font-family: var(--font-sans); margin-left: auto; }
+.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.feat { background: #111827; border: 1px solid #1e3a5f; border-radius: 8px; padding: 12px; }
+.feat-icon { font-size: 18px; margin-bottom: 6px; }
+.feat-name { font-size: 13px; color: #f1f5f9; font-family: var(--font-sans); font-weight: 500; }
+.feat-desc { font-size: 11px; color: #64748b; font-family: var(--font-sans); margin-top: 3px; line-height: 1.5; }
+.card-sim { background: #111827; border: 1px solid #1e3a5f; border-radius: 10px; padding: 14px; margin-bottom: 8px; }
+.card-num { font-size: 14px; color: #d4a843; letter-spacing: 0.1em; font-family: var(--font-mono); }
+.card-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.card-owner { font-size: 11px; color: #94a3b8; font-family: var(--font-sans); }
+.card-balance { font-size: 13px; color: #00d084; font-family: var(--font-sans); font-weight: 500; }
+.progress-bar { height: 4px; background: #1e3a5f; border-radius: 2px; margin-top: 6px; }
+.progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #d4a843, #f59e0b); }
+.section-title { color: #64748b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-sans); margin-bottom: 10px; }
+.simulate-btn { width: 100%; padding: 10px; background: #1e3a5f; border: 1px solid #2d5a9e; border-radius: 8px; color: #93c5fd; font-family: var(--font-sans); font-size: 13px; cursor: pointer; margin-top: 12px; transition: all 0.2s; }
+.simulate-btn:hover { background: #2d5a9e; }
+</style>
+
+<div class="atm-wrap">
+  <div class="atm-header">
+    <div class="atm-logo">🏦</div>
+    <div>
+      <div class="atm-title">ATM Banking System — COBOL</div>
+      <div class="atm-sub">Projet #7 &nbsp;·&nbsp; GnuCOBOL 3.x &nbsp;·&nbsp; Fichiers ISAM indexés</div>
+    </div>
+    <div style="margin-left:auto; display:flex; gap:6px; flex-wrap:wrap;">
+      <span class="badge badge-gold">⭐⭐⭐ Avancé</span>
+      <span class="badge badge-green">✓ Compilé</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('demo')">Terminal</button>
+    <button class="tab" onclick="showTab('files')">Fichiers</button>
+    <button class="tab" onclick="showTab('cartes')">Cartes test</button>
+    <button class="tab" onclick="showTab('features')">Fonctions</button>
+  </div>
+
+  <div id="tab-demo" class="tab-content active">
+    <div class="terminal">
+      <div class="term-bar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="term-title">atm-main — session active</span>
+      </div>
+      <div class="term-body" id="term-out">
+        <span class="term-line t-gold">================================================</span>
+        <span class="term-line t-white">    *** BANQUE CENTRALE - ATM ***</span>
+        <span class="term-line t-muted">         v1.0  |  GnuCOBOL 3.x</span>
+        <span class="term-line t-gold">================================================</span>
+        <span class="term-line"> </span>
+        <span class="term-line t-white">  Bienvenue sur le terminal de paiement bancaire.</span>
+        <span class="term-line t-muted">  Ce système est sécurisé et surveillé 24h/24.</span>
+        <span class="term-line"> </span>
+        <span class="term-line t-blue">------------------------------------------------</span>
+        <span class="term-line t-yellow">  CARTES DE TEST DISPONIBLES :</span>
+        <span class="term-line">  [1] 4978 1234 5678 9012  PIN:1234  COURANT</span>
+        <span class="term-line">  [2] 4978 2345 6789 0123  PIN:1111  EPARGNE</span>
+        <span class="term-line">  [3] 4978 3456 7890 1234  PIN:4321  COURANT</span>
+        <span class="term-line t-blue">------------------------------------------------</span>
+        <span class="term-line"> </span>
+        <span class="term-line t-muted" id="cursor-line">  Appuyez sur ENTREE pour insérer votre carte... ▌</span>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px;">
+      <button class="simulate-btn" onclick="simInsertion()">💳 Insérer carte</button>
+      <button class="simulate-btn" onclick="simRetrait()">💵 Simuler retrait</button>
+      <button class="simulate-btn" onclick="simSolde()">📊 Voir solde</button>
+    </div>
+  </div>
+
+  <div id="tab-files" class="tab-content">
+    <div class="file-list">
+      <div class="file-item">
+        <div class="file-icon fi-main"><i class="ti ti-file-code" style="color:#60a5fa;font-size:16px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="file-name">ATM-MAIN.cbl</div>
+          <div class="file-desc">Programme principal · Menu · Sessions · Accueil · Affichage</div>
+        </div>
+        <span class="file-size">~800 lignes</span>
+      </div>
+      <div class="file-item">
+        <div class="file-icon fi-init"><i class="ti ti-database" style="color:#d4a843;font-size:16px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="file-name">ATM-INIT.cbl</div>
+          <div class="file-desc">Initialisation BD · Clients · Comptes · Cartes · Données démo</div>
+        </div>
+        <span class="file-size">~200 lignes</span>
+      </div>
+      <div class="file-item">
+        <div class="file-icon fi-sec"><i class="ti ti-shield-lock" style="color:#00d084;font-size:16px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="file-name">ATM-SECU.cbl</div>
+          <div class="file-desc">Sécurité PIN · Blocage carte · Journal d'audit · LINKAGE SECTION</div>
+        </div>
+        <span class="file-size">~100 lignes</span>
+      </div>
+      <div class="file-item">
+        <div class="file-icon fi-trans"><i class="ti ti-arrows-exchange" style="color:#a78bfa;font-size:16px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="file-name">ATM-TRANS.cbl</div>
+          <div class="file-desc">Validation retrait/dépôt · Plafonds · Calculs · Codes erreur</div>
+        </div>
+        <span class="file-size">~120 lignes</span>
+      </div>
+      <div class="file-item">
+        <div class="file-icon" style="background:#1a1a2e;"><i class="ti ti-settings" style="color:#94a3b8;font-size:16px;" aria-hidden="true"></i></div>
+        <div>
+          <div class="file-name">Makefile</div>
+          <div class="file-desc">make start → compile + init + lancement automatique</div>
+        </div>
+        <span class="file-size">makefile</span>
+      </div>
+    </div>
+    <div style="margin-top:14px; padding:12px; background:#111827; border:1px solid #1e3a5f; border-radius:8px;">
+      <div class="section-title">Commandes</div>
+      <span style="font-size:12px; color:#00d084; font-family:var(--font-mono); line-height:2;">
+        make start &nbsp;&nbsp;&nbsp; # tout en une commande<br>
+        make all &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # compiler<br>
+        make init &nbsp;&nbsp;&nbsp;&nbsp; # initialiser BD<br>
+        make run &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # lancer l'ATM<br>
+        make clean-all &nbsp;# tout supprimer
+      </span>
+    </div>
+  </div>
+
+  <div id="tab-cartes" class="tab-content">
+    <div class="section-title">Comptes disponibles</div>
+    <div class="card-sim">
+      <div class="card-num">4978 1234 5678 9012</div>
+      <div class="card-row">
+        <div>
+          <div class="card-owner">DUPONT Jean · Compte COURANT</div>
+          <div style="font-size:11px;color:#475569;font-family:var(--font-sans);">PIN: 1234 · Expire: 2028-12-31</div>
+        </div>
+        <div class="card-balance">1 250,75 €</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+    </div>
+    <div class="card-sim">
+      <div class="card-num">4978 2345 6789 0123</div>
+      <div class="card-row">
+        <div>
+          <div class="card-owner">DUPONT Jean · Compte EPARGNE</div>
+          <div style="font-size:11px;color:#475569;font-family:var(--font-sans);">PIN: 1111 · Expire: 2027-10-31</div>
+        </div>
+        <div class="card-balance">5 000,00 €</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+    <div class="card-sim">
+      <div class="card-num">4978 3456 7890 1234</div>
+      <div class="card-row">
+        <div>
+          <div class="card-owner">MARTIN Sophie · Compte COURANT</div>
+          <div style="font-size:11px;color:#475569;font-family:var(--font-sans);">PIN: 4321 · Expire: 2026-05-31</div>
+        </div>
+        <div class="card-balance">850,30 €</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:17%"></div></div>
+    </div>
+    <div class="card-sim">
+      <div class="card-num">5368 9876 5432 1098</div>
+      <div class="card-row">
+        <div>
+          <div class="card-owner">RAKOTO Hery · Compte COURANT</div>
+          <div style="font-size:11px;color:#475569;font-family:var(--font-sans);">PIN: 0000 · Expire: 2029-03-31</div>
+        </div>
+        <div class="card-balance">2 500,00 €</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+    </div>
+  </div>
+
+  <div id="tab-features" class="tab-content">
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-icon">💳</div>
+        <div class="feat-name">Insertion carte</div>
+        <div class="feat-desc">Validation numéro, vérification activité et expiration</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔐</div>
+        <div class="feat-name">Sécurité PIN</div>
+        <div class="feat-desc">3 tentatives max, blocage automatique, journal d'audit</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">💵</div>
+        <div class="feat-name">Retrait</div>
+        <div class="feat-desc">Montants rapides 20/50/100/150/200€ ou libre (×10)</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">💰</div>
+        <div class="feat-name">Dépôt</div>
+        <div class="feat-desc">Crédit immédiat, validation plafond 10 000€</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📊</div>
+        <div class="feat-name">Consultation</div>
+        <div class="feat-desc">Solde, plafond, numéro IBAN, type de compte</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📋</div>
+        <div class="feat-name">Mini-relevé</div>
+        <div class="feat-desc">5 dernières opérations avec horodatage</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔑</div>
+        <div class="feat-name">Changement PIN</div>
+        <div class="feat-desc">Avec vérification de l'ancien code</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📁</div>
+        <div class="feat-name">Fichiers ISAM</div>
+        <div class="feat-desc">5 fichiers indexés + journal audit séquentiel</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; padding:12px; background:#111827; border:1px solid #1e3a5f; border-radius:8px;">
+      <div class="section-title">Concepts COBOL illustrés</div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px;">
+        <span class="badge badge-blue">Fichiers ISAM</span>
+        <span class="badge badge-blue">READ/WRITE/REWRITE</span>
+        <span class="badge badge-blue">EVALUATE</span>
+        <span class="badge badge-gold">LINKAGE SECTION</span>
+        <span class="badge badge-gold">CALL/USING</span>
+        <span class="badge badge-green">FUNCTION CURRENT-DATE</span>
+        <span class="badge badge-green">PERFORM UNTIL</span>
+        <span class="badge badge-green">PERFORM VARYING</span>
+        <span class="badge badge-gold">Clés alternatives</span>
+        <span class="badge badge-blue">START/READ NEXT</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+const screens = {
+  insertion: [
+    {t:'gold', v:'================================================'},
+    {t:'white', v:'            INSERTION DE CARTE'},
+    {t:'gold', v:'------------------------------------------------'},
+    {t:'', v:' '},
+    {t:'white', v:'  Numéro de carte :'},
+    {t:'blue', v:'  4978 1234 5678 9012'},
+    {t:'', v:' '},
+    {t:'muted', v:'  Lecture en cours...'},
+    {t:'', v:' '},
+    {t:'green', v:'  [OK] Carte reconnue — DUPONT Jean'},
+  ],
+  retrait: [
+    {t:'gold', v:'================================================'},
+    {t:'white', v:'           RETRAIT D\'ESPECES'},
+    {t:'gold', v:'------------------------------------------------'},
+    {t:'', v:' '},
+    {t:'', v:'  Solde disponible :      1.250,75 EUR'},
+    {t:'', v:'  Plafond de retrait :      300,00 EUR'},
+    {t:'', v:' '},
+    {t:'yellow', v:'  [2] 50 EUR sélectionné'},
+    {t:'', v:' '},
+    {t:'white', v:'  Confirmer le retrait de 50,00 EUR ? [O]'},
+    {t:'', v:' '},
+    {t:'green', v:'  *** RETRAIT EFFECTUÉ ***'},
+    {t:'', v:'  Montant retiré :         50,00 EUR'},
+    {t:'', v:'  Nouveau solde  :      1.200,75 EUR'},
+    {t:'', v:' '},
+    {t:'muted', v:'  Veuillez prendre vos billets.'},
+  ],
+  solde: [
+    {t:'gold', v:'================================================'},
+    {t:'white', v:'          CONSULTATION DE SOLDE'},
+    {t:'gold', v:'------------------------------------------------'},
+    {t:'', v:' '},
+    {t:'', v:'  Titulaire : DUPONT Jean'},
+    {t:'', v:'  Compte    : FR7612345000012345678901'},
+    {t:'', v:'  Type      : COURANT'},
+    {t:'', v:'  Ouvert le : 2020-01-15'},
+    {t:'', v:' '},
+    {t:'gold', v:'------------------------------------------------'},
+    {t:'', v:' '},
+    {t:'green', v:'  SOLDE DISPONIBLE :       1.250,75 EUR'},
+    {t:'', v:' '},
+    {t:'', v:'  Plafond retrait  :         300,00 EUR'},
+    {t:'gold', v:'------------------------------------------------'},
+  ]
+};
+
+function renderScreen(lines) {
+  const out = document.getElementById('term-out');
+  out.innerHTML = '';
+  lines.forEach((l, i) => {
+    setTimeout(() => {
+      const span = document.createElement('span');
+      span.className = 'term-line' + (l.t ? ' t-' + l.t : '');
+      span.textContent = l.v;
+      out.appendChild(span);
+    }, i * 60);
+  });
+}
+
+function simInsertion() { renderScreen(screens.insertion); }
+function simRetrait() { renderScreen(screens.retrait); }
+function simSolde() { renderScreen(screens.solde); }
+
+setInterval(() => {
+  const c = document.getElementById('cursor-line');
+  if (c) c.textContent = c.textContent.endsWith('▌') 
+    ? '  Appuyez sur ENTREE pour insérer votre carte...' 
+    : '  Appuyez sur ENTREE pour insérer votre carte... ▌';
+}, 600);
+</script>
