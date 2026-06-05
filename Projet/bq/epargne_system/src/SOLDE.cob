@@ -23,7 +23,7 @@
        01  TEMP-RECORD            PIC X(200).
 
        WORKING-STORAGE SECTION.
-       COPY 'epargne_copy.cpy'.
+       COPY 'epargne_copy.cpy'. 
        01  WS-CLIENT-IDX          PIC 9(9).
        01  WS-SOLDE-VAL           PIC S9(13)V99.
        01  WS-COMMANDE            PIC X(500).
