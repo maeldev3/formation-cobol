@@ -367,7 +367,7 @@ check-db:
 clean:
 	@echo "🧹 Nettoyage des fichiers compilés..."
 	rm -rf $(BIN_DIR)/* 2>/dev/null || true
-	rm -rf $(TEMP_DIR)
+	# rm -rf $(TEMP_DIR)
 	@echo "✅ Nettoyage terminé"
 
 # --------------------------------------------------
