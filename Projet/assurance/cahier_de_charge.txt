@@ -1,11 +1,6 @@
 #!/bin/bash
 
-# Créer le dossier docs s'il n'existe pas
-mkdir -p ~/projet/PR-Olivier/cobol/cobol_formation/Projet/assurance/docs
 
-# Créer le fichier CAHIER_CHARGE_ASSURANCE.md
-cat > ~/projet/PR-Olivier/cobol/cobol_formation/Projet/assurance/docs/CAHIER_CHARGE_ASSURANCE.md << 'EOF'
-# CAHIER DE CHARGE - SYSTÈME DE GESTION D'ASSURANCE
 
 ## PROJET ASSURANCE EN COBOL
 
