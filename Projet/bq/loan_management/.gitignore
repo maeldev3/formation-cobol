@@ -1,0 +1,44 @@
+# =========================
+# COBOL / GnuCOBOL files
+# =========================
+
+# Executables
+*.exe
+*.out
+*.run
+a.out
+
+# Object files
+*.o
+*.obj
+
+# Intermediate compilation files
+*.c
+*.i
+*.lst
+*.int
+*.gnt
+
+# Logs
+*.log
+
+# Backup files
+*~
+*.bak
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Linux / system
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+
+# Database files (if SQLite used in COBOL project)
+*.db
+*.sqlite

@@ -1,0 +1,6 @@
+bin/
+data/*.dat
+data/*.idx
+logs/*.log
+logs/*.txt
+*.o
