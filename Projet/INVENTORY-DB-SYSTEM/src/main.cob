@@ -1,5 +1,0 @@
-       IDENTIFICATION DIVISION.
-       PROGRAM-ID. MAIN.
-       PROCEDURE DIVISION.
-           CALL "MENU"
-           STOP RUN.
