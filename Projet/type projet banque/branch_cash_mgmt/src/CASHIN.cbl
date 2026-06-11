@@ -1,0 +1,70 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CASHIN.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 WS-AMOUNT-IN          PIC 9(12)V99.
+       01 WS-CONFIRM            PIC X(01).
+
+       LINKAGE SECTION.
+       01 LS-CURRENT-BAL        PIC 9(12)V99.
+       01 LS-TRANS-COUNT        PIC 9(6).
+       01 LS-DATE               PIC X(10).
+       01 LS-TIME               PIC X(08).
+
+       PROCEDURE DIVISION USING LS-CURRENT-BAL
+                                LS-TRANS-COUNT
+                                LS-DATE
+                                LS-TIME.
+       
+       MAIN-PROCESS.
+           DISPLAY "=============================="
+           DISPLAY "      GESTION DES ENTREES     "
+           DISPLAY "         (DEPOTS)             "
+           DISPLAY "=============================="
+           DISPLAY "SOLDE ACTUEL : " LS-CURRENT-BAL
+           DISPLAY " "
+           
+           DISPLAY "ENTREZ LE MONTANT DU DEPOT : "
+           ACCEPT WS-AMOUNT-IN
+           
+           IF WS-AMOUNT-IN > 0
+               DISPLAY "CONFIRMEZ-VOUS DEPOT DE " WS-AMOUNT-IN
+               DISPLAY "OUI (O) / NON (N) : "
+               ACCEPT WS-CONFIRM
+               IF WS-CONFIRM = 'O' OR WS-CONFIRM = 'o'
+                   COMPUTE LS-CURRENT-BAL = 
+                       LS-CURRENT-BAL + WS-AMOUNT-IN
+                   ADD 1 TO LS-TRANS-COUNT
+                   PERFORM LOG-TRANSACTION
+                   DISPLAY "DEPOT EFFECTUE AVEC SUCCES"
+                   DISPLAY "NOUVEAU SOLDE : " LS-CURRENT-BAL
+               ELSE
+                   DISPLAY "OPERATION ANNULEE"
+               END-IF
+           ELSE
+               DISPLAY "MONTANT INVALIDE"
+           END-IF
+           
+           DISPLAY " "
+           DISPLAY "APPUYEZ SUR ENTREE"
+           ACCEPT WS-CONFIRM
+           GOBACK.
+
+       LOG-TRANSACTION.
+           OPEN EXTEND HIST-FILE
+           IF WS-HIST-STATUS = "00"
+               MOVE LS-DATE TO HR-DATE
+               MOVE LS-TIME TO HR-TIME
+               MOVE 'E' TO HR-TYPE
+               MOVE WS-AMOUNT-IN TO HR-AMOUNT
+               MOVE LS-CURRENT-BAL TO HR-BALANCE-AFT
+               MOVE "T001" TO HR-TELLER-ID
+               WRITE HIST-RECORD
+               CLOSE HIST-FILE
+           END-IF
+           .
+
+       COPY COMMON.
+       
+       END PROGRAM CASHIN.
