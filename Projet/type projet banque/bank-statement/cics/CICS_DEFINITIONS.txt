@@ -1,0 +1,173 @@
+******************************************************************
+* CICS RESOURCE DEFINITIONS                                       *
+* BANK STATEMENT GENERATOR                                        *
+******************************************************************
+
+******************************************************************
+* 1. TRANSACTION DEFINITIONS (CEDA DEFINE)                        *
+******************************************************************
+
+* TRANSACTION PRINCIPALE: BSTM
+CEDA DEFINE TRANSACTION(BSTM)
+       PROGRAM(BSTMTGEN)
+       PROFILE(DFHCICST)
+       DESCRIPTION('BANK STATEMENT GENERATOR - MAIN')
+       TWASIZE(512)
+       TASKDATALOC(ANY)
+       TASKDATAKEY(USER)
+       ISOLATE(YES)
+       DYNAMIC(NO)
+       PRIORITY(1)
+       TPNAME(BSTMTGEN)
+       INDOUBT(BACKOUT)
+       WAIT(YES)
+
+* TRANSACTION AFFICHAGE: BSTV
+CEDA DEFINE TRANSACTION(BSTV)
+       PROGRAM(BSTMTVIW)
+       PROFILE(DFHCICST)
+       DESCRIPTION('BANK STATEMENT VIEWER')
+       TWASIZE(256)
+       TASKDATALOC(ANY)
+       TASKDATAKEY(USER)
+       ISOLATE(YES)
+       PRIORITY(1)
+
+******************************************************************
+* 2. PROGRAM DEFINITIONS                                          *
+******************************************************************
+
+CEDA DEFINE PROGRAM(BSTMTGEN)
+       LANGUAGE(COBOL)
+       DESCRIPTION('BANK STATEMENT GENERATOR')
+       EXECKEY(USER)
+       CONCURRENCY(QUASIRENT)
+       RELOAD(NO)
+       RESIDENT(NO)
+       USAGE(NORMAL)
+       DATALOCATION(ANY)
+       EXECKEY(USER)
+
+CEDA DEFINE PROGRAM(BSTMTVIW)
+       LANGUAGE(COBOL)
+       DESCRIPTION('BANK STATEMENT VIEWER')
+       EXECKEY(USER)
+       CONCURRENCY(QUASIRENT)
+
+CEDA DEFINE PROGRAM(BSTMTMAP)
+       LANGUAGE(ASSEMBLER)
+       DESCRIPTION('BANK STATEMENT BMS MAPSET')
+       EXECKEY(CICS)
+
+******************************************************************
+* 3. BMS MAPSET DEFINITION                                        *
+******************************************************************
+
+BSTMTMAP DFHMSD TYPE=MAP,
+               LANG=COBOL,
+               MODE=INOUT,
+               TIOAPFX=YES,
+               CTRL=FREEKB,
+               STORAGE=AUTO,
+               MAPATTS=(COLOR,HILIGHT),
+               DSATTS=(COLOR,HILIGHT)
+
+* MAPSET: MENU PRINCIPAL
+BSTMTM01 DFHMDI SIZE=(24,80),LINE=1,COLUMN=1
+
+* HEADER
+         DFHMDF POS=(01,01),LENGTH=80,ATTRB=(ASKIP,NORM),
+               COLOR=BLUE,
+               INITIAL='==========================================
+               =============================================='
+
+         DFHMDF POS=(02,20),LENGTH=40,ATTRB=(ASKIP,NORM),
+               COLOR=WHITE,
+               INITIAL='GENERATEUR DE RELEVES BANCAIRES'
+
+         DFHMDF POS=(03,01),LENGTH=80,ATTRB=(ASKIP,NORM),
+               COLOR=BLUE,
+               INITIAL='==========================================
+               =============================================='
+
+* CHAMP NUMERO DE COMPTE
+         DFHMDF POS=(06,02),LENGTH=20,ATTRB=(ASKIP,NORM),
+               COLOR=GREEN,
+               INITIAL='NUMERO DE COMPTE :'
+
+COMPTE   DFHMDF POS=(06,23),LENGTH=26,ATTRB=(UNPROT,NORM),
+               COLOR=TURQUOISE,
+               INITIAL='                          '
+
+* CHAMP DATE DEBUT
+         DFHMDF POS=(08,02),LENGTH=20,ATTRB=(ASKIP,NORM),
+               COLOR=GREEN,
+               INITIAL='DATE DEBUT (AAAA-MM-JJ):'
+
+DTDEBUT  DFHMDF POS=(08,26),LENGTH=10,ATTRB=(UNPROT,NORM),
+               COLOR=TURQUOISE,
+               INITIAL='          '
+
+* CHAMP DATE FIN
+         DFHMDF POS=(10,02),LENGTH=20,ATTRB=(ASKIP,NORM),
+               COLOR=GREEN,
+               INITIAL='DATE FIN   (AAAA-MM-JJ):'
+
+DTFIN    DFHMDF POS=(10,26),LENGTH=10,ATTRB=(UNPROT,NORM),
+               COLOR=TURQUOISE,
+               INITIAL='          '
+
+* ZONE MESSAGE
+         DFHMDF POS=(22,02),LENGTH=15,ATTRB=(ASKIP,NORM),
+               COLOR=YELLOW,
+               INITIAL='MESSAGE :'
+
+MSGZONE  DFHMDF POS=(22,18),LENGTH=60,ATTRB=(ASKIP,NORM),
+               COLOR=YELLOW,
+               INITIAL='                                            
+               ================'
+
+* PF KEYS
+         DFHMDF POS=(24,01),LENGTH=78,ATTRB=(ASKIP,NORM),
+               COLOR=NEUTRAL,
+               INITIAL='PF1=AIDE  PF3=FIN  PF5=GENERER RELEVE  
+               PF6=AFFICHER HISTORIQUE'
+
+         DFHMSD TYPE=FINAL
+         END
+
+******************************************************************
+* 4. TEMPORARY STORAGE QUEUE DEFINITIONS                          *
+******************************************************************
+
+* File: CICSTSQ.conf
+* Temporary Storage Queue for statement lines
+* Queue: BSTMTQ   (80 bytes per record)
+* Queue: BSTMTEQ  (error messages)
+
+CEDA DEFINE TSMODEL(BSTMTQ)
+       PREFIX(BSTMT)
+       LOCATION(AUXILIARY)
+       SECURITY(NO)
+       EXPIRYINT(01)
+       DESCRIPTION('BANK STATEMENT OUTPUT QUEUE')
+
+CEDA INSTALL TSMODEL(BSTMTQ)
+
+******************************************************************
+* 5. DB2 ENTRY DEFINITIONS                                        *
+******************************************************************
+
+CEDA DEFINE DB2ENTRY(BSTMTGEN)
+       PLAN(BSTMTPLN)
+       PLANEXITNAME(DFHD2EX0)
+       ACCOUNTREC(NONE)
+       AUTHTYPE(USERID)
+       DESCRIPTION('BANK STATEMENT DB2 ENTRY')
+       DROLLBACK(YES)
+       PRIORITY(HIGH)
+       PROTECTNUM(0)
+       THREADLIMIT(20)
+       THREADWAIT(YES)
+
+CEDA INSTALL DB2ENTRY(BSTMTGEN)

@@ -1,0 +1,17 @@
+ACCTMAP  DFHMSD TYPE=&SYSPARM,                                     X
+               MODE=INOUT,                                         X
+               LANG=COBOL,                                         X
+               TERM=3270-2,                                        X
+               CTRL=FREEKB,                                        X
+               STORAGE=AUTO,                                       X
+               TIOAPFX=YES
+ACCTMAP  DFHMDI SIZE=(24,80)
+         DFHMDF POS=(1,1), LENGTH=20, INITIAL='---GESTIONNAIRE---'
+         DFHMDF POS=(3,1), LENGTH=18, INITIAL='Numero de compte :'
+         ACINUM   DFHMDF POS=(3,21), LENGTH=6, ATTRB=(UNPROT,IC)
+         DFHMDF POS=(5,1), LENGTH=30, INITIAL='Nom du titulaire     :'
+         ACINOM   DFHMDF POS=(5,26), LENGTH=30, ATTRB=PROT
+         DFHMDF POS=(7,1), LENGTH=30, INITIAL='Solde du compte (EUR) :'
+         ACISOL   DFHMDF POS=(7,26), LENGTH=13, ATTRB=PROT
+         MESSAGE  DFHMDF POS=(23,1), LENGTH=79, ATTRB=PROT
+         DFHMSD TYPE=FINAL
