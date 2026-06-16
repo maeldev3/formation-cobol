@@ -1,0 +1,67 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CALCSOL.
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT CLIENTS-FILE
+               ASSIGN TO CLIENTS
+               ORGANIZATION IS SEQUENTIAL
+               FILE STATUS IS WS-FS-CLI.
+           SELECT TOTAL-FILE
+               ASSIGN TO TOTAL
+               ORGANIZATION IS SEQUENTIAL
+               FILE STATUS IS WS-FS-TOT.
+       DATA DIVISION.
+       FILE SECTION.
+       FD CLIENTS-FILE
+           RECORDING MODE F
+           LABEL RECORDS STANDARD.
+       01 CLIENTS-RECORD.
+           05 CLIENT-NO      PIC X(10).
+           05 CLIENT-NAME    PIC X(20).
+           05 CLIENT-FNAME   PIC X(20).
+           05 CLIENT-BALANCE PIC 9(7)V99.
+       FD TOTAL-FILE
+           RECORDING MODE F
+           LABEL RECORDS STANDARD.
+       01 TOTAL-RECORD.
+           05 TOTAL-AMOUNT   PIC 9(12)V99.
+       WORKING-STORAGE SECTION.
+       01 WS-FS-CLI          PIC X(02) VALUE '00'.
+       01 WS-FS-TOT          PIC X(02) VALUE '00'.
+       01 WS-EOF             PIC X VALUE 'N'.
+           88 WS-END-OF-FILE VALUE 'Y'.
+       01 WS-TOTAL           PIC 9(12)V99 VALUE 0.
+       PROCEDURE DIVISION.
+       MAIN.
+           PERFORM INITIALIZE
+           PERFORM OPEN-FILES
+           IF WS-FS-CLI = '00' AND WS-FS-TOT = '00'
+               PERFORM PROCESS-RECORDS
+               PERFORM WRITE-TOTAL
+               PERFORM CLOSE-FILES
+               MOVE 0 TO RETURN-CODE
+           ELSE
+               DISPLAY 'ERREUR OUVERTURE FICHIER(S)'
+               MOVE 4 TO RETURN-CODE
+           END-IF
+           GOBACK.
+       INITIALIZE.
+           MOVE 'N' TO WS-EOF
+           MOVE 0 TO WS-TOTAL.
+       OPEN-FILES.
+           OPEN INPUT CLIENTS-FILE
+           OPEN OUTPUT TOTAL-FILE.
+       PROCESS-RECORDS.
+           PERFORM UNTIL WS-END-OF-FILE
+               READ CLIENTS-FILE
+                   AT END SET WS-END-OF-FILE TO TRUE
+                   NOT AT END ADD CLIENT-BALANCE TO WS-TOTAL
+               END-READ
+           END-PERFORM.
+       WRITE-TOTAL.
+           MOVE WS-TOTAL TO TOTAL-AMOUNT
+           WRITE TOTAL-RECORD.
+       CLOSE-FILES.
+           CLOSE CLIENTS-FILE
+           CLOSE TOTAL-FILE.

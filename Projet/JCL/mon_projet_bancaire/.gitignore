@@ -1,0 +1,7 @@
+*.lst
+*.tmp
+*.log
+build/
+logs/
+data/*.txt
+config/zowe.config.json
