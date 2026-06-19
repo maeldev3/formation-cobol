@@ -1,0 +1,16 @@
+//Z74830  JOB (ACCT),'COMPILE HELLOBANK',CLASS=A,MSGCLASS=X,
+//   NOTIFY=&SYSUID
+//*--------------------------------------------------------------*
+//* JOB     : Z74830                                           *
+//* OBJET   : COMPILATION ET LINK-EDIT DU PROGRAMME HELLOBANK     *
+//* USER    : Z74830                                              *
+//* NOTE    : ADAPTER LE NOM DE PROC (IGYWCL) ET LES VOLUMES      *
+//*           SELON LES NORMES DE VOTRE ETABLISSEMENT/EZTRIEVE    *
+//*--------------------------------------------------------------*
+//STEP1    EXEC IGYWCL,PARM.COBOL='LIB,APOST,NOSEQ',REGION=0M
+//COBOL.SYSIN   DD DSN=Z74830.HELLOBNK.COBOL(HELLOBNK),DISP=SHR
+//COBOL.SYSLIB  DD DSN=Z74830.HELLOBNK.COPY,DISP=SHR
+//LKED.SYSLMOD  DD DSN=Z74830.HELLOBNK.LOAD(HELLOBNK),DISP=SHR
+//*
+//* SYSPRINT, SYSOUT ET MESSAGES SONT FOURNIS PAR LA PROC IGYWCL
+//*
