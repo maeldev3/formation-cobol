@@ -1,0 +1,34 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. SEQPROC.
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT INFILE  ASSIGN TO INFILE
+                  ORGANIZATION SEQUENTIAL.
+           SELECT OUTFILE ASSIGN TO OUTFILE
+                  ORGANIZATION SEQUENTIAL.
+       DATA DIVISION.
+       FILE SECTION.
+       FD INFILE  RECORDING MODE F.
+       01 IN-REC   PIC X(80).
+       FD OUTFILE RECORDING MODE F.
+       01 OUT-REC  PIC X(80).
+       WORKING-STORAGE SECTION.
+       01 WS-EOF    PIC X(1) VALUE 'N'.
+       01 WS-COUNT  PIC 9(5) VALUE 0.
+       PROCEDURE DIVISION.
+           OPEN INPUT INFILE
+           OPEN OUTPUT OUTFILE
+           PERFORM UNTIL WS-EOF = 'Y'
+               READ INFILE INTO IN-REC
+                 AT END MOVE 'Y' TO WS-EOF
+                 NOT AT END
+                   MOVE IN-REC TO OUT-REC
+                   WRITE OUT-REC
+                   ADD 1 TO WS-COUNT
+               END-READ
+           END-PERFORM
+           CLOSE INFILE
+           CLOSE OUTFILE
+           DISPLAY 'NOMBRE D ENREGISTREMENTS TRAITES : ' WS-COUNT
+           GOBACK.

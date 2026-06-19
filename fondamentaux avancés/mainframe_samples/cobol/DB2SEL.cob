@@ -1,0 +1,26 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. DB2SEL.
+       ENVIRONMENT DIVISION.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       EXEC SQL
+           INCLUDE SQLCA
+       END-EXEC.
+       01 WS-EMPNO    PIC X(6).
+       01 WS-LASTNAME PIC X(20).
+       01 WS-FIRSTNME PIC X(12).
+       PROCEDURE DIVISION.
+       MAIN-PROCEDURE.
+           EXEC SQL
+               SELECT EMPNO, LASTNAME, FIRSTNME
+               INTO :WS-EMPNO, :WS-LASTNAME, :WS-FIRSTNME
+               FROM Z74830.EMPLOYEE
+               WHERE EMPNO = '000010'
+           END-EXEC
+           IF SQLCODE = 0
+               DISPLAY 'NOM: ' WS-LASTNAME
+               DISPLAY 'PRENOM: ' WS-FIRSTNME
+           ELSE
+               DISPLAY 'ERREUR SQLCODE = ' SQLCODE
+           END-IF
+           GOBACK.

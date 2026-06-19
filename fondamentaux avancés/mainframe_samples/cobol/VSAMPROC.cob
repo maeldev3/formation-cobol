@@ -1,0 +1,27 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. VSAMPROC.
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT VSAM-FILE
+                  ASSIGN TO VSAM
+                  ORGANIZATION INDEXED
+                  ACCESS MODE RANDOM
+                  RECORD KEY WS-KEY.
+       DATA DIVISION.
+       FILE SECTION.
+       FD VSAM-FILE.
+       01 VSAM-REC.
+           05 VSAM-KEY   PIC X(10).
+           05 VSAM-DATA  PIC X(70).
+       WORKING-STORAGE SECTION.
+       01 WS-KEY         PIC X(10).
+       PROCEDURE DIVISION.
+           MOVE '0000000001' TO WS-KEY
+           OPEN OUTPUT VSAM-FILE
+           MOVE WS-KEY TO VSAM-KEY
+           MOVE 'ENREGISTREMENT 1 - COBOL VSAM' TO VSAM-DATA
+           WRITE VSAM-REC
+           CLOSE VSAM-FILE
+           DISPLAY 'VSAM ECRIT AVEC SUCCES'
+           GOBACK.
