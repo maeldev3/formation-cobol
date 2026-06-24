@@ -1,13 +1,12 @@
 #!/bin/bash
-echo "======================================"
-echo "COMPILATION DU BRANCH CASH SYSTEM"
-echo "======================================"
+echo "COMPILATION..."
 cd src
+rm -f CASHMAIN
 cobc -x CASHMAIN.cbl -o CASHMAIN
 if [ -f CASHMAIN ]; then
-    echo "COMPILATION REUSSIE"
+    echo "SUCCES"
     ls -la CASHMAIN
 else
-    echo "ERREUR DE COMPILATION"
+    echo "ECHEC"
 fi
 cd ..

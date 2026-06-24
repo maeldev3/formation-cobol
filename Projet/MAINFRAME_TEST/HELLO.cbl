@@ -2,5 +2,5 @@
        PROGRAM-ID. HELLO.
 
        PROCEDURE DIVISION.
-           DISPLAY 'BONJOUR MAINFRAME'.
-           GOBACK.
+           DISPLAY 'HELLO FROM COBOL ON MAINFRAME'.
+           STOP RUN.
