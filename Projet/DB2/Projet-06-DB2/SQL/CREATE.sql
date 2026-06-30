@@ -1,0 +1,8 @@
+CREATE TABLE EMPLOYEE
+(
+    EMP_ID      INTEGER      NOT NULL,
+    EMP_NAME    CHAR(30),
+    DEPT        CHAR(10),
+    SALARY      DECIMAL(9,2),
+    PRIMARY KEY (EMP_ID)
+);

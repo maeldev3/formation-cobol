@@ -1,0 +1,6 @@
+//PRECOMP JOB (ACCT),'DB2 PRECOMP',CLASS=A,
+//         MSGCLASS=X,NOTIFY=&SYSUID
+//*
+//* Précompilation DB2
+//*
+//STEP1 EXEC PGM=IKJEFT01
