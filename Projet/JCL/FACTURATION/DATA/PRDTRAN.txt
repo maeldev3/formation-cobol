@@ -1,0 +1,4 @@
+APRD0001 Ordinateur portable 15p       8500000200000025IN
+APRD0002 Souris sans fil               2500000200000150AC
+APRD0003 Clavier mecanique             6000000200000080AC
+APRD0004 Ecran 24 pouces               3200000200000040IN

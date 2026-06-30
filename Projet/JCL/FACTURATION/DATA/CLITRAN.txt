@@ -1,0 +1,4 @@
+ACL0001RAKOTOMALALA             Jean                Lot II M 45 Ambohipo     Antananarivo   101  0341234567     jean.rakoto@mail.mg           
+ACL0002RAVALOMANANA             Hery                Lot 67B Ankorondrano     Antananarivo   101  0331122334     hery.rava@mail.mg             
+ACL0003RABENJA                  Fara                Villa 12 Ivandry         Antananarivo   101  0327654321     fara.rabenja@mail.mg          
+MCL0002RAVALOMANANA             Hery Tojo           Lot 67B Ankorondrano     Antananarivo   105  0331122334     hery.rava@mail.mg             
