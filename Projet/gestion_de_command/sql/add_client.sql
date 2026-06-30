@@ -1,0 +1,4 @@
+INSERT INTO CLIENT
+(NOM, TELEPHONE, EMAIL)
+VALUES
+('Paul Martin','0320000000','paul@test.com');

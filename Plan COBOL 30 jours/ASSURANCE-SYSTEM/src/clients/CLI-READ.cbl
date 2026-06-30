@@ -1,29 +1,29 @@
-IDENTIFICATION DIVISION.
-PROGRAM-ID. CLI-READ.
-
-DATA DIVISION.
-WORKING-STORAGE SECTION.
-EXEC SQL INCLUDE SQLCA END-EXEC.
-
-01 WS-ID PIC 9(6).
-01 WS-NOM PIC X(50).
-01 WS-ADR PIC X(100).
-01 WS-TEL PIC X(20).
-
-PROCEDURE DIVISION.
-
-DISPLAY "ID : "
-ACCEPT WS-ID
-
-EXEC SQL
-   SELECT nom, adresse, telephone
-   INTO :WS-NOM, :WS-ADR, :WS-TEL
-   FROM clients
-   WHERE id = :WS-ID
-END-EXEC
-
-DISPLAY WS-NOM
-DISPLAY WS-ADR
-DISPLAY WS-TEL
-
-STOP RUN.
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CLI-READ.
+       
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       EXEC SQL INCLUDE SQLCA END-EXEC.
+       
+       01 WS-ID PIC 9(6).
+       01 WS-NOM PIC X(50).
+       01 WS-ADR PIC X(100).
+       01 WS-TEL PIC X(20).
+       
+       PROCEDURE DIVISION.
+       
+       DISPLAY "ID : "
+       ACCEPT WS-ID
+       
+       EXEC SQL
+           SELECT nom, adresse, telephone
+           INTO :WS-NOM, :WS-ADR, :WS-TEL
+           FROM clients
+           WHERE id = :WS-ID
+       END-EXEC
+       
+       DISPLAY WS-NOM
+       DISPLAY WS-ADR
+       DISPLAY WS-TEL
+       
+       STOP RUN.

@@ -1,0 +1,836 @@
+4	./ecole/test_ecole.sh
+4	./ecole/data/output/reports/RAPPORT_ECOLE.rpt
+4	./ecole/data/output/reports/BULLETIN.rpt
+12	./ecole/data/output/reports
+4	./ecole/data/output/logs
+4	./ecole/data/output/archive
+24	./ecole/data/output
+4	./ecole/data/input/COURS.DAT
+4	./ecole/data/input/ETUDIANTS.DAT
+4	./ecole/data/input/NOTES.DAT
+4	./ecole/data/input/EVALUATIONS.DAT
+20	./ecole/data/input
+48	./ecole/data
+4	./ecole/tests
+8	./ecole/scripts/main.sh
+12	./ecole/scripts
+4	./ecole/config
+80	./ecole/bin/LISTER_ETUDIANTS
+80	./ecole/bin/RECHERCHE_ETUDIANT
+80	./ecole/bin/AJOUT_ETUDIANT
+116	./ecole/bin/BATCH_ECOLE
+124	./ecole/bin/BULLETIN_ETUDIANT
+92	./ecole/bin/AJOUT_NOTE
+108	./ecole/bin/LISTER_NOTES
+684	./ecole/bin
+4	./ecole/docs
+4	./ecole/sql/queries.sql
+4	./ecole/sql/create_tables.sql
+12	./ecole/sql
+4	./ecole/Makefile
+4	./ecole/backups
+4	./ecole/src/modules/EVALUATIONS
+12	./ecole/src/modules/NOTES/BULLETIN_ETUDIANT.cob
+8	./ecole/src/modules/NOTES/AJOUT_NOTE.cob
+4	./ecole/src/modules/NOTES/LISTER_NOTES.cob
+28	./ecole/src/modules/NOTES
+4	./ecole/src/modules/COURS
+4	./ecole/src/modules/ETUDIANTS/RECHERCHE_ETUDIANT.cob
+4	./ecole/src/modules/ETUDIANTS/AJOUT_ETUDIANT.cob
+4	./ecole/src/modules/ETUDIANTS/LISTER_ETUDIANTS.cob
+16	./ecole/src/modules/ETUDIANTS
+56	./ecole/src/modules
+4	./ecole/src/reports
+8	./ecole/src/batch/BATCH_ECOLE.cob
+12	./ecole/src/batch
+4	./ecole/src/common
+80	./ecole/src
+864	./ecole
+4	./JCL/helo/jcl/HELLOMENU.jcl
+4	./JCL/helo/jcl/HELLOMENU.cbl
+4	./JCL/helo/jcl/HELLO.jcl
+16	./JCL/helo/jcl
+4	./JCL/helo/zapp.yaml
+24	./JCL/helo
+4	./JCL/mon_projet_bancaire/TEST3.jcl
+4	./JCL/mon_projet_bancaire/jcl/compilation/COMP_READCLI.jcl
+4	./JCL/mon_projet_bancaire/jcl/compilation/COMP_REPORT.jcl
+4	./JCL/mon_projet_bancaire/jcl/compilation/COMP_CALCSOL.jcl
+16	./JCL/mon_projet_bancaire/jcl/compilation
+4	./JCL/mon_projet_bancaire/jcl/utils/LOADCLI.jcl
+8	./JCL/mon_projet_bancaire/jcl/utils
+4	./JCL/mon_projet_bancaire/jcl/allocation/CREATE_DS.jcl
+4	./JCL/mon_projet_bancaire/jcl/allocation/CREATE_SRC.jcl
+12	./JCL/mon_projet_bancaire/jcl/allocation
+4	./JCL/mon_projet_bancaire/jcl/jobs/BANKJOB.jcl
+8	./JCL/mon_projet_bancaire/jcl/jobs
+48	./JCL/mon_projet_bancaire/jcl
+4	./JCL/mon_projet_bancaire/data/clients.txt
+8	./JCL/mon_projet_bancaire/data
+4	./JCL/mon_projet_bancaire/TEST2.jcl
+4	./JCL/mon_projet_bancaire/logs
+4	./JCL/mon_projet_bancaire/scripts/submit_job.sh
+4	./JCL/mon_projet_bancaire/scripts/aliases.sh
+12	./JCL/mon_projet_bancaire/scripts
+4	./JCL/mon_projet_bancaire/config
+4	./JCL/mon_projet_bancaire/TEST.jcl
+4	./JCL/mon_projet_bancaire/build
+4	./JCL/mon_projet_bancaire/.gitignore
+4	./JCL/mon_projet_bancaire/README.md
+4	./JCL/mon_projet_bancaire/TEST4.jcl
+4	./JCL/mon_projet_bancaire/src/copy
+4	./JCL/mon_projet_bancaire/src/cbl/REPORT.cbl
+4	./JCL/mon_projet_bancaire/src/cbl/READCLI.cbl
+4	./JCL/mon_projet_bancaire/src/cbl/CALCSOL.cbl
+16	./JCL/mon_projet_bancaire/src/cbl
+24	./JCL/mon_projet_bancaire/src
+132	./JCL/mon_projet_bancaire
+4	./JCL/assurance
+80	./JCL/gestion-rh/RH001
+0	./JCL/gestion-rh/RH003.cbl
+0	./JCL/gestion-rh/RH005.cbl
+4	./JCL/gestion-rh/RH001.cbl
+4	./JCL/gestion-rh/EMPLOYEE.DAT
+0	./JCL/gestion-rh/RH004.cbl
+0	./JCL/gestion-rh/RH002.cbl
+4	./JCL/gestion-rh/RH001.jcl
+4	./JCL/gestion-rh/RHJOB1.sh
+0	./JCL/gestion-rh/RH.REPORT.FILE
+4	./JCL/gestion-rh/Z75013.CBL(RH001)
+4	./JCL/gestion-rh/RH001_COMP.jcl
+108	./JCL/gestion-rh
+272	./JCL
+4	./zowe.config.json
+4	./.vscode/extensions.json
+8	./.vscode
+4	./gestion_de_command/clients.dat
+4	./gestion_de_command/reports
+80	./gestion_de_command/bin/client_add
+80	./gestion_de_command/bin/menu
+164	./gestion_de_command/bin
+4	./gestion_de_command/sql/add_client.sql
+8	./gestion_de_command/sql
+4	./gestion_de_command/src/client_add.cob
+0	./gestion_de_command/src/client.cob
+0	./gestion_de_command/src/commande.cob
+0	./gestion_de_command/src/livraison.cob
+4	./gestion_de_command/src/menu.cob
+0	./gestion_de_command/src/article.cob
+12	./gestion_de_command/src
+4	./gestion_de_command/copybooks
+200	./gestion_de_command
+4	./TRANSPORT_SYSTEM/data/exports
+52	./TRANSPORT_SYSTEM/data/transport.db
+4	./TRANSPORT_SYSTEM/data/backup
+64	./TRANSPORT_SYSTEM/data
+80	./TRANSPORT_SYSTEM/bin/CREER_BUS
+104	./TRANSPORT_SYSTEM/bin/MENU_PRINCIPAL
+80	./TRANSPORT_SYSTEM/bin/RAPPORT_OCCUPATION
+80	./TRANSPORT_SYSTEM/bin/LISTER_TRAJETS
+80	./TRANSPORT_SYSTEM/bin/LISTER_BUS
+80	./TRANSPORT_SYSTEM/bin/CREER_CONDUCTEUR
+80	./TRANSPORT_SYSTEM/bin/RAPPORT_CA
+80	./TRANSPORT_SYSTEM/bin/LISTER_CONDUCTEURS
+84	./TRANSPORT_SYSTEM/bin/CREER_TRAJET
+752	./TRANSPORT_SYSTEM/bin
+4	./TRANSPORT_SYSTEM/CAHIER_DES_CHARGES.md
+4	./TRANSPORT_SYSTEM/sql/schema.sql
+4	./TRANSPORT_SYSTEM/sql/init_data.sql
+12	./TRANSPORT_SYSTEM/sql
+4	./TRANSPORT_SYSTEM/Makefile
+4	./TRANSPORT_SYSTEM/src/modules/CONDUCTEURS/CREER_CONDUCTEUR.cob
+4	./TRANSPORT_SYSTEM/src/modules/CONDUCTEURS/LISTER_CONDUCTEURS.cob
+12	./TRANSPORT_SYSTEM/src/modules/CONDUCTEURS
+4	./TRANSPORT_SYSTEM/src/modules/BUS/LISTER_BUS.cob
+4	./TRANSPORT_SYSTEM/src/modules/BUS/CREER_BUS.cob
+12	./TRANSPORT_SYSTEM/src/modules/BUS
+4	./TRANSPORT_SYSTEM/src/modules/RAPPORTS/RAPPORT_OCCUPATION.cob
+4	./TRANSPORT_SYSTEM/src/modules/RAPPORTS/RAPPORT_CA.cob
+12	./TRANSPORT_SYSTEM/src/modules/RAPPORTS
+4	./TRANSPORT_SYSTEM/src/modules/TRAJETS/LISTER_TRAJETS.cob
+4	./TRANSPORT_SYSTEM/src/modules/TRAJETS/CREER_TRAJET.cob
+12	./TRANSPORT_SYSTEM/src/modules/TRAJETS
+52	./TRANSPORT_SYSTEM/src/modules
+4	./TRANSPORT_SYSTEM/src/scripts/BACKUP_DB.cob
+4	./TRANSPORT_SYSTEM/src/scripts/EXPORT_BUS_CSV.cob
+12	./TRANSPORT_SYSTEM/src/scripts
+12	./TRANSPORT_SYSTEM/src/MENU_PRINCIPAL.cob
+80	./TRANSPORT_SYSTEM/src
+920	./TRANSPORT_SYSTEM
+4	./cobol-ncurses-lib/lib
+4	./cobol-ncurses-lib/bin
+4	./cobol-ncurses-lib/.git/packed-refs
+4	./cobol-ncurses-lib/.git/HEAD
+4	./cobol-ncurses-lib/.git/refs/heads/main
+8	./cobol-ncurses-lib/.git/refs/heads
+4	./cobol-ncurses-lib/.git/refs/remotes/origin/HEAD
+8	./cobol-ncurses-lib/.git/refs/remotes/origin
+12	./cobol-ncurses-lib/.git/refs/remotes
+4	./cobol-ncurses-lib/.git/refs/tags
+28	./cobol-ncurses-lib/.git/refs
+4	./cobol-ncurses-lib/.git/logs/HEAD
+4	./cobol-ncurses-lib/.git/logs/refs/heads/main
+8	./cobol-ncurses-lib/.git/logs/refs/heads
+4	./cobol-ncurses-lib/.git/logs/refs/remotes/origin/HEAD
+8	./cobol-ncurses-lib/.git/logs/refs/remotes/origin
+12	./cobol-ncurses-lib/.git/logs/refs/remotes
+24	./cobol-ncurses-lib/.git/logs/refs
+32	./cobol-ncurses-lib/.git/logs
+4	./cobol-ncurses-lib/.git/objects/info
+16	./cobol-ncurses-lib/.git/objects/pack/pack-1005dbf8658ebb3be7f025c48f58e7ceacc2f4ab.pack
+4	./cobol-ncurses-lib/.git/objects/pack/pack-1005dbf8658ebb3be7f025c48f58e7ceacc2f4ab.rev
+4	./cobol-ncurses-lib/.git/objects/pack/pack-1005dbf8658ebb3be7f025c48f58e7ceacc2f4ab.idx
+28	./cobol-ncurses-lib/.git/objects/pack
+36	./cobol-ncurses-lib/.git/objects
+4	./cobol-ncurses-lib/.git/config
+4	./cobol-ncurses-lib/.git/info/exclude
+8	./cobol-ncurses-lib/.git/info
+4	./cobol-ncurses-lib/.git/index
+4	./cobol-ncurses-lib/.git/hooks/pre-applypatch.sample
+8	./cobol-ncurses-lib/.git/hooks/pre-rebase.sample
+4	./cobol-ncurses-lib/.git/hooks/update.sample
+4	./cobol-ncurses-lib/.git/hooks/sendemail-validate.sample
+4	./cobol-ncurses-lib/.git/hooks/applypatch-msg.sample
+4	./cobol-ncurses-lib/.git/hooks/push-to-checkout.sample
+4	./cobol-ncurses-lib/.git/hooks/prepare-commit-msg.sample
+4	./cobol-ncurses-lib/.git/hooks/commit-msg.sample
+4	./cobol-ncurses-lib/.git/hooks/post-update.sample
+4	./cobol-ncurses-lib/.git/hooks/pre-merge-commit.sample
+4	./cobol-ncurses-lib/.git/hooks/pre-receive.sample
+8	./cobol-ncurses-lib/.git/hooks/fsmonitor-watchman.sample
+4	./cobol-ncurses-lib/.git/hooks/pre-commit.sample
+4	./cobol-ncurses-lib/.git/hooks/pre-push.sample
+68	./cobol-ncurses-lib/.git/hooks
+4	./cobol-ncurses-lib/.git/gk/config
+8	./cobol-ncurses-lib/.git/gk
+4	./cobol-ncurses-lib/.git/description
+204	./cobol-ncurses-lib/.git
+4	./cobol-ncurses-lib/samples/hello-world.cbl
+4	./cobol-ncurses-lib/samples/sample-ncurses-window.cbl
+12	./cobol-ncurses-lib/samples
+8	./cobol-ncurses-lib/Makefile
+4	./cobol-ncurses-lib/INSTALL-GNUCOBOL.md
+4	./cobol-ncurses-lib/LICENSE.md
+4	./cobol-ncurses-lib/.gitignore
+4	./cobol-ncurses-lib/INSTALL-NCURSES.md
+4	./cobol-ncurses-lib/README.md
+4	./cobol-ncurses-lib/src/ncurses-util.cbl
+4	./cobol-ncurses-lib/src/ncurses-window.cbl
+12	./cobol-ncurses-lib/src
+268	./cobol-ncurses-lib
+28	./zowe.schema.json
+68	./hotel_crud/data/input/hotel.db
+4	./hotel_crud/data/input/init_data.sql
+4	./hotel_crud/data/input/hotel.db.sql
+80	./hotel_crud/data/input
+84	./hotel_crud/data
+16	./hotel_crud/hotel.sh
+4	./hotel_crud/bin
+8	./hotel_crud/docs/structure donne.txt
+8	./hotel_crud/docs/deepseek_bash_20260521_10fe3f.sh
+20	./hotel_crud/docs
+4	./hotel_crud/test_hotel.sh
+4	./hotel_crud/Makefile
+4	./hotel_crud/rapport_ca.sh
+4	./hotel_crud/compile.sh
+4	./hotel_crud/compile_all.sh
+4	./hotel_crud/ca.sh
+4	./hotel_crud/src/modules/CLIENTS/SUPPRIMER_CLIENT.cob
+4	./hotel_crud/src/modules/CLIENTS/MODIFIER_CLIENT.cob
+4	./hotel_crud/src/modules/CLIENTS/RECHERCHER_CLIENT.cob
+4	./hotel_crud/src/modules/CLIENTS/LISTER_CLIENTS.cob
+12	./hotel_crud/src/modules/CLIENTS/CREER_CLIENT.cob
+32	./hotel_crud/src/modules/CLIENTS
+4	./hotel_crud/src/modules/RAPPORTS/RAPPORT_OCCUPATION.cob
+4	./hotel_crud/src/modules/RAPPORTS/RAPPORT_CA.cob
+12	./hotel_crud/src/modules/RAPPORTS
+4	./hotel_crud/src/modules/CHAMBRES/MODIFIER_CHAMBRE.cob
+4	./hotel_crud/src/modules/CHAMBRES/LISTER_CHAMBRES.cob
+4	./hotel_crud/src/modules/CHAMBRES/CREER_CHAMBRE.cob
+16	./hotel_crud/src/modules/CHAMBRES
+4	./hotel_crud/src/modules/RESERVATIONS/CREER_RESERVATION.cob
+4	./hotel_crud/src/modules/RESERVATIONS/ANNULER_RESERVATION.cob
+4	./hotel_crud/src/modules/RESERVATIONS/LISTER_RESERVATIONS.cob
+16	./hotel_crud/src/modules/RESERVATIONS
+80	./hotel_crud/src/modules
+84	./hotel_crud/src
+236	./hotel_crud
+4	./bibliotheque/jcl
+28	./bibliotheque/bibliotheque.db
+4	./bibliotheque/test_all.sh
+8	./bibliotheque/run_all.sh
+4	./bibliotheque/data/output/reports/AMENDES.rpt
+8	./bibliotheque/data/output/reports
+4	./bibliotheque/data/output/logs
+16	./bibliotheque/data/output
+4	./bibliotheque/data/input/ADHERENTS.DAT
+4	./bibliotheque/data/input/LIVRES.DAT
+4	./bibliotheque/data/input/EMPRUNTS.DAT
+16	./bibliotheque/data/input
+36	./bibliotheque/data
+4	./bibliotheque/readme.md
+4	./bibliotheque/scripts
+80	./bibliotheque/bin/LISTER_ADHERENTS
+80	./bibliotheque/bin/EMPRUNTER
+80	./bibliotheque/bin/EMPRUNTS_EN_COURS
+104	./bibliotheque/bin/RETOUR
+80	./bibliotheque/bin/RECHERCHE_LIVRE
+80	./bibliotheque/bin/AJOUT_LIVRE
+92	./bibliotheque/bin/MODIF_ADHERENT
+88	./bibliotheque/bin/SUPPR_ADHERENT
+80	./bibliotheque/bin/LISTER_LIVRES
+80	./bibliotheque/bin/MENU_ADHERENT
+116	./bibliotheque/bin/AJOUT_ADHERENT
+116	./bibliotheque/bin/BATCH_AMENDES
+80	./bibliotheque/bin/LISTER_ADHERENT
+1160	./bibliotheque/bin
+4	./bibliotheque/sql/create_tables.sql
+8	./bibliotheque/sql
+4	./bibliotheque/Makefile
+4	./bibliotheque/compile_all.sh
+4	./bibliotheque/src/modules/LIVRES/LISTER_LIVRES.cob
+4	./bibliotheque/src/modules/LIVRES/RECHERCHE_LIVRE.cob
+4	./bibliotheque/src/modules/LIVRES/AJOUT_LIVRE.cob
+16	./bibliotheque/src/modules/LIVRES
+4	./bibliotheque/src/modules/ADHERENTS/LISTER_ADHERENTS.cob
+4	./bibliotheque/src/modules/ADHERENTS/AJOUT_ADHERENT.cob
+4	./bibliotheque/src/modules/ADHERENTS/RECHERCHE_ADHERENT.cob
+4	./bibliotheque/src/modules/ADHERENTS/SUPPR_ADHERENT.cob
+4	./bibliotheque/src/modules/ADHERENTS/MENU_ADHERENT.cob
+8	./bibliotheque/src/modules/ADHERENTS/MODIF_ADHERENT.cob
+32	./bibliotheque/src/modules/ADHERENTS
+4	./bibliotheque/src/modules/EMPRUNTS/RETOUR.cob
+4	./bibliotheque/src/modules/EMPRUNTS/EMPRUNTS_EN_COURS.cob
+4	./bibliotheque/src/modules/EMPRUNTS/EMPRUNTER.cob
+16	./bibliotheque/src/modules/EMPRUNTS
+68	./bibliotheque/src/modules
+4	./bibliotheque/src/reports
+4	./bibliotheque/src/batch/BATCH_AMENDES.cob
+8	./bibliotheque/src/batch
+4	./bibliotheque/src/common/COPYBOOKS/ADHERENT.cpy
+4	./bibliotheque/src/common/COPYBOOKS/EMPRUNT.cpy
+4	./bibliotheque/src/common/COPYBOOKS/LIVRE.cpy
+16	./bibliotheque/src/common/COPYBOOKS
+20	./bibliotheque/src/common
+104	./bibliotheque/src
+1372	./bibliotheque
+4	./MAINFRAME_TEST/HELLO.cbl
+4	./MAINFRAME_TEST/HELLO.jcl
+12	./MAINFRAME_TEST
+4	./zapp.yaml
+4	./hopital/data/output/reports/RAPPORT_HOPITAL.rpt
+8	./hopital/data/output/reports
+4	./hopital/data/output/logs
+4	./hopital/data/output/archive
+20	./hopital/data/output
+4	./hopital/data/input/PATIENTS.DAT
+4	./hopital/data/input/CONSULTATIONS.DAT
+4	./hopital/data/input/FACTURES.DAT
+4	./hopital/data/input/PRESCRIPTIONS.DAT
+4	./hopital/data/input/MEDECINS.DAT
+24	./hopital/data/input
+48	./hopital/data
+4	./hopital/tests
+8	./hopital/scripts/main.sh
+12	./hopital/scripts
+4	./hopital/config
+80	./hopital/bin/LISTER_FACTURES
+88	./hopital/bin/AJOUT_PATIENT
+116	./hopital/bin/GENERER_FACTURE
+80	./hopital/bin/PAYER_FACTURE
+92	./hopital/bin/AJOUT_CONSULTATION
+80	./hopital/bin/LISTER_CONSULTATIONS
+80	./hopital/bin/RECHERCHE_PATIENT
+92	./hopital/bin/BATCH_HOPITAL
+80	./hopital/bin/LISTER_PATIENTS
+792	./hopital/bin
+4	./hopital/test_cas_reels_hopital.sh
+4	./hopital/docs
+4	./hopital/sql
+4	./hopital/Makefile
+4	./hopital/src/modules/FACTURES/PAYER_FACTURE.cob
+8	./hopital/src/modules/FACTURES/GENERER_FACTURE.cob
+4	./hopital/src/modules/FACTURES/LISTER_FACTURES.cob
+20	./hopital/src/modules/FACTURES
+4	./hopital/src/modules/CONSULTATIONS/LISTER_CONSULTATIONS.cob
+8	./hopital/src/modules/CONSULTATIONS/AJOUT_CONSULTATION.cob
+16	./hopital/src/modules/CONSULTATIONS
+4	./hopital/src/modules/PATIENTS/AJOUT_PATIENT.cob
+4	./hopital/src/modules/PATIENTS/RECHERCHE_PATIENT.cob
+4	./hopital/src/modules/PATIENTS/LISTER_PATIENTS.cob
+16	./hopital/src/modules/PATIENTS
+4	./hopital/src/modules/MEDECINS
+4	./hopital/src/modules/PRESCRIPTIONS
+64	./hopital/src/modules
+4	./hopital/src/reports
+8	./hopital/src/batch/BATCH_HOPITAL.cob
+12	./hopital/src/batch
+4	./hopital/src/common
+88	./hopital/src
+968	./hopital
+16	./ussout.txt
+4	./assurance/jcl
+8	./assurance/cahier_de_charge.txt
+4	./assurance/data/output/reports/SINISTRES_RAPPORT.rpt
+8	./assurance/data/output/reports
+4	./assurance/data/output/logs/assurance_20260519.log
+8	./assurance/data/output/logs
+4	./assurance/data/output/archive
+24	./assurance/data/output
+4	./assurance/data/input/CONTRATS.DAT
+4	./assurance/data/input/PAIEMENTS.DAT
+4	./assurance/data/input/SINISTRES.DAT
+4	./assurance/data/input/CLIENTS.DAT
+20	./assurance/data/input
+48	./assurance/data
+4	./assurance/test_assurance.sh
+4	./assurance/tests/test_unitaires.sh
+4	./assurance/tests/test_integration.sh
+12	./assurance/tests
+4	./assurance/scripts/deploy
+4	./assurance/scripts/backup.sh
+8	./assurance/scripts/main.sh
+4	./assurance/scripts/deploy.sh
+4	./assurance/scripts/backup
+28	./assurance/scripts
+4	./assurance/config
+4	./assurance/docs
+4	./assurance/sql
+4	./assurance/Makefile
+4	./assurance/test_cas_reels.sh
+4	./assurance/assurance/data/output/reports
+4	./assurance/assurance/data/output/logs
+4	./assurance/assurance/data/output/archive
+16	./assurance/assurance/data/output
+4	./assurance/assurance/data/input
+24	./assurance/assurance/data
+4	./assurance/assurance/tests
+4	./assurance/assurance/scripts
+4	./assurance/assurance/config
+4	./assurance/assurance/bin
+4	./assurance/assurance/docs
+4	./assurance/assurance/sql
+4	./assurance/assurance/src/modules/SINISTRES
+4	./assurance/assurance/src/modules/CLIENTS
+4	./assurance/assurance/src/modules/CONTRATS
+4	./assurance/assurance/src/modules/PAIEMENTS
+20	./assurance/assurance/src/modules
+4	./assurance/assurance/src/api
+4	./assurance/assurance/src/common
+32	./assurance/assurance/src
+84	./assurance/assurance
+4	./assurance/backups
+4	./assurance/src/modules/SINISTRES/LISTER_SINISTRES.cob
+4	./assurance/src/modules/SINISTRES/TRAITER_SINISTRE.cob
+4	./assurance/src/modules/SINISTRES/DECLARER_SINISTRE.cob
+16	./assurance/src/modules/SINISTRES
+4	./assurance/src/modules/CLIENTS/RECHERCHE_CLIENT.cob
+4	./assurance/src/modules/CLIENTS/LISTER_CLIENTS.cob
+4	./assurance/src/modules/CLIENTS/AJOUT_CLIENT.cob
+16	./assurance/src/modules/CLIENTS
+4	./assurance/src/modules/CONTRATS/CREER_CONTRAT.cob
+4	./assurance/src/modules/CONTRATS/LISTER_CONTRATS.cob
+12	./assurance/src/modules/CONTRATS
+4	./assurance/src/modules/PAIEMENTS/LISTER_PAIEMENTS.cob
+4	./assurance/src/modules/PAIEMENTS/INDEMNISER.cob
+12	./assurance/src/modules/PAIEMENTS
+60	./assurance/src/modules
+4	./assurance/src/reports
+8	./assurance/src/batch/BATCH_QUOTIDIEN.cob
+12	./assurance/src/batch
+80	./assurance/src
+296	./assurance
+4	./type projet banque/GESTCMPT/GESTCMPT.cbl
+4	./type projet banque/GESTCMPT/comptes.sql
+4	./type projet banque/GESTCMPT/ACCTMAP.member
+4	./type projet banque/GESTCMPT/GCMPT.jcl
+4	./type projet banque/GESTCMPT/README.md
+24	./type projet banque/GESTCMPT
+8	./type projet banque/atm-cobol/data/TRANSACT.DAT
+8	./type projet banque/atm-cobol/data/CARTES.DAT.1
+8	./type projet banque/atm-cobol/data/SESSIONS.DAT
+8	./type projet banque/atm-cobol/data/COMPTES.DAT.1
+8	./type projet banque/atm-cobol/data/COMPTES.DAT
+8	./type projet banque/atm-cobol/data/CARTES.DAT
+8	./type projet banque/atm-cobol/data/CLIENTS.DAT.1
+8	./type projet banque/atm-cobol/data/CLIENTS.DAT
+68	./type projet banque/atm-cobol/data
+8	./type projet banque/atm-cobol/bin/data/TRANSACT.DAT
+8	./type projet banque/atm-cobol/bin/data/CARTES.DAT.1
+8	./type projet banque/atm-cobol/bin/data/SESSIONS.DAT
+8	./type projet banque/atm-cobol/bin/data/COMPTES.DAT.1
+8	./type projet banque/atm-cobol/bin/data/COMPTES.DAT
+8	./type projet banque/atm-cobol/bin/data/CARTES.DAT
+8	./type projet banque/atm-cobol/bin/data/CLIENTS.DAT.1
+8	./type projet banque/atm-cobol/bin/data/CLIENTS.DAT
+68	./type projet banque/atm-cobol/bin/data
+92	./type projet banque/atm-cobol/bin/atm-init
+176	./type projet banque/atm-cobol/bin/atm-main
+340	./type projet banque/atm-cobol/bin
+4	./type projet banque/atm-cobol/{src,data,scripts}
+20	./type projet banque/atm-cobol/atm_cobol_project_viewer.html
+4	./type projet banque/atm-cobol/Makefile
+4	./type projet banque/atm-cobol/README.md
+36	./type projet banque/atm-cobol/src/ATM-MAIN.cbl
+12	./type projet banque/atm-cobol/src/ATM-INIT.cbl
+8	./type projet banque/atm-cobol/src/ATM-TRANS.cbl
+4	./type projet banque/atm-cobol/src/ATM-SECU.cbl
+64	./type projet banque/atm-cobol/src
+508	./type projet banque/atm-cobol
+24	./type projet banque/bank-batch/data/TRANSACTIONS.dat
+8	./type projet banque/bank-batch/data/ACCOUNTS.dat.1
+8	./type projet banque/bank-batch/data/ACCOUNTS.dat
+44	./type projet banque/bank-batch/data
+0	./type projet banque/bank-batch/logs/BATCH_REPORT.txt
+8	./type projet banque/bank-batch/logs/BATCH.log
+12	./type projet banque/bank-batch/logs
+4	./type projet banque/bank-batch/scripts/build.sh
+4	./type projet banque/bank-batch/scripts/run-demo.sh
+12	./type projet banque/bank-batch/scripts
+96	./type projet banque/bank-batch/bin/batch-init
+180	./type projet banque/bank-batch/bin/batch-main
+92	./type projet banque/bank-batch/bin/batch-history
+372	./type projet banque/bank-batch/bin
+0	./type projet banque/bank-batch/=
+4	./type projet banque/bank-batch/.gitignore
+8	./type projet banque/bank-batch/README.md
+12	./type projet banque/bank-batch/src/BATCH-INIT.cbl
+32	./type projet banque/bank-batch/src/BATCH-MAIN.cbl
+8	./type projet banque/bank-batch/src/BATCH-HISTORY.cbl
+56	./type projet banque/bank-batch/src
+512	./type projet banque/bank-batch
+12	./type projet banque/bank-statement/cobol/BSTMTBAT.cbl
+20	./type projet banque/bank-statement/cobol/BSTMTGEN.cbl
+36	./type projet banque/bank-statement/cobol
+8	./type projet banque/bank-statement/jcl/BSTMT_JCL.jcl
+12	./type projet banque/bank-statement/jcl
+8	./type projet banque/bank-statement/ispf/BSTMT_PANELS.pnl
+8	./type projet banque/bank-statement/ispf/BSTMTEXC.rex
+20	./type projet banque/bank-statement/ispf
+8	./type projet banque/bank-statement/README.txt
+4	./type projet banque/bank-statement/{cics,db2,jcl,ispf,cobol}
+4	./type projet banque/bank-statement/db2/CREATE_TABLES.sql
+8	./type projet banque/bank-statement/db2
+8	./type projet banque/bank-statement/cics/CICS_DEFINITIONS.txt
+12	./type projet banque/bank-statement/cics
+104	./type projet banque/bank-statement
+4	./type projet banque/virement_system/SQL_TMP.SQL
+4	./type projet banque/virement_system/SESSION.DAT
+24	./type projet banque/virement_system/data/banque.db
+28	./type projet banque/virement_system/data
+4	./type projet banque/virement_system/menu.sh
+4	./type projet banque/virement_system/scripts/init_db.sh
+4	./type projet banque/virement_system/scripts/reset_db.sh
+12	./type projet banque/virement_system/scripts
+92	./type projet banque/virement_system/bin/AUTHENTIFIER
+124	./type projet banque/virement_system/bin/VIREMENT_INTERNE
+92	./type projet banque/virement_system/bin/SOLDE
+80	./type projet banque/virement_system/bin/HISTORIQUE
+80	./type projet banque/virement_system/bin/LOGOUT
+116	./type projet banque/virement_system/bin/VIREMENT_EXTERNE
+588	./type projet banque/virement_system/bin
+0	./type projet banque/virement_system/TEMP.DAT
+4	./type projet banque/virement_system/Makefile
+0	./type projet banque/virement_system/ERROR.DAT
+4	./type projet banque/virement_system/src/LOGOUT.cob
+4	./type projet banque/virement_system/src/HISTORIQUE.cob
+4	./type projet banque/virement_system/src/virement_copy.cpy
+8	./type projet banque/virement_system/src/VIREMENT_INTERNE.cob
+8	./type projet banque/virement_system/src/VIREMENT_EXTERNE.cob
+4	./type projet banque/virement_system/src/AUTHENTIFIER.cob
+4	./type projet banque/virement_system/src/SOLDE.cob
+40	./type projet banque/virement_system/src
+688	./type projet banque/virement_system
+4	./type projet banque/epargne_system/SESSION.DAT
+20	./type projet banque/epargne_system/data/epargne.db
+24	./type projet banque/epargne_system/data
+4	./type projet banque/epargne_system/menu.sh
+4	./type projet banque/epargne_system/scripts/init_db.sh
+4	./type projet banque/epargne_system/scripts/reset_db.sh
+12	./type projet banque/epargne_system/scripts
+92	./type projet banque/epargne_system/bin/AUTHENTIFIER
+92	./type projet banque/epargne_system/bin/SOLDE
+92	./type projet banque/epargne_system/bin/DEPOT
+116	./type projet banque/epargne_system/bin/RETRAIT
+396	./type projet banque/epargne_system/bin
+4	./type projet banque/epargne_system/Makefile
+4	./type projet banque/epargne_system/src/DEPOT.cob
+4	./type projet banque/epargne_system/src/LOGOUT.cob
+4	./type projet banque/epargne_system/src/HISTORIQUE.cob
+8	./type projet banque/epargne_system/src/RETRAIT.cob
+4	./type projet banque/epargne_system/src/AUTHENTIFIER.cob
+4	./type projet banque/epargne_system/src/epargne_copy.cpy
+8	./type projet banque/epargne_system/src/CALCUL_INTERETS.cob
+4	./type projet banque/epargne_system/src/SOLDE.cob
+44	./type projet banque/epargne_system/src
+492	./type projet banque/epargne_system
+4	./type projet banque/systeme banque/data/output/reports/RAPPORT_BANQUE.rpt
+8	./type projet banque/systeme banque/data/output/reports
+4	./type projet banque/systeme banque/data/output/logs
+4	./type projet banque/systeme banque/data/output/archive
+20	./type projet banque/systeme banque/data/output
+4	./type projet banque/systeme banque/data/input/COMPTES.TMP
+4	./type projet banque/systeme banque/data/input/CREDITS.DAT
+4	./type projet banque/systeme banque/data/input/TRANSACTIONS.DAT
+4	./type projet banque/systeme banque/data/input/COMPTES.DAT.bak
+4	./type projet banque/systeme banque/data/input/COMPTES.DAT
+4	./type projet banque/systeme banque/data/input/CLIENTS.DAT
+28	./type projet banque/systeme banque/data/input
+52	./type projet banque/systeme banque/data
+4	./type projet banque/systeme banque/tests
+8	./type projet banque/systeme banque/scripts/main.sh
+12	./type projet banque/systeme banque/scripts
+4	./type projet banque/systeme banque/config
+80	./type projet banque/systeme banque/bin/LISTER_CLIENTS
+80	./type projet banque/systeme banque/bin/HISTORIQUE_TRANSACTIONS
+92	./type projet banque/systeme banque/bin/AJOUT_COMPTE
+80	./type projet banque/systeme banque/bin/RECHERCHE_CREDIT
+92	./type projet banque/systeme banque/bin/DEPOT
+80	./type projet banque/systeme banque/bin/RECHERCHE_CLIENT
+116	./type projet banque/systeme banque/bin/BATCH_BANQUE
+80	./type projet banque/systeme banque/bin/CONSULTER_SOLDE
+80	./type projet banque/systeme banque/bin/LISTER_COMPTES
+92	./type projet banque/systeme banque/bin/RETRAIT
+92	./type projet banque/systeme banque/bin/AJOUT_CLIENT
+80	./type projet banque/systeme banque/bin/LISTER_CREDITS
+96	./type projet banque/systeme banque/bin/VIREMENT
+1144	./type projet banque/systeme banque/bin
+4	./type projet banque/systeme banque/docs
+4	./type projet banque/systeme banque/sql
+4	./type projet banque/systeme banque/Makefile
+4	./type projet banque/systeme banque/backups
+4	./type projet banque/systeme banque/src/modules/COMPTES/CONSULTER_SOLDE.cob
+4	./type projet banque/systeme banque/src/modules/COMPTES/LISTER_COMPTES.cob
+4	./type projet banque/systeme banque/src/modules/COMPTES/AJOUT_COMPTE.cob
+16	./type projet banque/systeme banque/src/modules/COMPTES
+4	./type projet banque/systeme banque/src/modules/CLIENTS/RECHERCHE_CLIENT.cob
+4	./type projet banque/systeme banque/src/modules/CLIENTS/LISTER_CLIENTS.cob
+4	./type projet banque/systeme banque/src/modules/CLIENTS/AJOUT_CLIENT.cob
+16	./type projet banque/systeme banque/src/modules/CLIENTS
+8	./type projet banque/systeme banque/src/modules/TRANSACTIONS/DEPOT.cob
+8	./type projet banque/systeme banque/src/modules/TRANSACTIONS/VIREMENT.cob
+8	./type projet banque/systeme banque/src/modules/TRANSACTIONS/RETRAIT.cob
+4	./type projet banque/systeme banque/src/modules/TRANSACTIONS/HISTORIQUE_TRANSACTIONS.cob
+32	./type projet banque/systeme banque/src/modules/TRANSACTIONS
+4	./type projet banque/systeme banque/src/modules/CREDITS/RECHERCHE_CREDIT.cob
+4	./type projet banque/systeme banque/src/modules/CREDITS/LISTER_CREDITS.cob
+8	./type projet banque/systeme banque/src/modules/CREDITS/AJOUT_CREDIT.cob
+20	./type projet banque/systeme banque/src/modules/CREDITS
+88	./type projet banque/systeme banque/src/modules
+4	./type projet banque/systeme banque/src/reports
+8	./type projet banque/systeme banque/src/batch/BATCH_BANQUE.cob
+12	./type projet banque/systeme banque/src/batch
+4	./type projet banque/systeme banque/src/common
+112	./type projet banque/systeme banque/src
+4	./type projet banque/systeme banque/test_cas_reels_banque.sh
+1352	./type projet banque/systeme banque
+4	./type projet banque/loan_management/data/LOAN_REPORT.txt
+8	./type projet banque/loan_management/data/LOANS.dat.1
+8	./type projet banque/loan_management/data/AMORT.dat
+8	./type projet banque/loan_management/data/LOANS.dat
+0	./type projet banque/loan_management/data/REPORT.txt
+32	./type projet banque/loan_management/data
+4	./type projet banque/loan_management/scripts/build.sh
+4	./type projet banque/loan_management/scripts/run-demo.sh
+12	./type projet banque/loan_management/scripts
+100	./type projet banque/loan_management/bin/loan-report
+168	./type projet banque/loan_management/bin/loan-main
+272	./type projet banque/loan_management/bin
+4	./type projet banque/loan_management/docs/README.md
+8	./type projet banque/loan_management/docs
+4	./type projet banque/loan_management/.gitignore
+4	./type projet banque/loan_management/{src,data,scripts,docs}
+8	./type projet banque/loan_management/src/LOAN-REPORT.cbl
+28	./type projet banque/loan_management/src/LOAN-MAIN.cbl
+4	./type projet banque/loan_management/src/LOAN-UTILS.cbl
+44	./type projet banque/loan_management/src
+380	./type projet banque/loan_management
+4	./type projet banque/banque_corporate_v3/data/output/reports/RAPPORT_JOURNALIER.rpt
+4	./type projet banque/banque_corporate_v3/data/output/reports/ALERTES.rpt
+12	./type projet banque/banque_corporate_v3/data/output/reports
+4	./type projet banque/banque_corporate_v3/data/output/batch
+20	./type projet banque/banque_corporate_v3/data/output
+4	./type projet banque/banque_corporate_v3/data/input/TRANSACTIONS.dat
+4	./type projet banque/banque_corporate_v3/data/input/PARAMETRES.dat
+4	./type projet banque/banque_corporate_v3/data/input/UTILISATEURS.dat
+4	./type projet banque/banque_corporate_v3/data/input/CREDITS.dat
+4	./type projet banque/banque_corporate_v3/data/input/CLIENTS.dat
+4	./type projet banque/banque_corporate_v3/data/input/COMPTES.dat
+4	./type projet banque/banque_corporate_v3/data/input/CARTES.dat
+4	./type projet banque/banque_corporate_v3/data/input/AGENCES.dat
+36	./type projet banque/banque_corporate_v3/data/input
+4	./type projet banque/banque_corporate_v3/data/temp
+64	./type projet banque/banque_corporate_v3/data
+4	./type projet banque/banque_corporate_v3/scripts/batch_quotidien.sh
+4	./type projet banque/banque_corporate_v3/scripts/batch_mensuel.sh
+20	./type projet banque/banque_corporate_v3/scripts/main.sh
+32	./type projet banque/banque_corporate_v3/scripts
+124	./type projet banque/banque_corporate_v3/bin/BATCH_QUOTIDIEN
+80	./type projet banque/banque_corporate_v3/bin/AUTHENTIFICATION
+88	./type projet banque/banque_corporate_v3/bin/LISTER_CARTES
+92	./type projet banque/banque_corporate_v3/bin/AJOUT_AGENCE
+84	./type projet banque/banque_corporate_v3/bin/RECHERCHE_AGENCE
+92	./type projet banque/banque_corporate_v3/bin/AJOUT_UTILISATEUR
+80	./type projet banque/banque_corporate_v3/bin/LISTER_AGENCES
+88	./type projet banque/banque_corporate_v3/bin/RECHERCHE_CREDIT
+92	./type projet banque/banque_corporate_v3/bin/DEPOT
+80	./type projet banque/banque_corporate_v3/bin/LISTER_UTILISATEURS
+88	./type projet banque/banque_corporate_v3/bin/RECHERCHE_CARTE
+80	./type projet banque/banque_corporate_v3/bin/LISTER_COMPTES
+84	./type projet banque/banque_corporate_v3/bin/CARTES_PAR_COMPTE
+92	./type projet banque/banque_corporate_v3/bin/GESTION_CARTE
+116	./type projet banque/banque_corporate_v3/bin/RETRAIT
+92	./type projet banque/banque_corporate_v3/bin/AJOUT_CLIENT
+88	./type projet banque/banque_corporate_v3/bin/LISTER_CREDITS
+80	./type projet banque/banque_corporate_v3/bin/BLOQUER_CARTE
+116	./type projet banque/banque_corporate_v3/bin/VIREMENT
+1740	./type projet banque/banque_corporate_v3/bin
+4	./type projet banque/banque_corporate_v3/Makefile
+4	./type projet banque/banque_corporate_v3/src/modules/CARTES/LISTER_CARTES.cob
+4	./type projet banque/banque_corporate_v3/src/modules/CARTES/BLOQUER_CARTE.cob
+8	./type projet banque/banque_corporate_v3/src/modules/CARTES/GESTION_CARTE.cob
+4	./type projet banque/banque_corporate_v3/src/modules/CARTES/RECHERCHE_CARTE.cob
+12	./type projet banque/banque_corporate_v3/src/modules/CARTES/AJOUT_CARTE.cob
+4	./type projet banque/banque_corporate_v3/src/modules/CARTES/CARTES_PAR_COMPTE.cob
+40	./type projet banque/banque_corporate_v3/src/modules/CARTES
+4	./type projet banque/banque_corporate_v3/src/modules/COMPTES/LISTER_COMPTES.cob
+8	./type projet banque/banque_corporate_v3/src/modules/COMPTES
+8	./type projet banque/banque_corporate_v3/src/modules/CLIENTS/AJOUT_CLIENT.cob
+12	./type projet banque/banque_corporate_v3/src/modules/CLIENTS
+8	./type projet banque/banque_corporate_v3/src/modules/UTILISATEURS/AJOUT_UTILISATEUR.cob
+4	./type projet banque/banque_corporate_v3/src/modules/UTILISATEURS/AUTHENTIFICATION.cob
+4	./type projet banque/banque_corporate_v3/src/modules/UTILISATEURS/LISTER_UTILISATEURS.cob
+20	./type projet banque/banque_corporate_v3/src/modules/UTILISATEURS
+8	./type projet banque/banque_corporate_v3/src/modules/TRANSACTIONS/DEPOT.cob
+8	./type projet banque/banque_corporate_v3/src/modules/TRANSACTIONS/VIREMENT.cob
+8	./type projet banque/banque_corporate_v3/src/modules/TRANSACTIONS/RETRAIT.cob
+28	./type projet banque/banque_corporate_v3/src/modules/TRANSACTIONS
+4	./type projet banque/banque_corporate_v3/src/modules/AGENCES/AJOUT_AGENCE.cob
+4	./type projet banque/banque_corporate_v3/src/modules/AGENCES/RECHERCHE_AGENCE.cob
+4	./type projet banque/banque_corporate_v3/src/modules/AGENCES/LISTER_AGENCES.cob
+16	./type projet banque/banque_corporate_v3/src/modules/AGENCES
+4	./type projet banque/banque_corporate_v3/src/modules/CREDITS/RECHERCHE_CREDIT.cob
+4	./type projet banque/banque_corporate_v3/src/modules/CREDITS/LISTER_CREDITS.cob
+8	./type projet banque/banque_corporate_v3/src/modules/CREDITS/AJOUT_CREDIT.cob
+20	./type projet banque/banque_corporate_v3/src/modules/CREDITS
+148	./type projet banque/banque_corporate_v3/src/modules
+4	./type projet banque/banque_corporate_v3/src/utils
+8	./type projet banque/banque_corporate_v3/src/batch/BATCH_MENSUEL.cob
+12	./type projet banque/banque_corporate_v3/src/batch/BATCH_QUOTIDIEN.cob
+24	./type projet banque/banque_corporate_v3/src/batch
+180	./type projet banque/banque_corporate_v3/src
+2024	./type projet banque/banque_corporate_v3
+4	./type projet banque/branch_cash_mgmt/data/history.dat
+4	./type projet banque/branch_cash_mgmt/data/cash.dat
+12	./type projet banque/branch_cash_mgmt/data
+4	./type projet banque/branch_cash_mgmt/init_data.sh
+4	./type projet banque/branch_cash_mgmt/Makefile
+4	./type projet banque/branch_cash_mgmt/run.sh
+4	./type projet banque/branch_cash_mgmt/compile.sh
+4	./type projet banque/branch_cash_mgmt/src/CASHOUT.cbl
+140	./type projet banque/branch_cash_mgmt/src/CASHMAIN
+4	./type projet banque/branch_cash_mgmt/src/CASHIN.cbl
+4	./type projet banque/branch_cash_mgmt/src/COMMON.cpy
+4	./type projet banque/branch_cash_mgmt/src/CLOSEDAY.cbl
+4	./type projet banque/branch_cash_mgmt/src/CASHCTRL.cbl
+16	./type projet banque/branch_cash_mgmt/src/CASHMAIN.cbl
+180	./type projet banque/branch_cash_mgmt/src
+212	./type projet banque/branch_cash_mgmt
+6300	./type projet banque
+4	./gestion-rh/modules/employes/lister-employes.cob
+12	./gestion-rh/modules/employes/ajouter-employe.cob
+4	./gestion-rh/modules/employes/modifier-employe.cob
+24	./gestion-rh/modules/employes
+4	./gestion-rh/modules/postes/supprimer-poste.cob
+4	./gestion-rh/modules/postes/ajouter-poste.cob
+4	./gestion-rh/modules/postes/modifier-poste.cob
+4	./gestion-rh/modules/postes/lister-postes.cob
+20	./gestion-rh/modules/postes
+12	./gestion-rh/modules/auth/authentifier.cob
+16	./gestion-rh/modules/auth
+0	./gestion-rh/modules/exports/paie.csv
+0	./gestion-rh/modules/exports/employes.csv
+0	./gestion-rh/modules/exports/conges.csv
+4	./gestion-rh/modules/exports
+4	./gestion-rh/modules/presence/lister-presence.cob
+4	./gestion-rh/modules/presence/ajouter-presence.cob
+12	./gestion-rh/modules/presence
+4	./gestion-rh/modules/departements/ajouter-departement.cob
+4	./gestion-rh/modules/departements/modifier-departement.cob
+4	./gestion-rh/modules/departements/supprimer-departement.cob
+4	./gestion-rh/modules/departements/lister-departements.cob
+20	./gestion-rh/modules/departements
+4	./gestion-rh/modules/rapport/rapport-mensuel.cob
+8	./gestion-rh/modules/rapport
+4	./gestion-rh/modules/users/lister-utilisateurs.cob
+4	./gestion-rh/modules/users/modifier-utilisateur.cob
+4	./gestion-rh/modules/users/supprimer-utilisateur.cob
+4	./gestion-rh/modules/users/ajouter-utilisateur.cob
+20	./gestion-rh/modules/users
+8	./gestion-rh/modules/dashboard/dashboard-rh.cob
+12	./gestion-rh/modules/dashboard
+4	./gestion-rh/modules/conges/lister-conge.cob
+4	./gestion-rh/modules/conges/demande-conge.cob
+4	./gestion-rh/modules/conges/valider-conge.cob
+16	./gestion-rh/modules/conges
+4	./gestion-rh/modules/paie/rapport-paie.cob
+8	./gestion-rh/modules/paie/lister-paie.cob
+8	./gestion-rh/modules/paie/calculer-paie.cob
+24	./gestion-rh/modules/paie
+4	./gestion-rh/modules/export/export-conges.cob
+4	./gestion-rh/modules/export/export-paie.cob
+4	./gestion-rh/modules/export/export-employes.cob
+16	./gestion-rh/modules/export
+16	./gestion-rh/modules/menu/menu-rh.cob
+20	./gestion-rh/modules/menu
+216	./gestion-rh/modules
+48	./gestion-rh/data/rh.db
+52	./gestion-rh/data
+4	./gestion-rh/exports/paie.csv
+4	./gestion-rh/exports/employes.csv
+4	./gestion-rh/exports/conges.csv
+16	./gestion-rh/exports
+84	./gestion-rh/bin/employe-modifier
+80	./gestion-rh/bin/departement-supprimer
+80	./gestion-rh/bin/user-modifier
+84	./gestion-rh/bin/presence-ajouter
+88	./gestion-rh/bin/rapport-mensuel
+116	./gestion-rh/bin/calculer-paie
+92	./gestion-rh/bin/export-employes
+80	./gestion-rh/bin/poste-liste
+80	./gestion-rh/bin/rapport-paie
+80	./gestion-rh/bin/poste-modifier
+80	./gestion-rh/bin/departement-liste
+80	./gestion-rh/bin/conge-valider
+84	./gestion-rh/bin/export-paie
+80	./gestion-rh/bin/departement
+92	./gestion-rh/bin/employe
+108	./gestion-rh/bin/menu-rh
+96	./gestion-rh/bin/dashboard
+80	./gestion-rh/bin/user
+80	./gestion-rh/bin/user-supprimer
+80	./gestion-rh/bin/poste-supprimer
+92	./gestion-rh/bin/login
+80	./gestion-rh/bin/poste
+80	./gestion-rh/bin/user-liste
+84	./gestion-rh/bin/conge-liste
+80	./gestion-rh/bin/employe-liste
+80	./gestion-rh/bin/presence-liste
+84	./gestion-rh/bin/conge-demande
+84	./gestion-rh/bin/lister-paie
+80	./gestion-rh/bin/departement-modifier
+84	./gestion-rh/bin/export-conges
+2556	./gestion-rh/bin
+4	./gestion-rh/docs/schema.sql
+8	./gestion-rh/docs
+4	./gestion-rh/temp/sql.tmp
+4	./gestion-rh/temp/result.tmp
+12	./gestion-rh/temp
+16	./gestion-rh/Makefile
+4	./gestion-rh/bridge/db_bridge.o
+8	./gestion-rh/bridge
+0	./gestion-rh/copybooks/rh-copy.cpy
+4	./gestion-rh/copybooks
+2892	./gestion-rh
+14664	.
+Mon Jun 29 02:16:48 PM EAT 2026

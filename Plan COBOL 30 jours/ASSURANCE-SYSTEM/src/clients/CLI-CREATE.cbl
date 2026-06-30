@@ -1,38 +1,38 @@
-IDENTIFICATION DIVISION.
-PROGRAM-ID. CLI-CREATE.
-
-DATA DIVISION.
-WORKING-STORAGE SECTION.
-EXEC SQL INCLUDE SQLCA END-EXEC.
-
-01 WS-ID        PIC 9(6).
-01 WS-NOM       PIC X(50).
-01 WS-ADR       PIC X(100).
-01 WS-TEL       PIC X(20).
-
-PROCEDURE DIVISION.
-
-DISPLAY "ID CLIENT : "
-ACCEPT WS-ID
-
-DISPLAY "NOM : "
-ACCEPT WS-NOM
-
-DISPLAY "ADRESSE : "
-ACCEPT WS-ADR
-
-DISPLAY "TEL : "
-ACCEPT WS-TEL
-
-EXEC SQL
-   INSERT INTO clients(id, nom, adresse, telephone)
-   VALUES(:WS-ID, :WS-NOM, :WS-ADR, :WS-TEL)
-END-EXEC
-
-IF SQLCODE = 0
-   DISPLAY "CLIENT AJOUTE"
-ELSE
-   DISPLAY "ERREUR : " SQLCODE
-END-IF
-
-STOP RUN.
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CLI-CREATE.
+       
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       EXEC SQL INCLUDE SQLCA END-EXEC.
+       
+       01 WS-ID        PIC 9(6).
+       01 WS-NOM       PIC X(50).
+       01 WS-ADR       PIC X(100).
+       01 WS-TEL       PIC X(20).
+       
+       PROCEDURE DIVISION.
+       
+       DISPLAY "ID CLIENT : "
+       ACCEPT WS-ID
+       
+       DISPLAY "NOM : "
+       ACCEPT WS-NOM
+       
+       DISPLAY "ADRESSE : "
+       ACCEPT WS-ADR
+       
+       DISPLAY "TEL : "
+       ACCEPT WS-TEL
+       
+       EXEC SQL
+           INSERT INTO clients(id, nom, adresse, telephone)
+           VALUES(:WS-ID, :WS-NOM, :WS-ADR, :WS-TEL)
+       END-EXEC
+       
+       IF SQLCODE = 0
+           DISPLAY "CLIENT AJOUTE"
+       ELSE
+           DISPLAY "ERREUR : " SQLCODE
+       END-IF
+       
+       STOP RUN.
