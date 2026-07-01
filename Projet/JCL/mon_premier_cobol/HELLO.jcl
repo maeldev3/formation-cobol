@@ -1,0 +1,29 @@
+//HELLOJOB JOB (ACCT#),'COBOL TEST',CLASS=A,MSGCLASS=X
+//*
+//COMPILE  EXEC IGYWCL
+//COBOL.SYSIN  DD *
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. HELLO.
+       AUTHOR. OLIVIER.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER. IBM-370.
+       OBJECT-COMPUTER. IBM-370.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 WS-MESSAGE PIC X(30) VALUE "BIENVENUE SUR LE MAINFRAME".
+
+       PROCEDURE DIVISION.
+       MAIN-PROCEDURE.
+           DISPLAY "********************************"
+           DISPLAY WS-MESSAGE
+           DISPLAY "********************************"
+           DISPLAY "FIN DU PROGRAMME"
+           STOP RUN.
+//*
+//*  Pour exécuter le programme après compilation
+//GO      EXEC PGM=COBOL
+//STEPLIB DD DSN=Z74830.LOAD(COBOL),DISP=SHR
+//SYSOUT  DD SYSOUT=*

@@ -1,0 +1,20 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. HELLO.
+       AUTHOR. VOUS.
+
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER. IBM-370.
+       OBJECT-COMPUTER. IBM-370.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 WS-MESSAGE PIC X(30) VALUE "BIENVENUE SUR LE MAINFRAME".
+
+       PROCEDURE DIVISION.
+       MAIN-PROCEDURE.
+           DISPLAY "********************************"
+           DISPLAY WS-MESSAGE
+           DISPLAY "********************************"
+           DISPLAY "FIN DU PROGRAMME"
+           STOP RUN.

@@ -1,0 +1,53 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. BANKTRX.
+
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT TRX-FILE ASSIGN TO 'TRANSACTIONS.DAT'
+           ORGANIZATION IS LINE SEQUENTIAL.
+
+           SELECT REP-FILE ASSIGN TO 'REPORT.OUT'
+           ORGANIZATION IS LINE SEQUENTIAL.
+
+       DATA DIVISION.
+
+       FILE SECTION.
+
+       FD TRX-FILE.
+       01 TRX-REC.
+          05 TRX-ID     PIC X(3).
+          05 FILLER      PIC X.
+          05 TRX-TYPE   PIC X.
+          05 FILLER      PIC X.
+          05 TRX-AMT    PIC 9(5).
+
+       FD REP-FILE.
+       01 REP-REC      PIC X(80).
+
+       WORKING-STORAGE SECTION.
+       01 WS-EOF       PIC X VALUE 'N'.
+       01 WS-LINE      PIC X(80).
+
+       PROCEDURE DIVISION.
+
+       OPEN INPUT TRX-FILE
+            OUTPUT REP-FILE
+
+       PERFORM UNTIL WS-EOF = 'Y'
+
+           READ TRX-FILE
+               AT END MOVE 'Y' TO WS-EOF
+           NOT AT END
+               PERFORM WRITE-REPORT
+           END-READ
+
+       END-PERFORM
+
+       CLOSE TRX-FILE REP-FILE
+       STOP RUN.
+
+       WRITE-REPORT.
+           MOVE TRX-REC TO WS-LINE
+           MOVE WS-LINE TO REP-REC
+           WRITE REP-REC.

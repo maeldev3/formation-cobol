@@ -121,4 +121,6 @@ E0002RAVALOMANANA        Hery           COMPTABILI00280000
 E0003RABENJA             Fara           RH        00310000
 E0004RANDRIA             Tojo           INFORMATIQ00420000
 E0005RAZAFY              Lalao          MARKETING 00295000
+E0006Ismael              Tahna          Dk        00896000
+
 /*
