@@ -1,0 +1,85 @@
+***********************************************************************
+* TP21 - CICS                                                        *
+* Mapset      : MENUSET                                              *
+* Map         : MENUMAP                                              *
+* Description : Ecran menu principal (Ajouter/Modifier/Supprimer/    *
+*               Rechercher)                                          *
+***********************************************************************
+MENUSET  DFHMSD TYPE=&SYSPARM,                                        X
+               LANG=COBOL,                                            X
+               MODE=INOUT,                                            X
+               TERM=3270-2,                                            X
+               CTRL=(FREEKB,FRSET),                                    X
+               STORAGE=AUTO,                                           X
+               TIOAPFX=YES
+*
+MENUMAP  DFHMDI SIZE=(24,80),                                         X
+               LINE=1,                                                 X
+               COLUMN=1
+*
+*--------------------------- TITRE ------------------------------*
+TITRE1   DFHMDF POS=(01,01),                                          X
+               LENGTH=80,                                              X
+               ATTRB=(PROT,BRT),                                       X
+               INITIAL='TP21 - GESTION - MENU PRINCIPAL',              X
+               JUSTIFY=(LEFT)
+*
+DATE     DFHMDF POS=(01,70),                                          X
+               LENGTH=8,                                               X
+               ATTRB=(PROT,ASKIP)
+*
+*--------------------------- OPTIONS ------------------------------*
+LIB1     DFHMDF POS=(04,10),                                          X
+               LENGTH=30,                                              X
+               ATTRB=(PROT,NORM),                                      X
+               INITIAL='1. AJOUTER      UN ENREGISTREMENT'
+*
+LIB2     DFHMDF POS=(06,10),                                          X
+               LENGTH=30,                                              X
+               ATTRB=(PROT,NORM),                                      X
+               INITIAL='2. MODIFIER     UN ENREGISTREMENT'
+*
+LIB3     DFHMDF POS=(08,10),                                          X
+               LENGTH=30,                                              X
+               ATTRB=(PROT,NORM),                                      X
+               INITIAL='3. SUPPRIMER    UN ENREGISTREMENT'
+*
+LIB4     DFHMDF POS=(10,10),                                          X
+               LENGTH=30,                                              X
+               ATTRB=(PROT,NORM),                                      X
+               INITIAL='4. RECHERCHER   UN ENREGISTREMENT'
+*
+LIBQ     DFHMDF POS=(12,10),                                          X
+               LENGTH=30,                                              X
+               ATTRB=(PROT,NORM),                                      X
+               INITIAL='0. QUITTER'
+*
+*--------------------------- ZONE DE SAISIE ------------------------------*
+LIBCHX   DFHMDF POS=(16,10),                                          X
+               LENGTH=20,                                              X
+               ATTRB=(PROT,NORM),                                      X
+               INITIAL='VOTRE CHOIX ===>'
+*
+CHOIX    DFHMDF POS=(16,31),                                          X
+               LENGTH=1,                                               X
+               ATTRB=(UNPROT,NUM,IC,FSET),                             X
+               HILIGHT=UNDERLINE
+*
+         DFHMDF POS=(16,33),                                          X
+               LENGTH=1,                                               X
+               ATTRB=ASKIP
+*
+*--------------------------- ZONE MESSAGE ------------------------------*
+MSG      DFHMDF POS=(22,01),                                          X
+               LENGTH=79,                                              X
+               ATTRB=(PROT,BRT,ASKIP),                                 X
+               COLOR=RED
+*
+*--------------------------- LIGNE PF ------------------------------*
+PFLINE   DFHMDF POS=(24,01),                                          X
+               LENGTH=79,                                              X
+               ATTRB=(PROT,NORM),                                      X
+               INITIAL='PF3=QUITTER  ENTER=VALIDER'
+*
+         DFHMSD TYPE=FINAL
+         END

@@ -1,0 +1,35 @@
+*----------------------------------------------------------------*
+* TP21 - CICS : commandes CEDA pour definir les ressources        *
+* A saisir sous CEDA (ou via un script de definition batch DFHCSDUP)
+*----------------------------------------------------------------*
+
+* Groupe de ressources
+CEDA DEFINE GROUP(TP21GRP)
+
+* --- Programmes ---
+CEDA DEFINE PROGRAM(MENU00) GROUP(TP21GRP) LANGUAGE(COBOL)
+CEDA DEFINE PROGRAM(AJOU00) GROUP(TP21GRP) LANGUAGE(COBOL)
+CEDA DEFINE PROGRAM(MODI00) GROUP(TP21GRP) LANGUAGE(COBOL)
+CEDA DEFINE PROGRAM(SUPP00) GROUP(TP21GRP) LANGUAGE(COBOL)
+CEDA DEFINE PROGRAM(RECH00) GROUP(TP21GRP) LANGUAGE(COBOL)
+
+* --- Mapset ---
+CEDA DEFINE MAPSET(MENUSET) GROUP(TP21GRP)
+
+* --- Transaction ---
+CEDA DEFINE TRANSACTION(MENU) GROUP(TP21GRP) PROGRAM(MENU00)
+
+* Installer le groupe dans la region CICS active
+CEDA INSTALL GROUP(TP21GRP)
+
+*----------------------------------------------------------------*
+* Equivalent en batch DFHCSDUP (utilitaire de mise a jour du CSD) :
+*----------------------------------------------------------------*
+* DEFINE GROUP(TP21GRP)
+* DEFINE PROGRAM(MENU00) GROUP(TP21GRP) LANGUAGE(COBOL)
+* DEFINE PROGRAM(AJOU00) GROUP(TP21GRP) LANGUAGE(COBOL)
+* DEFINE PROGRAM(MODI00) GROUP(TP21GRP) LANGUAGE(COBOL)
+* DEFINE PROGRAM(SUPP00) GROUP(TP21GRP) LANGUAGE(COBOL)
+* DEFINE PROGRAM(RECH00) GROUP(TP21GRP) LANGUAGE(COBOL)
+* DEFINE MAPSET(MENUSET) GROUP(TP21GRP)
+* DEFINE TRANSACTION(MENU) GROUP(TP21GRP) PROGRAM(MENU00)
