@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "zowe.vscode-extension-for-zowe"
+        "zowe.vscode-extension-for-zowe",
+        "analytic-signal.preview-html",
+        "george-alisson.html-preview-vscode"
     ]
 }
